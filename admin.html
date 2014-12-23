@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="siclaApp">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title> Sicla - Admin</title>
+    <link href="lib/css/bootstrap.css" rel="stylesheet">
+    <link href="lib/css/sb-admin.css" rel="stylesheet">
+    <link rel="stylesheet" href="lib/css/font-awesome/css/font-awesome.min.css">
+  </head>
+
+  <body>
+
+    <div id="wrapper">
+
+      <!-- Sidebar -->
+      <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="admin.html">Administrador</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse navbar-ex1-collapse" >
+          <ul class="nav navbar-nav side-nav ">
+            <li  ng-class='{"active":tog==2}' ng-click="tog=2">
+                <a href="#/altas/nota"><i class="fa fa-edit"></i> Nueva Nota</a>
+            </li>
+            <li ng-class='{"active":tog==6}' ng-click="tog=6">
+                <a href="#/Buscar/Nota"><i class="fa fa-eye"></i> Ver Todas las Notas</a>
+            </li>
+            <li ng-class='{"active" : tog==8}' ng-click="tog=8">
+            	<a href="#/altas/recientes"><i class="fa fa-eye"></i> Notas Recientes</a>
+            </li>
+            <li ng-class='{"active":tog==9}' ng-click="tog=9">
+                <a href="#/altas/administradores"><i class="fa fa-user"></i> Nuevo Administrador</a>
+            </li>  
+            <li>
+                <a href="javascript:;" data-toggle="collapse" data-target="#demo"><i class="fa fa-pencil-square-o"></i> Editar Registros <i class="fa fa-fw fa-caret-down"></i></a>
+                <ul id="demo" class="collapse">
+					<li ng-class='{"active":tog==10}' ng-click="tog=10">
+		                <a href="#/editar/medios"><i class="fa fa-newspaper-o"></i> Medios y Autores</a>
+		            </li>
+
+					<li ng-class='{"active":tog==11}' ng-click="tog=11">
+		                <a href="#/editar/areas&temas"><i class="fa fa-newspaper-o"></i> Areas y Temas </a>
+		            </li>
+
+					<li ng-class='{"active":tog==12}' ng-click="tog=12">
+		                <a href="#/editar/pais"><i class="fa fa-map-marker"></i> Paises Estados</a>
+		            </li>
+
+					<li ng-class='{"active":tog==13}' ng-click="tog=13">
+		                <a href="#/editar/protagonistas"><i class="fa fa-users"></i> Protagonistas y Cargos</a>
+		            </li>
+
+					<li ng-class='{"active":tog==14}' ng-click="tog=14">
+		                <a href="#/editar/otros"><i class="fa fa-graduation-cap"></i> Secciones y otros</a>
+		            </li>
+
+                </ul>
+            </li>
+            <li ng-class='{"active":tog==15}' ng-click="tog=15">
+                <a href="#/reportes/todos"><i class="fa fa-area-chart"></i> Reportes</a>
+            </li>  
+          </ul>
+
+          <ul ng-controller="UsrCtrl" class="nav navbar-nav navbar-right navbar-user">
+            <li class="dropdown user-dropdown">
+              <a href="" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> {{usr.nombre}} <b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li><a ng-click="Out()"><i class="fa fa-power-off"></i> Cerrar Sesion</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div><!-- /.navbar-collapse -->
+      </nav>
+
+      <div ng-view></div><!-- /#page-wrapper -->
+
+    </div><!-- /#wrapper -->
+
+    <!-- JavaScript -->
+    <script src="js/core/jquery-1.10.2.js"></script>
+    <script src="js/core/bootstrap.js"></script>
+    <script src="lib/angular/angular.js"></script> 
+    <script src="lib/angular/angular-route.js"></script>  
+    <script src="lib/angular/angular-resource.js"></script>
+    <script src="js/admin/appAdminSicla.js"></script>
+    <script src="js/admin/controlesReportes.js"></script>     
+    <script src="js/admin/controlesAdmin.js"></script>
+    <script src="js/controllers/modals.js"></script>  
+    <script src="lib/angular/ui-bootstrap-tpls-0.11.0.min.js"></script>
+    <script src="js/admin/controlesEdicion.js" type="text/javascript"></script>
+    <!-- Page Specific Plugins -->
+    <script src="js/admin/tablesorter/jquery.tablesorter.js"></script>
+    <script src="js/admin/tablesorter/tables.js"></script>
+
+  </body>
+</html>

@@ -1,0 +1,26 @@
+<div class="modal-header">
+  <h3 class="text-center"> MUNICIPIO</h3>
+</div>
+<div class="modal-body">
+  <form role="form" class="" name="formMunicipio">
+    <div class="form-group">
+      <label>Estado</label>
+        <select class="form-control"  ng-model="municipio.estado" ng-options="opEs.nombreEstado for opEs in opcionesEstados" required>
+        </select>
+    </div>
+    <div class="form-group">
+      <label>Nombre del Municipio</label>
+       <input ng-model="municipio.nombre" ng-disabled="!municipio.estado" type="text" class="form-control" placeholder="Introduce nuevo municipio" required>
+    </div>
+  </form>
+</div>
+<div class="modal-footer">
+  <button class=" btn btn-primary btn-lg btn-block" ng-disabled="formMunicipio.$invalid" ng-click="updateMunicipio(municipio)">Guardar Municipio
+  </button>
+
+  <div class="{{alerta.tipo}}" id="mensajes">
+    {{alerta.mensaje}}
+  </div>
+</div>
+
+

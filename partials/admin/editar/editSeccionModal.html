@@ -1,0 +1,15 @@
+<div class="modal-header">
+	<h2 class="text-center"><strong>{{textoH4}}</strong></h2>
+</div>
+<div class="modal-body">
+	<div class="container-fluid">
+	<form  class="form" name="formCambiosMedios">
+			<h3 class="">  Nombre: <strong>{{nm}}</strong></h3>
+			<input type="text" ng-model="cambios.nombre" class="form-control" placeholder="Nuevo Nombre"> 			
+	</form>
+	</div>
+</div>
+<div class="modal-footer">
+	<button ng-show="valor==1" class="btn btn-success" ng-click="actualizaSeccion(cambios)"> Guardar Seccion </button>
+	<button ng-show="valor==2" class="btn btn-success" ng-click="actualizaTipo(cambios)"> Guardar Tipo de nota </button>
+</div>

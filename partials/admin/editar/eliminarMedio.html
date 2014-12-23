@@ -1,0 +1,19 @@
+<div class="modal-header">
+   <h3 class="text-center"><strong>Confirmación para eliminar de la Base de datos</strong></h3>
+</div>
+<div class="modal-body">
+    <form >
+      <div class="form-group" style="text-align: center;">
+          <h3><strong>¿Seguro que desea eliminar este Registro?</strong></h3><br> 
+          <h2 style="display: block;text-align: center;"><strong>{{tipo}} : {{nm}} </strong></h2><hr />
+          <h3>Esta decisión no puede deshacerse y puede afectar gravemente la base de datos</h3>
+      </div>        
+    </form>
+</div>
+   <div class="modal-footer">
+      <button ng-show="tipo=='Medio'" class="btn btn-danger" ng-click="eliminaMedio()"> Eliminar Medio </button>
+      <button ng-show="tipo=='Autor'" class="btn btn-danger" ng-click="eliminaAutor()"> Eliminar Autor </button>
+      <button class=" btn btn-primary " ng-click="cancel()">Cancelar</button>
+   </div>
+	
+  <br>

@@ -1,0 +1,67 @@
+<br />
+<div class="container-fluid">
+
+</div>
+<hr>
+<div class="container-fluid">
+
+  <div class="col-sm-4 col-md-4 col-xs-12  ">
+  <h3 class="text-center"><strong>Paises</strong></h3>
+    <table class="table table-hover">
+    <thead>
+    <tr><th> Nombre </th>
+    </thead>
+    <tbody>
+    <tr ng-class="clickable" ng-repeat="p in paises" ng-click="getEstados(p)" >
+      <td ng-class="clickable" >{{p.nombrePais}}</td>
+      <td class="">
+        <div class="btn-group pull-right">
+          <button class="btn btn-primary " ng-click="modalPaises(p,1)" title="Editar Pais"><i class="fa fa-pencil-square-o"></i></button>
+          <button class="btn btn-danger " ng-click="eliminaPaises('Pais',p.nombrePais,p.idPais)" title="Eliminar Pais"><i class="fa fa-trash"></i></button>
+        </div>
+      </td>
+    </tr>
+    </tbody>
+    </table> 
+  </div>
+  <div class="col-sm-4 col-md-4 col-xs-12  " ng-hide="!estados">
+  <h3 class="text-center"><strong> Estados de {{nmPais}} </strong></h3>
+    <table class="table table-hover" >
+    <thead>
+    <tr><th> Nombre </th>
+    </thead>
+    <tbody>
+    <tr class="clickable" ng-repeat="e in estados" ng-click="getMunicipios(e)">
+      <td  >{{$index+1}} - {{e.nombreEstado}}</td>
+      <td class="">
+      <div class="btn-group pull-right ">
+        <button class="btn btn-primary " ng-click="modalPaises(e,2)" title="Editar Estado"><i class="fa fa-pencil-square-o"></i></button>
+        <button class="btn btn-danger " ng-click="eliminaPaises('Estado',e.nombreEstado,e.idEstado)" title="Eliminar Estado"><i class="fa fa-trash"></i></button>
+      </div> 
+      </td>
+    </tr>
+    </tbody>
+    </table> 
+
+  </div>
+  <div class="col-sm-4 col-md-4 col-xs-12 " ng-hide="!municipios">
+  <h3 class="text-center"><strong>Municipios de {{nmEstado}}</strong></h3>
+    <table class="table table-hover" >
+      <thead>
+       <tr><th> Nombre</th>
+      </thead>
+      <tbody>
+        <tr ng-repeat="m in municipios " >
+          <td >{{$index+1}} - {{m.nombreMunicipio}}</td>
+          <td class="">
+            <div class="btn-group pull-right">
+              <button class="btn btn-primary" ng-click="modalPaises(m,3)" title="Editar Municipio"><i class="fa fa-pencil-square-o"></i></button>
+              <button class="btn btn-danger" ng-click="eliminaPaises('Municipio',m.nombreMunicipio,m.idMunicipio)" title="Eliminar Municipio"><i class="fa fa-trash"></i></button>
+              
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table> 
+  </div>
+</div>

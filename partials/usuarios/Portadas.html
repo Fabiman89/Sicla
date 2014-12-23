@@ -1,0 +1,22 @@
+    <div class="image-bg-fixed-height1">
+      <div class="img-shadow">
+      <div class="container">
+        <h1 class="col-lg-12">
+            <div class=" titles container-fluid col-lg-10 col-lg-offset-1 picBack">
+              <div class=""> Busqueda Avanzada</div>
+              <div class="search">
+                <input class="form-control" ng-model="qry" placeholder="Buscar por Periodico, Titulo, Fecha, Autor, Protagonista, Tema o palabras clave">
+              </div>
+            </div>    
+        </h1>
+      </div>
+      </div>
+    </div>
+<div class="container-fluid">
+    <div class="col-lg-portadas media-Sicla" ng-repeat="columnas in angColumnas | filter:qry">
+      <img ng-src="{{columnas.img8col}}" class="img-size">
+    </div>
+
+
+</div>
+        

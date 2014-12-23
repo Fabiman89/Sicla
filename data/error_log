@@ -1,0 +1,3 @@
+[02-Nov-2014 11:06:16 America/Chicago] PHP Warning:  mysqli_free_result() expects parameter 1 to be mysqli_result, boolean given in /home/u270745/public_html/sicla/data/medios.php on line 11
+[02-Nov-2014 11:06:28 America/Chicago] PHP Warning:  mysqli_free_result() expects parameter 1 to be mysqli_result, boolean given in /home/u270745/public_html/sicla/data/medios.php on line 11
+[02-Nov-2014 11:11:00 America/Chicago] PHP Warning:  mysqli_free_result() expects parameter 1 to be mysqli_result, boolean given in /home/u270745/public_html/sicla/data/medios.php on line 11

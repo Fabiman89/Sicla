@@ -1,0 +1,39 @@
+<br>
+<div class="container">
+<div class="row">
+<div class="col-xs-5 col-xs-offset-4">
+	<form class=""  name="formAltaUsr">
+	<h3 class="text-center"> Registro de Usuarios </h3>
+	<br>
+	<div class="form-group">
+		<div class="row">
+			<div class="col-xs-6">
+				<input class="form-control" ng-model="usuario.nombre" type="text" placeholder="Nombre" required>
+			</div>
+			<div class="col-xs-6">
+				<input class="form-control" ng-model="usuario.apellido" type="text" placeholder="Apellidos" required>
+			</div>
+		</div>
+		<br>
+		<input class="form-control" ng-model="usuario.correo" type="text" placeholder="Correo Electronico" required>
+		<br>
+		<input class="form-control" ng-model="usuario.password" type="text" placeholder="Contrasenha" required>
+		<br>
+		<input class="form-control" ng-model="usuario.passwordConfirm" type="text" placeholder="Confirma Contrasenha" required>
+		<br>
+		<select ng-model="usuario.tipo" ng-disabled="formAltaUsr.$invalid" ng-options="opTipo.nombre for opTipo in opcionesTipo" class="form-control">
+			<option value="" disabled selected>Seleccionar un tipo</option>
+		</select>
+		<br>
+       <button class=" btn btn-primary btn-md btn-block" ng-disabled="formAltaUsr.$invalid" ng-click="insertAdmin(usuario)">Guardar Autor    </button>
+
+	</div>
+	</form>
+</div>
+<div class="col-xs-4"></div>
+
+                
+
+
+</div>
+</div>

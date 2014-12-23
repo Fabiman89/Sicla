@@ -1,0 +1,81 @@
+<br />
+<div class="container-fluid">
+
+</div>
+<hr>
+<div class="container-fluid">
+
+  <div class="col-sm-4 col-md-4 col-xs-12  ">
+  <h3><strong>Lista de Protagonistas</strong></h3>
+    <div class="input-group">
+        <input type="text" class="form-control" ng-model="search" placeholder="Buscar Protagonista">
+        <span class="input-group-btn">
+            <button class="btn btn-default" type="button"><i class="fa fa-search"></i>
+            </button>
+        </span>
+    </div>
+
+    <table class="table table-hover">
+    <thead>
+    <tr><th>Nombres</th>
+    </thead>
+    <tbody>
+    <tr ng-repeat="p in protagonistas |filter:search" ng-click="getCargos(p)" >
+      <td ng-class="clickable" >{{$index+1}} - {{p.nombreProtagonista}}</td>
+      <td class="">
+        <div class="btn-group pull-right ">
+          <button class="btn btn-primary " ng-click="modalEdita(p,1)" title="Editar Protagonista"><i class="fa fa-pencil-square-o"></i></button>
+          <button class="btn btn-danger " ng-click="modalBorrar(p,1,p.nombreProtagonista)" title="Eliminar Protagonista"><i class="fa fa-trash"></i></button>
+        </div> 
+      </td>
+    </tr>
+    </tbody>
+    </table> 
+  </div>
+  <div class="col-sm-4 col-md-4 col-xs-12  " ng-hide="!cargosProtagonista">
+  <h3 class="text-center"><strong>Listado de Cargos de {{nombreP}}</strong></h3>
+    <table class="table table-hover" style="margin-top:35px;" >
+    <thead>
+    <tr><th> cargos</th>
+    </thead>
+    <tbody>
+    <tr ng-repeat="cp in cargosProtagonista " >
+      <td class="clickable" ng-click=""> {{$index+1}} - {{cp.nombreCargo}}</td>
+      <td class="">
+      <div class="btn-group pull-right ">
+        <button class="btn btn-primary " ng-click="modalEdita(cp,2)" title="Editar Cargo"><i class="fa fa-pencil-square-o"></i></button>
+        <button class="btn btn-danger " ng-click="modalBorrar(cp,2,nombreP)" title="Eliminar Cargo de {{nombreP}} "><i class="fa fa-trash"></i></button>
+      </div> 
+      </td>
+    </tr>
+    </tbody>
+    </table> 
+
+  </div>
+  <div class="col-sm-4 col-md-4 col-xs-12 ">
+  <h3 class="text-center"><strong>Listado de todos los Cargos</strong></h3>
+    <div class="input-group">
+        <input type="text" class="form-control" ng-model="searchCargos" placeholder="Buscar en todos los cargos">
+        <span class="input-group-btn">
+            <button class="btn btn-default" type="button"><i class="fa fa-search"></i>
+            </button>
+        </span>
+    </div>
+    <table class="table table-hover" >
+      <thead>
+       <tr><th>Nombre</th>
+      </thead>
+      <tbody>
+        <tr ng-repeat="c in cargos|filter:searchCargos" >
+          <td ><i class="fa fa-thumb-tack"></i> {{$index+1}} - {{c.nombreCargo}}</td>
+          <td class="">
+      <div class="btn-group pull-right ">
+        <button class="btn btn-primary " ng-click="modalEdita(c,2)" title="Editar Cargo"><i class="fa fa-pencil-square-o"></i></button>
+        <button class="btn btn-danger " ng-click="modalBorrar(c,3,c.nombreCargo)" title="Eliminar Cargo"><i class="fa fa-trash"></i></button>
+      </div> 
+          </td>
+        </tr>
+      </tbody>
+    </table> 
+  </div>
+</div>

@@ -1,0 +1,36 @@
+<div class="modal-header">
+  <h3 class="text-center">Alta de Protagonista</h3>
+</div>
+<div class="modal-body">
+  <form name="formProtagonista" role="form">
+    <div class="form-group">
+      <label for="protagonista1">Nombre de Protagonista</label>
+      <input ng-model="protagonista.nombre" type="text" class="form-control" id="nombreProtagonista" placeholder="Nombre de nuevo protagonista" required>
+    </div>
+    <div class="form-group">
+    <label>Genero</label>
+    <div>
+      <label class="radio-inline">
+          <input type="radio" ng-model="protagonista.genero" name="1" value="S.E." active> Sin Especificar
+      </label>
+      <label class="radio-inline">
+        <input type="radio" ng-model="protagonista.genero"  name="1" value="M"> Masculino
+      </label>
+      <label class="radio-inline">
+        <input type="radio" ng-model="protagonista.genero"  name="1" value="F"> Femenino
+      </label>  
+    </div>
+    <div class="form-group">
+      <label>Cargo</label>
+      <select ng-model="protagonista.cargo" ng-options="opCargo.nombreCargo for opCargo in cargos" class="form-control">
+        <option value="" disabled selected>Selecciona un cargo</option>
+      </select>
+    </div> 
+  </form>
+</div>
+<div class="modal-footer">
+  <button class=" btn btn-primary btn-md btn-block" ng-disabled="formProtagonista.$invalid" ng-click="updateProtagonista(protagonista)">Guardar</button>  
+  <div class="{{alerta.tipo}}" id="mensajes">
+    {{alerta.mensaje}}
+  </div>
+</div>

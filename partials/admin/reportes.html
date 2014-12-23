@@ -1,0 +1,85 @@
+<br />
+<div class="container-fluid">
+  <div class="col-lg-10 col-xs-10 col-lg-offset-1">
+    <div class="col-lg-2 col-md-2 col-sm-2">
+      <h4 class="control-label">Medio</h4>
+    </div>
+    <div class="col-lg-4">
+        <select class="form-control" ng-model="thisMedio" ng-change="getAutores(thisMedio.idMedio)" ng-options="m.nombreMedio for m in medios"> <option></option></select>
+    </div>
+    <div class="col-lg-3">
+        <input type="radio" name="radioMedio" value="todos" ng-model="rMedio"  >Todos
+        <input type="radio" value="uno" name="radioMedio" ng-model="rMedio"> Uno
+        <input type="radio" value="unoMas" name="radioMedio" ng-model="rMedio"> Uno
+    </div>
+  </div>
+
+  <div class="col-lg-10 col-xs-10 col-lg-offset-1">
+    <div class="col-lg-2 col-md-2 col-sm-2">
+      <h4 class="control-label">Autor</h4>
+    </div>
+    <div class="col-lg-4">
+        <select class="form-control" ng-model="thisAutor" ng-options="a.nombreAutor for a in autores"> <option></option></select>
+    </div>
+    <div class="col-lg-3">
+        <input type="radio" name="radioAutor" value="todos" ng-model="rAutor" checked>Todos
+        <input type="radio" value="uno" name="radioAutor" ng-model="rAutor"> Uno
+        <input type="radio" value="unoMas" name="radioAutor" ng-model="rAutor"> Uno
+    </div>
+  </div>
+
+  <div class="col-lg-10 col-xs-10 col-lg-offset-1">
+    <div class="col-lg-2 col-md-2 col-sm-2">
+      <h4 class="control-label">Protagonista</h4>
+    </div>
+    <div class="col-lg-4">
+        <select class="form-control" ng-model="thisProt" ng-options="p.nombreProtagonista for p in protagonistas"> <option></option></select>
+    </div>
+    <div class="col-lg-3">
+        <input type="radio" name="radioProtagonista" value="todos" ng-model="rProtagonista" checked>Todos
+        <input type="radio" value="uno" name="radioProtagonista" ng-model="rProtagonista"> Uno
+        <input type="radio" value="unoMas" name="radioProtagonista" ng-model="rProtagonista"> Uno
+    </div>
+  </div>
+
+  <div class="col-lg-10 col-xs-10 col-lg-offset-1">
+    <div class="col-lg-2 col-md-2 col-sm-2">
+      <h4 class="control-label">Area</h4>
+    </div>
+    <div class="col-lg-4">
+        <select class="form-control" ng-model="thisArea" ng-options="ar.nombreArea for ar in areas"> <option></option></select>
+    </div>
+    <div class="col-lg-3">
+        <input type="radio" name="radioArea" value="todos" ng-model="rArea" checked>Todos
+        <input type="radio" value="uno" name="radioArea" ng-model="rArea"> Uno
+        <input type="radio" value="unoMas" name="radioArea" ng-model="rArea"> Uno
+    </div>
+  </div>
+  <div class="col-lg-12">
+    <button class="btn btn-success pull-right"> Generar </button>
+  </div>
+
+</div>
+<hr>
+
+<!--
+<div class="container-fluid">
+<table class="table table-hover">
+<thead>
+<tr><th>Id</th><th>Título</th><th>Medio</th><th>Tipo de Nota</th><th>Usuario</th></tr>
+</thead>
+<tbody>
+<tr ng-repeat="nota in notasArray |filter:search">
+<td>{{nota.idNota}}</td><td>{{nota.titulo| limitTo:20}}</td><td>{{nota.nombreMedio}}</td><td>{{nota.tipo}}</td><td>{{nota.usuario}}</td>
+<td>
+<div class="btn-group">
+  <a href="#/Editar/Nota/{{nota.idNota}}" class="btn btn-primary" role="button">Editar</a>
+  <button type="button" class="btn btn-danger" ng-click="modalEliminar(nota)">Eliminar</button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+-->

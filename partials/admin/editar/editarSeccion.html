@@ -1,0 +1,47 @@
+<br />
+<div class="container-fluid">
+
+</div>
+<hr>
+<div class="container-fluid">
+
+  <div class="col-sm-6 col-md-6 col-xs-12  ">
+  <h3 class="text-center"><strong>Secciones</strong></h3>
+    <table class="table table-hover">
+    <thead>
+    <tr><th> Nombre </th>
+    </thead>
+    <tbody>
+    <tr ng-class="clickable" ng-repeat="s in secciones" ng-click="" >
+      <td ng-class="clickable" >{{s.nombreSeccion}}</td>
+      <td class="">
+        <div class="btn-group pull-right">
+          <button class="btn btn-primary " ng-click="modalSeccion(s,1)" title="Editar Seccion"><i class="fa fa-pencil-square-o"></i></button>
+          <button class="btn btn-danger " ng-click="eliminaSeccion(s,1)" title="Eliminar Seccion"><i class="fa fa-trash"></i></button>
+        </div>
+      </td>
+    </tr>
+    </tbody>
+    </table> 
+  </div>
+  <div class="col-sm-6 col-md-6 col-xs-12  " ng-hide="!tipos">
+  <h3 class="text-center"><strong> Tipo de Nota </strong></h3>
+    <table class="table table-hover" >
+    <thead>
+    <tr><th> Nombre </th>
+    </thead>
+    <tbody>
+    <tr class="clickable" ng-repeat="t in tipos" ng-click="">
+      <td  >{{$index+1}} - {{t.nombreTipoNota}}</td>
+      <td class="">
+      <div class="btn-group pull-right ">
+        <button class="btn btn-primary " ng-click="modalSeccion(t,2)" title="Editar Tipo Nota"><i class="fa fa-pencil-square-o"></i></button>
+        <button class="btn btn-danger " ng-click="eliminaSeccion(t,2)" title="Eliminar Tipo Nota"><i class="fa fa-trash"></i></button>
+      </div> 
+      </td>
+    </tr>
+    </tbody>
+    </table> 
+
+  </div>
+</div>

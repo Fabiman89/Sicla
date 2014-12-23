@@ -1,0 +1,25 @@
+<div class="container-fluid">
+<div class="modal-header">
+
+       <h3 class="modal-title">{{dt.tituloNota}} - <small> {{dt.fecha}}</small> </h3>
+
+
+</div>
+<div class="modal-body">
+<div class="row">
+<div class="col-lg-3" ng-hide="!dt.img8col" >
+	<img  ng-src="{{dt.img8col}}" class="img-responsive">
+</div>
+<div class="col-lg-9 text-justify angular-with-newlines" >
+  {{dt.texto}}
+</div>
+ </div>
+ <br>
+ <br>
+ <strong>Autor: {{dt.autor}}</strong>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-danger" ng-click="cancel()">Cerrar</button>
+</div>
+
+	</div>

@@ -1,0 +1,29 @@
+<div class="modal-header">
+	<h2 class="text-center"><strong>{{textoH4}}</strong></h2>
+</div>
+<div class="modal-body">
+	<div class="container-fluid">
+	<form ng-show="valor==1" class="form" name="formCambiosMedios">
+			<h3 class="">  Nombre: <strong>{{nm}}</strong></h3>
+			<input type="text" ng-model="cambios.nombre" class="form-control" placeholder="Nuevo Nombre"> 
+			<h3 class="">  Url:	<strong>{{url}}</strong></h3>
+			<input type="text" ng-model="cambios.url" class="form-control" placeholder="Nuevo Url"> 
+			<h3 class="">  Imagen: </h3>
+			<input type="file" ng-model="cambios.imagen" id="exampleInputFile" class="form-control" > 			
+	</form>
+	<form ng-show="valor==2" class="form" name="formCambiosAutor">
+			<h3 class="">  Nombre: <strong> {{nm}} </strong></h3>
+			<input type="text" ng-model="cambios.nombre" class="form-control" placeholder="Nuevo Nombre"> 
+			<h3 class="">  Genero: <strong> {{generoActual}} </strong></h3>
+			<input type="radio" ng-model="cambios.genero" class="" value="M"> M
+			<input type="radio" ng-model="cambios.genero" class="" value="F"> F		
+			<input type="radio" ng-model="cambios.genero" class="" value="S"> S.G.	
+	</form >
+	</div>
+</div>
+<div class="modal-footer">
+	<button ng-show="valor==1" class="btn btn-success" ng-click="actualizaMedio(cambios)"> Guardar Medio </button>
+	<button ng-show="valor==2" class="btn btn-success" ng-click="actualizaAutor(cambios)"> Guardar Autor </button>
+
+	{{cambios}}
+</div>

@@ -1,0 +1,72 @@
+<div class="modal-header">
+   <h3 class="text-center">Autores</h3>
+</div>
+<div class="modal-body">
+  <accordion>
+
+  <accordion-group heading=" Agregar a un nuevo autor" class="text-center clickable"> 
+    <form name="formAutor" class=" " role="form">
+      <div class="form-group">
+        <label>Nombre de Medio</label>
+          <select class="form-control" ng-model="autors.medio" ng-options="opMedios.nombreMedio for opMedios in opcionesMedios" required>
+          </select>
+      </div>
+      <div class="form-group">
+         <label >Nombre de Autor</label>
+         <input ng-model="autors.nombre" type="text" class="form-control" placeholder="Nombre completo del nuevo autor" required>
+      </div>
+      <label>Genero</label>
+      <div>
+        <label class="radio-inline">
+            <input type="radio" ng-model="autors.genero" name="1" value="SN" active > Sin Especificar
+        </label>
+        <label class="radio-inline">
+          <input type="radio" ng-model="autors.genero"  name="1" value="M"> Masculino
+        </label>
+        <label class="radio-inline">
+          <input type="radio" ng-model="autors.genero"  name="1" value="F"> Femenino
+        </label>                          
+      </div>
+      <br>      
+    </form>
+    <button class=" btn btn-primary btn-md btn-block" ng-disabled="formAutor.$invalid" ng-click="updateAutor(autors)">Guardar Autor    </button>
+  </accordion-group>
+
+    <hr />
+    <br>
+
+  <accordion-group heading=" Asignarle Periodico a un Autor Existente" class="text-center" >
+    <form name="formAutorMedio" class=" " role="form">
+      <div class="form-group">
+          <label>Nombre de Medio</label>
+          <select class="form-control" ng-model="autors2.medio" ng-change="buscaDisponibles(autors2.medio.idMedio)" ng-options="opMedios.nombreMedio for opMedios in opcionesMedios" required>
+          </select>
+      </div>
+      <div class="form-group">
+          <label>Nombre de Autor</label>
+          <select class="form-control" ng-model="autors2.autor" ng-diabled="!autors2.medio" ng-options="opAutores.nombreAutor for opAutores in opcionesAutores" required>
+          </select>
+      </div>
+      <br>      
+    </form>
+    <button class=" btn btn-primary btn-md btn-block" ng-disabled="formAutorMedio.$invalid" ng-click="updateAutorMedio(autors2)"> Asignar  </button>
+  </accordion-group>
+
+
+  </accordion> 
+
+
+
+</div>
+   <div class="modal-footer">
+
+
+              
+   </div>
+<!--
+  <br>
+      <div class="{{alerta.tipo}}" id="mensajes2">
+        {{alerta.mensaje}}
+      </div>
+-->
+

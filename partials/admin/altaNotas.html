@@ -1,0 +1,378 @@
+<br>
+<form name="formNotas" class="form-horizontal" role="form">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-lg-5">
+
+        <div class="form-group">
+          <div class="col-xs-3 col-lg-3 control-label" for="input-medio">
+            <label>Medio</label>
+          </div>
+          <div class="col-xs-7 col-lg-7">
+            <select id="input-medio" ng-model="nota.medio" ng-options="opMedios.nombreMedio for opMedios in opcionesMedios" ng-change="getAutor(nota.medio.idMedio)" class="form-control"><option value=" " disabled >Selecciona un medio</option></select>
+          </div>
+          <div class="col-xs-1 col-lg-1">
+            <button ng-click="modalMedios()" type="button" class="btn btn-success"><span class="fa fa-plus"  ></span></button>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="col-xs-3 col-lg-3 control-label">
+            <label>Autor</label>
+          </div>
+          <div class="col-xs-7 col-lg-7">
+            <select ng-disabled="!nota.medio" ng-model="nota.autor" ng-options="opAutores.nombreAutor for opAutores in opcionesAutores" class="form-control" placeholder="Autor"><option value=" " selected></option>
+            </select>
+          </div>
+          <div class="col-xs-1 col-lg-1">
+            <button ng-disabled="!nota.medio" type="button" ng-click="modalAutores(nota.medio)" class="btn btn-success"><span class="fa fa-plus"></span></button>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="col-xs-3 col-lg-3 control-label"><label>Fecha</label>
+          </div>
+          <div class="col-xs-7 col-lg-7">
+            <input type="date" ng-model="nota.fecha" class="form-control" />
+          </div>
+          <div class="col-xs-1 col-lg-1">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="col-xs-3 col-lg-3 control-label">
+          <label>Tipo</label>
+          </div>
+          <div class="col-xs-7 col-lg-7">
+            <select class="form-control" ng-model="nota.tipo" ng-options="opTP.nombreTipoNota for opTP in opcionesNota">
+            <option value=" "  selected>Seleccione</option></select>
+          </div>
+          <div class="col-xs-1 col-lg-1">
+            <button ng-click="modalTipoNota()" type="button" class="btn btn-success"><span class="fa fa-plus"></span></button>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="col-xs-3 col-lg-3 control-label"><label>Página</label>
+          </div>
+          <div class="col-xs-7 col-lg-7">
+            <input type="number" ng-model="nota.pagina" class="form-control" />
+          </div>
+          <div class="col-xs-1 col-lg-1">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="col-xs-3 col-lg-3 control-label"><label># Ejemplar</label>
+          </div>
+          <div class="col-xs-7 col-lg-7">
+            <input type="number" ng-model="nota.num" class="form-control" required/>
+          </div>
+          <div class="col-xs-1 col-lg-1">
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-xs-3 col-lg-3 control-label"><label>Seccion</label>
+          </div>
+          <div class="col-xs-7 col-lg-7">
+            <select class="form-control" ng-model="nota.seccion" ng-options="opSeccion.nombreSeccion for opSeccion in opcionesSeccion">
+              <option value=" "  selected>Seleccione</option>
+            </select>
+          </div>
+          <div class="col-xs-1 col-lg-1">
+            <button type="button" ng-click="modalSeccion()" class="btn btn-success"><span class="fa fa-plus"></span>
+            </button>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="col-xs-3 col-lg-3 control-label"><label>Prot.</label>
+          </div>
+          <div class="col-xs-7 col-lg-7">
+            <select class="form-control" ng-model="nota.protagonista" ng-options="opProtagonista.nombreProtagonista for opProtagonista in opcionesProtagonsita" ng-change="getCargo(nota.protagonista)"><option value=" " selected>Seleccione Protagonista</option>
+            </select>
+          </div>
+          <div class="col-xs-1 col-lg-1">
+            <button type="button" ng-click="modalProt()" class="btn btn-success"><span class="fa fa-plus"></span>
+            </button>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="col-xs-3 col-lg-3 control-label"><label>Cargo</label>
+          </div>
+          <div class="col-xs-7 col-lg-7">
+            <select class="form-control" ng-model="nota.cargo" ng-disabled="!nota.protagonista" ng-options="opCargo.nombreCargo for opCargo in opcionesCargo"><option value=" " selected></option>
+            </select>
+          </div>
+          <div class="col-xs-1 col-lg-1">
+            <button ng-disabled="!nota.protagonista" ng-click="modalCargo(nota.protagonista)" type="button" class="btn btn-success"><span class="fa fa-plus"></span>
+            </button>
+          </div>
+        </div>
+
+<div class="form-group" ng-repeat="aux in auxiliarPT">
+  <div class="col-xs-3 col-lg-3 control-label">
+    <label></label>
+  </div>
+  <div class="col-xs-7 col-lg-7">
+    <accordion  >
+      <accordion-group heading="Agregar Otro Protagonista" is-disabled="!nota.cargo"  class="text-center">
+        <form role="form" class="" name="formOtroProt">
+                  <div class="form-group">
+                    <div class="col-xs-3 col-lg-3 control-label"><label>Prot.</label>
+                    </div>
+                    <div class="col-xs-7 col-lg-7">
+                      <select class="form-control" ng-model="nota.otrosPT[$index]" ng-options="opProtagonista.nombreProtagonista for opProtagonista in opcionesProtagonsita" ng-change="getoCar(nota.otrosPT[$index], $index)"><option value=" " selected>Seleccione Protagonista</option>
+                      </select>
+                    </div>
+                    <div class="col-xs-1 col-lg-1">
+                      <button type="button" ng-click="modalProt($index)" class="btn btn-success"><span class="fa fa-plus"></span>
+                      </button>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <div class="col-xs-3 col-lg-3 control-label"><label>Cargo</label>
+                    </div>
+                    <div class="col-xs-7 col-lg-7">
+                      <select class="form-control" ng-model="nota.otrosCargo[$index]" ng-disabled="!nota.otrosPT[$index]" ng-options="opCargo.nombreCargo for opCargo in opcionesPT[$index]"><option value=" " selected></option>
+                      </select>
+                    </div>
+                    <div class="col-xs-1 col-lg-1">
+                      <button ng-disabled="" ng-click="modalCargo(nota.otrosPT[$index],$index)" type="button" class="btn btn-success"><span class="fa fa-plus"></span>
+                      </button>                     
+                    </div>
+                  </div>
+        </form>
+      </accordion-group>    
+    </accordion>
+  </div>
+  <div class="col-xs-1 col-lg-1">
+    <button type="button" ng-disabled="!nota.cargo" ng-click="masPT()" class="btn btn-warning"><span class="fa fa-plus"></span>
+    </button>
+  </div>
+</div>
+
+        <div class="form-group">
+          <div class="col-xs-3 col-lg-3 control-label"><label>Pos/Neg</label>
+          </div>
+          <div class="col-xs-7 col-lg-7">
+            <select class="form-control" ng-model="nota.posneg">
+              <option value="positiva"> Positiva</option>
+              <option value="negativa"> Negativa</option>
+            </select>
+          </div>
+          <div class="col-xs-1 col-lg-1">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="col-xs-3 col-lg-3 control-label"><label>Area</label>
+          </div>
+          <div class="col-xs-7 col-lg-7">
+            <select class="form-control" ng-model="nota.area" ng-options="opArea.nombreArea for opArea in opcionesArea" ng-change="getTema(nota.area.idArea)"><option value=" " selected>Seleccione Area</option>
+            </select>
+          </div>
+          <div class="col-xs-1 col-lg-1">
+            <button type="button" ng-click="modalArea()" class="btn btn-success"><span class="fa fa-plus"></span>
+            </button>
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <div class="col-xs-3 col-lg-3 control-label"><label>Tema</label>
+          </div>
+          <div class="col-xs-7 col-lg-7">
+            <select ng-disabled="!nota.area" class="form-control" ng-model="nota.tema" ng-options="opTema.nombreTema for opTema in opcionesTema" ng-change="getSubtema(nota.tema.idTema)"><option value=" " selected>Seleccione</option>
+            </select>
+          </div>
+          <div class="col-xs-1 col-lg-1">
+            <button type="button" ng-disabled="!nota.area" ng-click="modalTema(nota.area)" class="btn btn-success"><span class="fa fa-plus"></span>
+            </button>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="col-xs-3 col-lg-3 control-label"><label>Subtema</label>
+          </div>
+          <div class="col-xs-7 col-lg-7">
+            <select class="form-control" ng-model="nota.subtema" ng-disabled="!nota.tema" ng-options="opSubtema.nombreSubtema for opSubtema in opcionesSubtema"><option value=" " selected></option>
+            </select>
+          </div>
+          <div class="col-xs-1 col-lg-1">
+            <button type="button" ng-disabled="!nota.tema" ng-click="modalSubtema(nota.area.idArea,nota.tema)" class="btn btn-success"><span class="fa fa-plus"></span>
+            </button>
+          </div>
+        </div>
+
+<div class="form-group"  ng-repeat="aux in auxiliarST">
+  <div class="col-xs-3 col-lg-3 control-label">
+    <label></label>
+  </div>
+  <div class="col-xs-7 col-lg-7">
+    <accordion  >
+      <accordion-group heading="Agregar Otro Tema" is-disabled="!nota.subtema" class="text-center ">
+        <form role="form" class="" name="formOtroTema">
+              <div class="form-group">
+                <div class="col-xs-3 col-lg-3 control-label"><label>Area</label>
+                </div>
+                <div class="col-xs-7 col-lg-7">
+                  <select class="form-control" ng-model="nota.otraArea[$index]" ng-options="opArea.nombreArea for opArea in opcionesArea" ng-change="getOTema(nota.otraArea[$index], $index)"><option value=" " selected>Seleccione Area</option>
+                  </select>
+                </div>
+                <div class="col-xs-1 col-lg-1">
+                  <button type="button" ng-click="modalArea($index)" class="btn btn-success"><span class="fa fa-plus"></span>
+                  </button>                  
+                </div>
+              </div>
+              
+              <div class="form-group">
+                <div class="col-xs-3 col-lg-3 control-label"><label>Tema</label>
+                </div>
+                <div class="col-xs-7 col-lg-7">
+                  <select ng-disabled="!nota.otraArea[$index]" class="form-control" ng-model="nota.otroTema[$index]" ng-options="opTema.nombreTema for opTema in opcionesOtroTema[$index]" ng-change="getSub(nota.otroTema[$index], $index)"><option value=" " selected>Seleccione</option>
+                  </select>
+                </div>
+                <div class="col-xs-1 col-lg-1">
+                  <button type="button" ng-disabled="" ng-click="modalTema(nota.otraArea[$index], $index)" class="btn btn-success"><span class="fa fa-plus"></span>
+                  </button>                  
+                </div>
+              </div>
+
+              <div class="form-group">
+                <div class="col-xs-3 col-lg-3 control-label"><label>Subtema</label>
+                </div>
+                <div class="col-xs-7 col-lg-7">
+                  <select class="form-control" ng-model="nota.otroSubtema[$index]" ng-disabled="!nota.otroTema[$index]" ng-options="opSubtema.nombreSubtema for opSubtema in opcionesOtroSub[$index]"><option value=" " selected></option>
+                  </select>
+                </div>
+                <div class="col-xs-1 col-lg-1">
+                  <button type="button" ng-disabled="" ng-click="modalSubtema(nota.otraArea[$index].idArea,nota.otroTema[$index], $index)" class="btn btn-success"><span class="fa fa-plus"></span>
+                  </button>                  
+                </div>
+              </div>
+        </form>
+      </accordion-group>    
+    </accordion>
+  </div>
+  <div class="col-xs-1 col-lg-1">
+    <button type="button" ng-disabled="!nota.tema" ng-click="masST()" class="btn btn-warning"><span class="fa fa-plus"></span>
+    </button>
+  </div>
+</div>
+        <div class="form-group">
+          <div class="col-xs-3 col-lg-3 control-label"><label>Pais</label>
+          </div>
+          <div class="col-xs-7 col-lg-7">
+            <select class="form-control" ng-model="nota.pais" ng-change="getEstados(nota.pais.idPais)" ng-options="opEstado.nombrePais for opEstado in opcionesPais">
+            <option value=" " selected>Pais</option>
+            </select>
+          </div>
+          <div class="col-xs-1 col-lg-1">
+            <button type="button" ng-click="modalPais()" class="btn btn-success"><span class="fa fa-plus"></span>
+            </button>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="col-xs-3 col-lg-3 control-label"><label>Estado</label>
+          </div>
+          <div class="col-xs-7 col-lg-7">
+            <select class="form-control" ng-model="nota.estado" ng-change="getMunicipio(nota.estado.idEstado)") ng-options="opEstado.nombreEstado for opEstado in opcionesEstado" ng-disabled="!nota.pais">
+            <option value=" " selected>Seleccione Estado</option>
+            </select>
+          </div>
+          <div class="col-xs-1 col-lg-1">
+            <button type="button" ng-click="modalEstado(nota.pais)" class="btn btn-success"><span class="fa fa-plus"></span>
+            </button>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="col-xs-3 col-lg-3 control-label"><label>Municipio</label>
+          </div>
+          <div class="col-xs-7 col-lg-7">
+            <select ng-disabled="!nota.estado" class="form-control" ng-model="nota.municipio" ng-options="opMunicipio.nombreMunicipio for opMunicipio in opcionesMunicipios" ><option value=" " selected>Seleccione</option>
+            </select>
+          </div>
+          <div class="col-xs-1 col-lg-1">
+            <button type="button" ng-click="modalMunicipio(nota.pais.idPais,nota.estado)" ng-disabled="!nota.estado" class="btn btn-success"><span class="fa fa-plus"></span>
+            </button>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="col-xs-3 col-lg-3 control-label"><label>URL</label>
+          </div>
+          <div class="col-xs-7 col-lg-7">
+            <input type="text" ng-model="nota.url" class="form-control" placeholder="Link de la nota"/>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="col-xs-3 col-lg-3 control-label"><label>Portada</label>
+          </div>
+          <div class="col-xs-7 col-lg-7">
+            <input type="file" id="exampleInputFile">
+            <p class="help-block">Seleccione portada</p>
+          </div>
+          <div class="col-xs-1 col-lg-1">
+          </div>
+        </div>
+
+      </div>
+      <div class="col-lg-6">
+
+        <div class="form-group">
+          <div class="col-xs-2 col-lg-2 control-label"><label>Titulo</label>
+          </div>
+          <div class="col-xs-10 col-lg-10">
+            <input type="text" class="form-control" ng-model="nota.titulo" placeholder="Titulo" required />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="col-xs-2 col-lg-2 control-label"><label>Sintesis</label>
+          </div>
+          <div class="col-xs-10 col-lg-10">
+            <textarea class="form-control" ng-model="nota.sintesis" rows="5" placeholder="Breve Sintesis" required></textarea>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="col-xs-2 col-lg-2 control-label"><label>Texto</label>
+          </div>
+          <div class="col-xs-10 col-lg-10">
+            <textarea class="form-control" ng-model="nota.texto" rows="15" placeholder="Nota Completa" required></textarea>
+          </div>
+        </div>
+
+<div class="btn-group btn-group-lg btn-group-justified" style="width:100%" role="group" aria-label="Button Group">
+  <button type="button" class="btn btn-primary" ng-disabled="formNotas.$invalid" ng-click="vistaPrevia(nota)">Vista Previa</button>
+  <button type="button" ng-disabled="!permitir" ng-click="updateNota(nota)" class="btn btn-danger">Guardar </button>
+</div>
+
+      </div>
+    </div>
+  </div>
+</form>
+
+<!--
+        <div class="form-group">
+          <div class="col-xs-3 col-lg-3 control-label"><label></label>
+          </div>
+          <div class="col-xs-7 col-lg-7">
+
+          </div>
+          <div class="col-xs-1 col-lg-1">
+            <button type="button" class="btn btn-success"><span class="fa fa-plus"></span>
+            </button>
+            <button type="button" ng-click="" class="btn btn-primary"><i class="fa fa-refresh"></i>
+            </button>
+          </div>
+        </div>
+
+
+
+-->

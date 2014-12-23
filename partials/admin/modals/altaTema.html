@@ -1,0 +1,29 @@
+<div class="modal-header">
+  <h3 class="text-center"> TEMAS</h3>
+</div>
+<div class="modal-body">
+  <form role="form" class="" name="formTema">
+  <div class="form-group">
+    <label>Area del Tema</label>
+      <select class="form-control" ng-model="tema.area" ng-options="opArea.nombreArea for opArea in opcionesArea" required>
+      </select>
+  </div>
+  <div class="form-group">
+    <label for="nombre_tema" >Nombre del Tema</label>
+      <input ng-model="tema.nombre" type="text" class="form-control" id="tema_nombre" placeholder="Introduce nuevo tema" required>
+  </div> 
+
+  </form>
+
+
+</div>
+<div class="modal-footer">
+   <button class=" btn btn-primary btn-lg btn-block" ng-disabled="formTema.$invalid" ng-click="updateTema(tema)">Guardar
+  </button>
+
+  <div class="{{alerta.tipo}}" id="mensajes">
+    {{alerta.mensaje}}
+  </div>
+</div>
+
+

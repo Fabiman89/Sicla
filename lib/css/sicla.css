@@ -1,0 +1,608 @@
+body{
+	position:relative;
+	font-family: 'Lato', sans-serif;
+	font-size:150%;
+	/*
+	background-image: url(../img/logos/bg.png);
+	color: rgba(255,255,255,1);
+	background-repeat: repeat-x repeat-y;
+	*/
+	background-color: #e9eaed;
+    padding: 0px 0;
+	font-family: 'Ubuntu Condensed', sans-serif;
+	height: 100%;
+}
+.container56{
+	-moz-column-count: 1;
+    -moz-column-gap: 10px;
+    -webkit-column-count: 1;
+    -webkit-column-gap: 10px;
+    column-count: 1;
+    column-gap: 10px;
+
+}
+
+.angular-with-newlines {
+    white-space: pre-wrap;
+}
+
+.center-content{
+width: 1170px;
+
+	margin-left:auto;
+	margin-right:auto;
+	
+	padding-left:15px;
+	padding-right:15px;
+
+}
+.post-header{
+	background-color: #fff;
+}
+
+.post-container{
+	box-shadow: 0 0 1px 1px #ddd;
+	box-shadow: 2px 4px 5px 2px #464347;
+    height: auto;
+    margin: 0 0 30px;
+    overflow: hidden;
+    padding: 0;
+    background-color: #fff;
+}
+
+.container6 div {
+    display: inline-block;
+    width: 100%;
+    background-color: red;
+}
+
+.post-image{
+	background-color: #fff;
+    padding: 15px;
+}
+.post-titulo {
+    background-color: #fff;
+    border-top: 1px solid #ddd;
+    font-size: 14px;
+    padding: 15px;
+    height:60px;
+    overflow: hidden;
+
+}
+.cont{
+	width:100%;
+	height:auto;
+}
+
+.post-desc {
+    background-color: #fff;
+    border-top: 1px solid #ddd;
+    font-size: 14px;
+    padding: 15px;
+    height:285px;
+}
+
+.upperMenu{
+	background-color: #000;
+	width:100%;
+	height:55px ;
+	text-transform: uppercase;
+	padding: 4px 6px;
+    font-size: 16px;
+    color: #fff;
+
+}
+
+.notasHoy{
+	display: table;
+	width:100%;
+	height: 100%;
+}
+.windowSize{
+	display: table;
+	width:100%;
+	height: 100%;
+	padding-bottom: -55px;
+}
+.windowSize2{
+	display: table;
+	width:100%;
+	height: 94%;
+
+}
+
+
+.wellcomeSicla{
+	display: table;
+	width:100%;
+	height: 100%;
+	background: url(../../imagenes/globales/newspapers3.jpg) no-repeat center bottom scroll;
+	background-color: rgba(0,0,0,0.7);
+	-webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+    -o-background-size: cover;
+}
+
+.img-shadow2{
+	background-color: rgba(255,0,0,0.7);
+	height: inherit;
+
+}
+
+.img-shadow{
+	background-color: rgba(0,0,0,0.7);
+	margin: 0px;
+	height: 100%;
+	width: 100%;
+
+}
+
+
+.introText{
+	color:#fff;
+	font-size: 18px;
+/*	background-color:rgba(0,0,0,0.5);
+	border-color: #7A7D76;
+	border-width: 3px;
+	border-style: solid;
+	box-shadow: 10px 10px 5px #888888;
+*/
+	padding: 1px 10px 15px 10px;
+
+}
+
+.media{
+	color:black;
+	padding-bottom:10px;
+}
+
+.rounded{
+	border-radius: 25px;
+	padding-bottom:10px;
+	border-style: 	groove;
+	background-color: rgba(255,255,255,.8);
+}
+
+.container-index{
+	border-radius: 10px;
+    padding-bottom: 50px;
+}
+
+.vieww{
+	padding-bottom:50px;
+}
+.border-btm{
+	padding-bottom:-20px;
+}
+
+
+.image-bg-fluid-height,
+.image-bg-fixed-height {
+    text-align: center;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+    -o-background-size: cover;
+}
+
+.image-bg-fluid-height {
+	background: url('../../imagenes/globales/periodicoglobal_1.jpg') no-repeat center center scroll;
+    padding: 110px 0;
+    background-position: center;
+	background-size: 100%;
+}
+
+.image-fixed-height-users {
+	height: 200px;
+	background: url('../../imagenes/globales/periodicoglobal_1.jpg') no-repeat center center scroll;
+    padding: 50px 0;
+    background-position: center;
+	background-size: 100%;
+}
+
+
+
+.img-shadow-fixed{
+	background-color: rgba(0,0,0,0.5);
+	background-size:100%;
+
+}
+
+.barra {
+	font-family: 'Lato', sans-serif;
+	font-size:150%;
+	font-color:#fff;
+	background-image: url(../img/logos/bg.png);
+	color: rgba(255,255,255,.8);
+	background-color: #b84d45;
+	background-repeat: repeat-x;
+	height: 5%;
+	c
+} 
+
+
+.media-body {
+	padding-top: 0px;
+	padding-bottom: 6px;
+	width: 100%;
+	height: 245px;
+	zoom: 1;
+	overflow: hidden;
+    text-overflow:ellipsis;
+}
+
+
+.Sicla-seccion{
+	padding-bottom: 75px; 
+	padding-top: 25px;
+}
+.clickable{
+		cursor:pointer;
+}
+
+.media-Sicla {
+	font-family: font-family: 'Muli', sans-serif;
+	color:#000;
+	height:360px;
+}
+
+.media-Sicla {
+	font-family: font-family: 'Muli', sans-serif;
+	color:#000;
+	height:360px;
+}
+
+
+.media-info{
+	overflow: hidden;
+}
+
+.media-nota {
+	box-shadow: 2px 4px 5px 2px #464347;
+	margin-top:10px;
+	height:340px;
+	background-color:rgba(255,255,255,1);
+	width:100%;
+
+}
+.media-titulo{
+	border-bottom-style: solid;
+	padding-top:3px;
+	padding-bottom: 5px;
+	padding-left:10px ;
+	padding-right:10px; ;
+	border-bottom-color: grey;
+	border-bottom-width: 1px;
+	background-color:rgba(224,101,91,0.1); /*22,54,33,0.6*/
+	width:100%;
+	color:#000;
+	font-style: italic;
+	font-weight: 1000;
+	font-size: 120%;
+
+}
+
+.foot:hover {
+	ackground-color: #F06114;
+
+}
+
+.foot {
+	cursor:pointer;
+background-color:#b84d45;
+width:100%;
+height: 11%;
+text-align: center;
+margin-top: 3%;
+padding-top: 3%;
+border-top-left-radius: 1px;
+border-top-right-radius: 2px;
+border-bottom-right-radius: 6px;
+border-bottom-left-radius: 6px; 
+}
+
+.blogpost{
+border-style: solid;
+border-width: 4px;
+border-color:#000;
+}
+.blog-title{
+border-style: solid;
+border-width: 1px;
+border-color:#000;
+}
+/* #E5DDEB*/
+.col-lg-portadas{
+    position: relative;
+    min-height: 1px;
+    padding-right: 5px;
+    padding-left: 5px;
+}
+@media (min-width: 1200px){
+
+}
+
+.img-size{
+	height:355px;
+	width:220px;
+	padding-bottom: 5px;
+	padding-top: 10px;
+}
+
+.container-img-medios{
+	border-bottom-style: solid;
+	border-bottom-color: grey;
+	border-bottom-width: 1px;
+	background-color:rgba(184,77,69,0.8);
+	background-image: url(../img/logos/bg.png);
+
+	width:100%;
+
+}
+.img-medios{
+	margin-top: 5%;
+	height:43px;
+	width:164px;
+}
+
+.image-bg-fixed-height1 {
+	background-image: url('../../imagenes/globales/newspapers3.jpg');
+	color:#000;
+    height: 200px;
+    background-position: center;
+	background-size: 100%;
+	margin-top:25px;
+}
+
+.image-bg-fixed-height4 {
+	background-image: url('../../imagenes/globales/periodicoglobal_1.jpg');
+	color:#FFF;
+    height: 265px;
+    background-position: center;
+	background-size: 100%;
+	
+}
+
+.image-bg-fixed-height3 {
+	background-image: url('../../imagenes/globales/periodicoglobal_1.jpg');
+	color:#FFF;
+    height: 350px;
+    background-position: center;
+	background-size: 100%;
+	
+}
+
+.search{
+	margin-top:20px;
+	margin-bottom:20px;
+	font-family: font-family: 'Muli', sans-serif;
+	font-size: 100%;
+
+}
+
+
+.image-bg-fixed-height {
+	background-image: url('../../imagenes/globales/Newspapers.jpg');
+	color:#000;
+    height: 200px;
+    background-position: center;
+	background-size: 100%;
+	margin-top:25px;
+}
+
+
+.picBack{
+	background-color: rgba(255,255,255,.4);
+	border-radius: 30px;
+
+}
+
+.Secciones-Rojas{
+	background-image: url(../img/logos/bg.png);
+	background-color:#b84d45;
+	background-repeat: repeat-x repeat-y;
+	text-align: center;
+	position:relative;
+	font-size:25px;
+	height:150px;
+	padding-top: 1%;
+	color:#fff;
+}
+
+.Secciones-Notas{
+	background-image: url(../img/logos/bg.png);
+	background-color:#b84d45;
+	background-repeat: repeat-x repeat-y;
+	text-align: center;
+	position:relatve;
+	font-size:40px;
+	height:50px;
+	padding-top: 0%;
+}
+.media-nota a{
+	color:#000;
+
+}
+
+.titles-sicla{
+padding-top: 1%;
+font-weight: bold;
+font-family: 'Muli', sans-serif;
+font-size: 50px;
+text-align: center;
+color: #FF3D36;
+}
+
+
+.titles{
+font-family: 'Muli', sans-serif;
+font-size:45px;
+text-align: center;
+margin-top: 20px;
+}
+
+.img-thumbnail-header {
+    display: inline-block;
+    max-width: 100%;
+    height: auto;
+    padding: 4px;
+    line-height: 1.428571429;
+    background-color: #BF3519;
+    /*border: 3px solid #BF3519;*/  
+	border-width: 4px;
+    border-radius: 10px;
+	opacity:0.9;
+
+}
+
+.img-sicla{
+    display: block;
+    max-width: 100%;
+    height: auto;
+}
+
+
+
+
+
+.navbar-sicla .nav a,li  {
+    color: #E3E0D4;
+}
+
+.navbar-sicla {
+
+font-family: font-family: 'Muli', sans-serif;
+font-size:27px;
+}
+.navbar-sicla .nav li a {
+
+	border-radius: 5px;
+
+    -webkit-transition: background .3s ease-in-out;
+    -moz-transition: background .3s ease-in-out;
+    transition: background .3s ease-in-out;
+}
+
+.navbar-sicla .nav li a:hover,
+.navbar-sicla .nav li a:focus,
+.navbar-sicla .nav li.active {
+    outline: 0;
+    color:#000 ;
+   	text-decoration: none;
+    font-size:28px;
+    background-color: rgba(255,255,255,.6);
+}
+
+a:hover,
+a:focus {
+
+    color: #000;
+}
+
+
+.section-heading {
+    margin: 30px 0;
+    font-size: 4em;
+}
+
+.section-lead {
+    margin: 30px 0;
+}
+
+
+
+.section-paragraph {
+    margin: 30px 0;
+}
+
+#wrap {
+  min-height: 100%;
+  height: auto;
+  /* Negative indent footer by its height */
+  margin: 0 auto -60px;
+  /* Pad bottom by footer height */
+  padding: 0 0 60px;
+}
+
+/* Set the fixed height of the footer here */
+#footer {
+  height: 60px;
+  background-color: #f5f5f5;
+}
+
+
+.seccion-footer{
+
+	background-image: url(../img/logos/bg.png);
+	background-color:#212121;
+	background-repeat: repeat-x repeat-y;
+	text-align: center;
+	position:relative;
+	font-size:30px;
+	height:100px;
+	left:0px;
+    right:0px;
+    margin-bottom:0px;
+}
+
+footer {
+    margin: 50px 0;
+
+}
+
+@media(max-width:768px) {
+    section {
+        padding-top: 25px;
+        padding-bottom: 25px;
+    }
+
+    .section-heading {
+        font-size: 2em;
+    }
+}
+
+.defaultIni{
+	background-color:;
+}
+
+.btn-circle {
+    width: 78px;
+    height: 75px;
+    margin-top: 15px;
+    padding: 9px 13px;
+    border: 2px solid #fff;
+    border-radius: 40px;
+    font-size: 40px;
+    color: #fff;
+    background: 0 0;
+    -webkit-transition: background .3s ease-in-out;
+    -moz-transition: background .3s ease-in-out;
+    transition: background .3s ease-in-out;
+}
+
+.btn-circle:hover,
+.btn-circle:focus {
+    outline: 0;
+    color: #fff;
+    background: rgba(255,255,255,.1);
+}
+
+.btn-circle i.animated {
+    -webkit-transition-property: -webkit-transform;
+    -webkit-transition-duration: 1s;
+    -moz-transition-property: -moz-transform;
+    -moz-transition-duration: 1s;
+}
+
+.btn-circle:hover i.animated {
+    -webkit-animation-name: pulse;
+    -moz-animation-name: pulse;
+    -webkit-animation-duration: 1.5s;
+    -moz-animation-duration: 1.5s;
+    -webkit-animation-iteration-count: infinite;
+    -moz-animation-iteration-count: infinite;
+    -webkit-animation-timing-function: linear;
+    -moz-animation-timing-function: linear;
+}
+

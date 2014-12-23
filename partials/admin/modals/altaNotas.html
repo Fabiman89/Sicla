@@ -1,0 +1,432 @@
+                <br>
+                <div class="col-sm-12">
+                <form  name="formNotas" class="well form-horizontal" role="form">
+                      <div class="row">
+                        <div class="col-md-6">
+                         <div class="form-group">
+                            <div class="row">
+                              <div class="col-sm-1 control-label">
+                                <label>Medio</label>
+                              </div>
+                              <div class="col-md-8">
+                                <select ng-model="nota.medio" ng-options="opMedios.nombre for opMedios in opcionesMedios" ng-change="getAutor(nota.medio.id)" class="form-control" placeholder="medio">
+                                <option value="" disabled selected>Selecciona un medio</option>
+                                </select>
+                              </div>
+                              <div class="col-md-1">
+                                <button ng-controller="FormMedioCtrl" ng-click="datosModal('lg')" type="button" class="btn btn-success"><span class="fa fa-plus"  ></span></button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                         <div class="form-group" >
+                          <div class="row">
+                            <div class="col-sm-1 control-label">
+                              <label>Autor</label>
+                            </div>
+                            <div class="col-md-8">
+                              <select ng-disabled="!nota.medio" ng-model="nota.autor" ng-options="opAutores.nombre for opAutores in opcionesAutores" class="form-control" placeholder="Autor">
+                              <option value="" disabled selected></option>
+                              </select>
+                            </div>
+                            <div class="col-sm-1">
+                              <button type="button" class="btn btn-success">Nuevo Autor <span class="fa fa-plus"></span></button>
+                            </div>
+                          </div>
+                         </div>
+                        </div>
+                      </div>
+<hr>  
+                        <div class="form-group">
+                          <div class="row">
+                            <div class="col-md-2 control-label">
+                              <label>Titulo de la Nota</label>
+                            </div>
+                            <div class="col-md-8">
+                              <input type="text" class="form-control" ng-model="nota.titulo" placeholder="Titulo">
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="form-group">
+                          <div class="row">
+                            <div class="col-md-2 control-label">
+                              <label>Sintesis</label>
+                            </div>
+                            <div class="col-md-8">
+                              <textarea class="form-control" ng-model="nota.sintesis" rows="5" placeholder="Breve Sintesis"></textarea>
+                            </div>
+                          </div> 
+                       </div>
+            
+                      <div class="form-group">
+                          <div class="row">
+                            <div class="col-md-2 control-label">
+                              <label>Texto Completo</label>
+                            </div>
+                            <div class="col-md-8">
+                              <textarea class="form-control" ng-model="nota.texto" rows="15" placeholder="Nota Completa"></textarea>
+                            </div>
+                          </div> 
+                      </div>
+
+<hr/>
+<h3 class="col-md-offset-5">Detalles Generales</h3>
+<br>
+                  <div class="row">
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <div class="row">
+                          <div class="col-md-2 control-label">    
+                            <label>Tipo </label>
+                          </div>
+                          <div class="col-md-8">
+                              <select class="form-control" ng-model="nota.tipo" ng-options="opTP.nombre for opTP in opcionesNota">
+                                <option value="" disabled selected>Seleccione</option>
+                              </select>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <div class="row">
+                          <div class="col-md-2 control-label" >    
+                            <label>Página</label>
+                          </div>
+                          <div class="col-md-8">                           
+                            <input type="number" ng-model="nota.pagina" class="form-control" />
+                          </div>
+                          </div>
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <div class="row">
+                          <div class="col-md-2 control-label">
+                              <label>Fecha</label>
+                          </div>
+                          <div class="col-md-8">
+                            <input type="date" ng-model="nota.fecha" class="form-control">
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>      
+<div class="row">
+                    <div class="col-md-4">  
+                      <div class="form-group">
+                        <div class="row">
+                          <div class="col-md-2 control-label">    
+                            <label>Protagonista</label>
+                          </div>
+                          <div class="col-md-8">
+                              <select class="form-control" ng-model="nota.protagonista" ng-options="opProtagonista.nombre for opProtagonista in opcionesProtagonsita" ng-change="getCargo(nota.protagonista)">
+                                <option value="" disabled selected>Seleccione</option>
+                              </select>
+                          </div>
+                          <div class="col-md-1">
+                              <button type="button" class="btn btn-success"><span class="fa fa-plus"></span></button>
+                          </div>
+                          </div>
+                      </div>
+                    </div>
+                   <div class="col-md-4">
+                      <div class="form-group">
+                        <div class="row">
+                          <div class="col-md-2 control-label">    
+                            <label>Cargo</label>
+                          </div>
+                          <div class="col-md-8">
+                              <select class="form-control" ng-model="nota.cargo" ng-disabled="!nota.protagonista" ng-options="opCargo.nombre for opCargo in opcionesCargo">
+                              <option value="" disabled selected></option>
+                              </select>
+                          </div>
+                          <div class="col-md-1">
+                              <button type="button" class="btn btn-success" ng-disabled="!nota.protagonista" ><span class="fa fa-plus"></span></button>
+                          </div>
+
+                          </div>
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <div class="row">
+                          <div class="col-md-2 control-label">    
+                            <label>Pos/Neg</label>
+                          </div>
+                          <div class="col-md-8">
+                            <select class="form-control" ng-model="nota.posneg">
+                              <option value="" disabled selected>Seleccione</option>
+                              <option value="positiva"> Positiva</option>
+                              <option value="negativa"> Negativa</option>
+                            </select>
+                          </div>
+                          </div>
+                      </div>
+                    </div>
+</div>
+
+<div class="row">
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <div class="row">
+                          <div class="col-md-2 control-label">    
+                            <label>Area</label>
+                          </div>
+                          <div class="col-md-8">
+                              <select class="form-control" ng-model="nota.tema" ng-options="opTema.nombre for opTema in opcionesTema" ng-change="getSubtema(nota.tema)">
+                                <option value="" disabled selected>Seleccione</option>
+                              </select>
+
+                            </div>
+                          <div class="col-md-1">
+                            <button type="button" class="btn btn-success" ><span class="fa fa-plus"></span></button>
+                          </div>
+
+                          </div>
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <div class="row">
+                          <div class="col-md-2 control-label">    
+                            <label>Tema</label>
+                          </div>
+                          <div class="col-md-8">
+                              <select class="form-control" ng-model="nota.tema" ng-options="opTema.nombre for opTema in opcionesTema" ng-change="getSubtema(nota.tema)">
+                                <option value="" disabled selected>Seleccione</option>
+                              </select>
+
+                            </div>
+                          <div class="col-md-1">
+                            <button type="button" class="btn btn-success" ><span class="fa fa-plus"></span></button>
+                          </div>
+
+                          </div>
+                      </div>
+                    </div>
+
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <div class="row">
+                          <div class="col-md-2 control-label">    
+                            <label>Subtema</label>
+                          </div>
+                          <div class="col-md-8">
+                              <select class="form-control" ng-model="nota.subtema" ng-disabled="!nota.tema" ng-options="opSubtema.nombre for opSubtema in opcionesSubtema">
+                              <option value="" disabled selected></option>
+                              </select>
+                          </div>
+                          <div class="col-md-1">
+                            <button type="button" class="btn btn-success" ><span class="fa fa-plus"></span></button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+</div>
+<div class="row" ng-repeat="aux in auxiliarST">
+					<div class="col-md-6">
+					  <div class="form-group">
+					    <div class="row">
+					      <div class="col-md-2 control-label">    
+					        <label>Otro tema</label>
+					      </div>
+					      <div class="col-md-8">
+					          <select class="form-control" ng-model="nota.otros[$index]" ng-options="opTema.nombre for opTema in opcionesTema" ng-change="getSub(nota.otros[$index],$index)" ng-click="masST(nota.otros[$index].idTema)">
+					            <option value=''>Seleccione</option>
+					          </select>
+					        </div>
+					      </div>
+					  </div>
+					</div>
+					<div class="col-md-6">
+					  <div class="form-group">
+					    <div class="row">
+					      <div class="col-md-2 control-label">    
+					        <label>Subtema</label>
+					      </div>
+					      <div class="col-md-8">
+					          <select class="form-control" ng-model="nota.otrosSub[$index]" ng-options="opOtSub.nombre for opOtSub in opcionesOtros[$index]" ng-disabled="!nota.otros[$index]">
+					          <option value="" disabled selected>Seleccione</option>			            
+					          </select>
+					        </div>
+					      </div>
+					  </div>
+					</div>
+										
+</div>
+<div class="row" ng-repeat="aux in auxiliarPT"> 
+          <div class="col-md-6">
+            <div class="form-group">
+              <div class="row">
+                <div class="col-md-2 control-label">    
+                  <label>Otro Protagonista</label>
+                </div>
+                <div class="col-md-8">
+                  <select class="form-control" ng-model="nota.otrosPT[$index]" ng-options="opPT.nombre for opPT in opcionesProtagonsita" ng-change="getoCar(nota.otrosPT[$index], $index)" ng-click="masPT(nota.otrosPT[$index].idProtagonista)">
+                    <option value="">Seleccione</option>                 
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <div class="row">
+                <div class="col-md-2 control-label">    
+                  <label>Cargo</label>
+                </div>
+                <div class="col-md-8">
+                  <select class="form-control" ng-model="nota.otrosCargo[$index]" ng-options="opCG.nombre for opCG in opcionesPT[$index]" ng-disabled="!nota.otrosPT[$index]">
+                    <option value="" disabled selected>Seleccione</option>                 
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+</div>
+<div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <div class="row">
+                          <div class="col-md-2 control-label">    
+                            <label>Seccion</label>
+                          </div>
+                          <div class="col-md-8">
+                              <select class="form-control" ng-model="nota.seccion">
+                                <option value="" disabled selected>Seleccione</option>
+                                <option value="1"> Primera Plana</option>
+                                <option value="2"> Region</option>
+                                <option value="3"> Local</option>
+                              </select>
+                            </div>
+                          </div>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <div class="row">
+                          <div class="col-md-2 control-label">    
+                            <label>Municipio</label>
+                          </div>
+                          <div class="col-md-8">
+                            <select class="form-control" ng-model="nota.municipio" ng-options="opMunicipio.nombre for opMunicipio in opcionesMunicipio">
+                              <option value="" disabled selected>Seleccione</option>
+                            </select>
+                          </div>
+                          <div class="col-md-1">
+                            <button type="button" class="btn btn-success" ><span class="fa fa-plus"></span></button>
+                          </div>
+                          </div>
+                      </div>
+                    </div>
+</div>
+<!--
+<div class="row">
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <div class="row">
+                          <div class="col-md-2 control-label">    
+                            <label>Pais</label>
+                          </div>
+                          <div class="col-md-8">
+                            <select class="form-control" ng-model="nota.municipio" ng-options="opMunicipio.nombre for opMunicipio in opcionesMunicipio">
+                              <option value="" disabled selected>Seleccione</option>
+                            </select>
+                          </div>
+                          <div class="col-md-1">
+                            <button type="button" class="btn btn-success" ><span class="fa fa-plus"></span></button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <div class="row">
+                          <div class="col-md-2 control-label">    
+                            <label>Estado</label>
+                          </div>
+                          <div class="col-md-8">
+                            <select class="form-control" ng-model="nota.municipio" ng-options="opMunicipio.nombre for opMunicipio in opcionesMunicipio">
+                              <option value="" disabled selected>Seleccione</option>
+                            </select>
+                          </div>
+                          <div class="col-md-1">
+                            <button type="button" class="btn btn-success" ><span class="fa fa-plus"></span></button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <div class="row">
+                          <div class="col-md-2 control-label">    
+                            <label>Municipio</label>
+                          </div>
+                          <div class="col-md-8">
+                            <select class="form-control" ng-model="nota.municipio" ng-options="opMunicipio.nombre for opMunicipio in opcionesMunicipio">
+                              <option value="" disabled selected>Seleccione</option>
+                            </select>
+                          </div>
+                          <div class="col-md-1">
+                            <button type="button" class="btn btn-success" ><span class="fa fa-plus"></span></button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+</div>
+
+-->
+<div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <div class="row">
+                          <div class="col-md-2 control-label">    
+                            <label>Número de Periodico</label>
+                          </div>
+                          <div class="col-md-8">
+                              <input type="number" ng-model="nota.num" class="form-control" required/>
+                            </div>
+                          </div>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <div class="row">
+                          <div class="col-md-2 control-label">    
+                            <label>URL</label>
+                          </div>
+                          <div class="col-md-8">
+                            <input type="text" ng-model="nota.url" class="form-control" placeholder="Link de la nota"/>
+                          </div>
+                          </div>
+                      </div>
+                    </div>
+</div>
+
+
+
+<!--  Archivo  Input -->
+                
+                      <div class="col-md-6">
+                          <div class="form-group">
+                          <div class="row">
+                            <div class="col-md-2 control-label">
+                              <label >Portada</label>
+                            </div>
+                            <div class="col-md-8">
+                              <input type="file" id="exampleInputFile">
+                            </div>
+                            <p class="help-block">Seleccione portada</p>
+                          </div>
+                        </div>
+                      </div>
+                      <button class=" btn btn-primary btn-lg btn-block" ng-disabled="formMedios.$invalid" ng-click="updateNota(nota)">Guardar
+                    </button>
+                               
+                </form>
+              </div>

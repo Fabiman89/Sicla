@@ -1,0 +1,30 @@
+<br>
+<div class="modal-heading">
+  <h3 class="text-center">Alta de Tipo de Nota</h3>
+</div>
+<div class="modal-body">
+
+
+
+<label class="control-label">Tipos de nota registrados</label>
+<select class="form-control" ng-model="listaOpciones" ng-options="opTipo.nombreTipoNota for opTipo in opcionesNotas"><option value=" "></option></select>
+<hr> 
+<br>
+
+  <form name="formTpNota"class="" role="form">
+    <div class="form-group">
+      <label class="control-label">Nuevo tipo de nota: </label>
+       <input ng-model="tipo.nombre" type="text" class="form-control" placeholder="Nuevo tipo de nota" required>
+    </div>
+    <br>      
+  </form>
+</div>
+<div class="modal-footer">
+  <button class=" btn btn-primary btn-md btn-block" ng-disabled="formTpNota.$invalid" ng-click="updatetipo(tipo)"> Guardar </button>
+</div>
+
+
+
+
+
+

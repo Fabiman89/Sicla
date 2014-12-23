@@ -1,0 +1,18 @@
+<br />
+<table class="table table-hover">
+<thead>
+<tr><th>Id</th><th>Título</th><th>Medio</th><th>Tipo de Nota</th><th>Usuario</th></tr>
+</thead>
+<tbody>
+<tr ng-repeat="nota in notas">
+<td>{{nota.idNota}}</td><td>{{nota.titulo| limitTo:20}}</td><td>{{nota.nombreMedio}}</td><td>{{nota.tipo}}</td><td>{{nota.usuario}}</td>
+<td>
+<td>
+<div class="btn-group">
+	<a href="#/Editar/Nota/{{nota.idNota}}" class="btn btn-primary" role="button" >Editar</a>
+  <button type="button" class="btn btn-danger" ng-click="modalEliminar(nota)">Eliminar</button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>

@@ -1,0 +1,75 @@
+<br />
+<div class="container-fluid">
+
+</div>
+<hr>
+<div class="container-fluid">
+
+  <div class="col-sm-4 col-md-4 col-xs-12  ">
+    <h3 class="text-center"> Areas </h3>
+    <div class="col-lg-12 col-xs-10">
+    <div class="input-group">
+        <input type="text" class="form-control" ng-model="search" placeholder="Buscar en Areas">
+        <span class="input-group-btn">
+            <button class="btn btn-default" type="button"><i class="fa fa-search"></i>
+            </button>
+        </span>
+    </div>
+  </div>
+    <table class="table table-hover">
+    <thead>
+    <tr><th>Nombre</th>
+    </thead>
+    <tbody>
+    <tr ng-repeat="a in areas |filter:search" ng-click="getTemas(a)">
+      <td ng-class="clickable" >{{a.nombreArea}}</td>
+      <td class="">
+        <div class="btn-group pull-right  ">
+          <button class="btn btn-primary" ng-click="modalEdita(a,1)" title="Editar Area"><i class="fa fa-pencil-square-o"></i></button>
+          <button class="btn btn-danger " ng-click="modalBorrar('Area',a.nombreArea,a.idArea)" title="Borrar Area"><i class="fa fa-trash"></i></button>
+        </div>
+      </td>
+    </tr>
+    </tbody>
+    </table> 
+  </div>
+  <div class="col-sm-4 col-md-4 col-xs-12  " ng-hide="!temas">
+  <h3 style="margin-top:55px" class="text-center"> Temas de {{nmArea}}</h3>
+    <table class="table table-hover"  >
+    <thead>
+    <tr><th>Nombre</th>
+    </thead>
+    <tbody>
+    <tr ng-repeat="t in temas" ng-click="getSubs(t)" >
+      <td class="clickable" >{{t.nombreTema}}</td>
+      <td class="">
+      <div class="btn-group pull-right"> 
+        <button class="btn btn-primary " ng-click="modalEdita(t,2)" title="Editar Tema"><i class="fa fa-pencil-square-o"></i></button>
+        <button class="btn btn-danger " ng-click="modalBorrar('Tema',t.nombreTema,t.idTema)" title="Borrar Tema"><i class="fa fa-trash"></i></button>
+      </div>
+      </td>
+    </tr>
+    </tbody>
+    </table> 
+
+  </div>
+  <div class="col-sm-4 col-md-4 col-xs-12 " ng-hide="!subtemas">
+  <h3 style="margin-top:55px" class="text-center"> Sumbtemas de {{nmTema}}</h3>
+    <table class="table table-hover" >
+      <thead>
+       <tr><th>Nombre</th>
+      </thead>
+      <tbody>
+        <tr ng-repeat="s in subtemas " >
+          <td >{{s.nombreSubtema}}</td>
+          <td class="">
+          <div class="btn-group pull-right">
+            <button class="btn btn-primary " ng-click="modalEdita(s,3)"><i class="fa fa-pencil-square-o" title="Editar Subtema"></i></button>
+            <button class="btn btn-danger " ng-click="modalBorrar('Subtema',s.nombreSubtema,s.idSubtema)" title="Borrar Subtema"><i class="fa fa-trash"></i></button>
+          </div>
+          </td>
+        </tr>
+      </tbody>
+    </table> 
+  </div>
+</div>

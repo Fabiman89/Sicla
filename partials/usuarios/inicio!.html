@@ -1,0 +1,56 @@
+
+<section class="" style="margin-top:50px;">
+    <div class="container">
+<h1 class="Big-titles">Selecciona alguno de los periódicos indexados para ver todas las notas de los últimos 5 días</h1>
+    </div>
+    
+
+<div class="col-lg-12" style="background-color:rgba(255,255,255,0.5);">
+    <div class="container-fluid">
+        <div class="col-lg-2" ng-repeat="periodico in angMedios track by $index" >
+            <a href="" ng-click="pre(periodico.imagen)"><img ng-src="{{periodico.imagen}}" class="img-responsive" style="height:60px;width:226px;padding-top:10px;padding-bottom:10px;"></a>
+            <span style="background-color:#000;"></span>
+        </div>
+    </div>
+ </div>
+ <br><br>
+<div class >
+  
+
+<div class="container-fluid">
+    <div class="col-lg-12" style="background-color:#e9eaed;">
+        <div class="col-lg-portadas media-Sicla" ng-repeat="columnas in angColumnas | filter:predicate">
+            <img ng-src="{{columnas.img8col}}" class="img-size">
+        </div>
+    
+        <div class="col-lg-portadas media-Sicla " ng-repeat="nota in angNotas | filter:predicate">
+            <div class=" media-nota " >
+                <div class="col-lg-12 container-img-medios ">
+                  <a class="col-lg-10 col-lg-offset-1 " href="#">
+                    <img ng-click="open('lg')" ng-controler="ModalDemoCtrl" class="img-thumbnail img-medios img-responsive" ng-src="{{nota.imagen}}" >
+                  </a>
+                </div>
+
+              <div class="col-lg-12">
+                <div class="media-body">
+                    <div class="col-lg-12">
+                        
+                        <strong><a ui-sref="#/nota/8/{{nota.id}}">{{nota.titulo}}</a></strong> - <small>{{nota.fecha}} </small>
+                            <h5> {{nota.sintesis}} ... </h5><small><a ng-click="open('lg')" href="#">Continuar Leyendo <i class="fa fa-long-arrow-right"></i></a></small>
+                    </div>
+                </div>
+
+              </div> 
+            </div>
+        </div>
+        </div>
+</div>
+
+
+
+
+
+</div>
+
+</section>
+

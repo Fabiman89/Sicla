@@ -1,0 +1,25 @@
+<div class="modal-header">
+  <h3 class="text-center"> ESTADO </h3>
+</div>
+<div class="modal-body">
+    <div class="form-group">
+      <label>Pais</label>
+        <select class="form-control"  ng-model="estado.pais" ng-options="opEs.nombrePais for opEs in opcionesPais" required>
+        </select>
+    </div>
+  <div class="form-group">
+    <label>Nombre del Estado</label>
+      <input ng-model="estado.nombre" type="text" class="form-control" placeholder="Introduce nuevo estado" required>
+  </div>
+
+  </form>
+</div>
+<div class="modal-footer">
+   <button class=" btn btn-primary btn-lg btn-block" ng-disabled="formTema.$invalid" ng-click="updateEstado(estado)">Guardar Estado
+  </button>
+  <div class="{{alerta.tipo}}" id="mensajes">
+    {{alerta.mensaje}}
+  </div>
+</div>
+
+

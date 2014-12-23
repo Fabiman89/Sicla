@@ -1,0 +1,46 @@
+<div class="modal-header">
+  <h3 class="text-center">CARGOS</h3>
+</div>
+<div class="modal-body">
+  <accordion>
+    <accordion-group heading="Agregar un nuevo cargo" class="text-center">
+      <form name="formCargo" role="form">
+        <div class="form-group">
+          <label for="">Lista de Cargos:</label>
+          <select ng-model="listaCargos" ng-options="opCar.nombreCargo for opCar in cargos" class="form-control">
+            <option value="" disabled selected></option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="">Titulo del cargo</label>
+          <input ng-model="cargo.nombre" type="text" class="form-control" placeholder="Nombre del Cargo" required>
+        </div>
+        <button class=" btn btn-primary btn-md btn-block" ng-disabled="formCargo.$invalid" ng-click="updateCargo(cargo)">Guardar</button> 
+      </form>
+    </accordion-group>
+    <hr />
+    <br>
+    <accordion-group heading="Asignar Cargo a Protagonista" class="text-center">
+      <form class="" name="formCargoProt" ng-model="formCargoProt">
+        <div class="form-group">
+              <label for="">Protagonista:</label>
+              <select ng-model="prot" ng-options="opProt.nombreProtagonista for opProt in protagonistas" class="form-control" ng-change="getCargo(prot)" required>
+              <option value="" disabled selected>Selecciona un protagonista</option>
+              </select>
+              <hr />
+              <select ng-model="car" ng-options="opCar.nombreCargo for opCar in crg" class="form-control" ng-disabled="!prot.idProtagonista" required>
+                <option value="" disabled selected></option>
+              </select>
+          </div>
+          <button class="btn btn-primary btn-md btn-block" ng-disabled="formCargoProt.$invalid" ng-click="updateProt(prot, car)">Guardar</button>
+      </form>
+    </accordion-group>
+  </accordion>
+</div>
+<div class="modal-footer">
+<!--
+  <div class="{{alerta.tipo}}" id="mensajes">
+    {{alerta.mensaje}}
+  </div>
+-->
+</div>

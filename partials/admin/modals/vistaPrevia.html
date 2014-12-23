@@ -1,0 +1,88 @@
+<div class="modal-heading">
+<h3 class="text-center"> Vista Previa de la nota </h3>
+</div>
+<div class="modal-body">
+<div class="table-responsive">
+<table class="table table-striped">
+<tr>	
+	<td> <strong> Titulo </strong></td>
+ 	<td> <em>{{notaView.titulo }}</em></td>
+</tr>
+<tr>	
+	<td> <strong> Url </strong></td>
+ 	<td> <em>{{notaView.url }}</em></td>
+</tr>
+<tr>	
+	<td> <strong> Medio </strong></td>
+ 	<td> <em>{{notaView.medio.nombreMedio }}</em></td>
+</tr>
+<tr>	
+	<td> <strong> Autor </strong></td>
+ 	<td> <em>{{notaView.autor.nombreAutor }}</em></td>
+</tr>
+<tr>	
+	<td> <strong> Fecha </strong></td>
+ 	<td> <em>{{notaView.fecha }}</em></td>
+</tr>
+<tr>	
+	<td> <strong> Tipo </strong></td>
+ 	<td> <em>{{notaView.tipo.nombreTipoNota }}</em></td>
+</tr>
+<tr>	
+	<td> <strong> Pagina </strong></td>
+ 	<td> <em>{{notaView.pagina }}</em></td>
+</tr>
+<tr>	
+	<td> <strong> # de Periodico </strong></td>
+ 	<td> <em>{{notaView.num }}</em></td>
+</tr>
+<tr>	
+	<td> <strong> Seccion </strong></td>
+ 	<td> <em>{{notaView.seccion.nombreSeccion }}</em></td>
+</tr>
+<tr>	
+	<td> <strong> Protagonista Principal  </strong></td>
+ 	<td> <em>{{notaView.protagonista.nombreProtagonista }}</em></td>
+</tr>
+<tr>	
+	<td> <strong> Cargo </strong></td>
+ 	<td> <em>{{notaView.cargo.nombreCargo }}</em></td>
+</tr>
+<tr>	
+	<td> <strong> Clasificacion </strong></td>
+ 	<td> <em>{{notaView.posneg }}</em></td>
+</tr>
+<tr>	
+	<td> <strong> Area </strong></td>
+ 	<td> <em>{{notaView.area.nombreArea }}</em></td>
+</tr>
+<tr>	
+	<td> <strong> Tema </strong></td>
+ 	<td> <em>{{notaView.tema.nombreTema }}</em></td>
+</tr>
+<tr>	
+	<td> <strong> Subtema </strong></td>
+ 	<td> <em>{{notaView.subtema.nombreSubtema }}</em></td>
+</tr>
+<tr>	
+	<td> <strong> Pais </strong></td>
+ 	<td> <em>{{notaView.pais.nombrePais }}</em></td>
+</tr>
+<tr>	
+	<td> <strong> Estado </strong></td>
+ 	<td> <em>{{notaView.estado.nombreEstado }}</em></td>
+</tr>
+<tr>	
+	<td> <strong> Municipio </strong></td>
+ 	<td> <em>{{notaView.municipio.nombreMunicipio }}</em></td>
+</tr>
+<tr>	
+	<td> <strong> Subtema </strong></td>
+ 	<td> <em>{{notaView.subtema.nombreSubtema }}</em></td>
+</tr>
+</table>
+</div>
+</div>
+<div class="modal-footer">
+	<button type="submit" class="btn btn-primary" ng-click="(cancel())">Ok</button>
+</div>
