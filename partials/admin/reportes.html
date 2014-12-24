@@ -8,9 +8,9 @@
         <select class="form-control" ng-model="thisMedio" ng-change="getAutores(thisMedio.idMedio)" ng-options="m.nombreMedio for m in medios"> <option></option></select>
     </div>
     <div class="col-lg-3">
-        <input type="radio" name="radioMedio" value="todos" ng-model="rMedio"  >Todos
-        <input type="radio" value="uno" name="radioMedio" ng-model="rMedio"> Uno
-        <input type="radio" value="unoMas" name="radioMedio" ng-model="rMedio"> Uno
+        <input type="radio" name="radioMedio" value="0" ng-model="rMedio">Todos General
+        <input type="radio" value="1" name="radioMedio" ng-model="rMedio"> Uno
+        <input type="radio" value="2" name="radioMedio" ng-model="rMedio"> Todos Especifico
     </div>
   </div>
 
@@ -22,9 +22,9 @@
         <select class="form-control" ng-model="thisAutor" ng-options="a.nombreAutor for a in autores"> <option></option></select>
     </div>
     <div class="col-lg-3">
-        <input type="radio" name="radioAutor" value="todos" ng-model="rAutor" checked>Todos
-        <input type="radio" value="uno" name="radioAutor" ng-model="rAutor"> Uno
-        <input type="radio" value="unoMas" name="radioAutor" ng-model="rAutor"> Uno
+        <input type="radio" name="radioAutor" value="0" ng-model="rAutor">Todos General
+        <input type="radio" value="1" name="radioAutor" ng-model="rAutor"> Uno
+        <input type="radio" value="2" name="radioAutor" ng-model="rAutor"> Todos Especificando
     </div>
   </div>
 
@@ -36,9 +36,9 @@
         <select class="form-control" ng-model="thisProt" ng-options="p.nombreProtagonista for p in protagonistas"> <option></option></select>
     </div>
     <div class="col-lg-3">
-        <input type="radio" name="radioProtagonista" value="todos" ng-model="rProtagonista" checked>Todos
-        <input type="radio" value="uno" name="radioProtagonista" ng-model="rProtagonista"> Uno
-        <input type="radio" value="unoMas" name="radioProtagonista" ng-model="rProtagonista"> Uno
+        <input type="radio" name="radioProtagonista" value="0" ng-model="rProtagonista">Todos General
+        <input type="radio" value="1" name="radioProtagonista" ng-model="rProtagonista"> Uno
+        <input type="radio" value="2" name="radioProtagonista" ng-model="rProtagonista"> Todos Especifico
     </div>
   </div>
 
@@ -50,15 +50,14 @@
         <select class="form-control" ng-model="thisArea" ng-options="ar.nombreArea for ar in areas"> <option></option></select>
     </div>
     <div class="col-lg-3">
-        <input type="radio" name="radioArea" value="todos" ng-model="rArea" checked>Todos
-        <input type="radio" value="uno" name="radioArea" ng-model="rArea"> Uno
-        <input type="radio" value="unoMas" name="radioArea" ng-model="rArea"> Uno
+        <input type="radio" name="radioArea" value="0" ng-model="rArea">Todos General
+        <input type="radio" value="1" name="radioArea" ng-model="rArea"> Uno
+        <input type="radio" value="2" name="radioArea" ng-model="rArea"> Todos Especifico
     </div>
   </div>
   <div class="col-lg-12">
-    <button class="btn btn-success pull-right"> Generar </button>
+    <button class="btn btn-success pull-right" ng-click="getReporte(rArea,rAutor,rMedio,rProtagonista)"> Generar </button>
   </div>
-
 </div>
 <hr>
 

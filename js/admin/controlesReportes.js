@@ -2,6 +2,10 @@
     $scope.medios = {};
     $scope.autores = {};  
     $scope.areas = {};
+    $scope.rArea = 0;
+    $scope.rAutor = 0;
+    $scope.rMedio = 0;
+    $scope.rProtagonista = 0;
     $http.post("data/consultas/consultasAdmin.php",{'sentencia':2}).success(function(rOp){
       $scope.medios = rOp;
       console.log($scope.medios);
@@ -22,5 +26,27 @@
     $http.post("data/consultas/consultasAdmin.php",{'sentencia':5}).success(function(rOp){
       $scope.protagonistas = rOp;
     });
+    
+    $scope.getReporte = function(area,autor,medio,protagonista) 
+    {
+    	var areas=[], autores=[], medios=[], protagonistas=[], clasificacion=[];
+    	areas.push(0);
+    	autores.push(autor);
+    	medios.push(medio);
+    	protagonistas.push(protagonista);
+    	clasificacion.push(0);
+    	if(medio == 1 )
+    		medios.push($scope.thisMedio);
+    	if(protagonista == 1)
+    		protagonistas.push($scope.thisProt);
+    	if(autor == 1)
+    		autores.push($scope.thisAutor);
+    	if(area == 1)
+    		areas.push($scope.thisArea)
+    	$http.post("data/consultas/consultaReportes.php",
+    	{'autor':autores, 'medio':medios, 'protagonista':protagonistas, 'tema':areas, 'clasificacion':clasificacion}).success(function(data) {
+    		console.log(data);
+    	});    	
+    };
 
 }]);
