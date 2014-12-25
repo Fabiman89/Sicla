@@ -17,6 +17,9 @@ siclaApp.config(['$routeProvider',
     $routeProvider.when('/reportes/todos', {
         templateUrl: 'partials/admin/reportes.html',
         controller: 'reportCtrl'
+      }).when('/editar/areas&temas', {
+        templateUrl: 'partials/admin/editar/editarArea.html',
+        controller: 'editAreaCtrl'
       }).when('/Editar/Nota/:idNota', {
         templateUrl: 'partials/admin/editarNota.html',
         controller: 'EdicionNotasCtrl'

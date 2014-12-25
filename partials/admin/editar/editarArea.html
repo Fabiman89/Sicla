@@ -26,7 +26,7 @@
       <td class="">
         <div class="btn-group pull-right  ">
           <button class="btn btn-primary" ng-click="modalEdita(a,1)" title="Editar Area"><i class="fa fa-pencil-square-o"></i></button>
-          <button class="btn btn-danger " ng-click="modalBorrar('Area',a.nombreArea,a.idArea)" title="Borrar Area"><i class="fa fa-trash"></i></button>
+          <button class="btn btn-danger " ng-click="modalBorrar(a,1)" title="Borrar Area"><i class="fa fa-trash"></i></button>
         </div>
       </td>
     </tr>
@@ -45,7 +45,7 @@
       <td class="">
       <div class="btn-group pull-right"> 
         <button class="btn btn-primary " ng-click="modalEdita(t,2)" title="Editar Tema"><i class="fa fa-pencil-square-o"></i></button>
-        <button class="btn btn-danger " ng-click="modalBorrar('Tema',t.nombreTema,t.idTema)" title="Borrar Tema"><i class="fa fa-trash"></i></button>
+        <button class="btn btn-danger " ng-click="modalBorrar(t,2)" title="Borrar Tema"><i class="fa fa-trash"></i></button>
       </div>
       </td>
     </tr>
@@ -65,7 +65,7 @@
           <td class="">
           <div class="btn-group pull-right">
             <button class="btn btn-primary " ng-click="modalEdita(s,3)"><i class="fa fa-pencil-square-o" title="Editar Subtema"></i></button>
-            <button class="btn btn-danger " ng-click="modalBorrar('Subtema',s.nombreSubtema,s.idSubtema)" title="Borrar Subtema"><i class="fa fa-trash"></i></button>
+            <button class="btn btn-danger " ng-click="modalBorrar(s,3)" title="Borrar Subtema"><i class="fa fa-trash"></i></button>
           </div>
           </td>
         </tr>

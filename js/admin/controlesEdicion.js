@@ -333,7 +333,7 @@
                 }; 
               };
      /*---------------------------------------------  Borrar ------------------------------------------------*/                              
-              $scope.modalBorrar = function(tipo,nombre,id){
+              $scope.modalBorrar = function(dato,query){
                   var modalInstance = $modal.open({
                     templateUrl: 'partials/admin/editar/eliminarTemas.html',
                     controller: deleteModalCtrl,
@@ -341,7 +341,7 @@
                     resolve: {
                       val: function () {
                           datos = [];
-                          datos.push(tipo,nombre,id);
+                          datos.push(dato,query);
                           return datos;
                       } 
                     }
@@ -350,31 +350,73 @@
                   modalInstance.result.then(function(data) {
                     if (data != undefined)
                     {
-                      $scope.opcionesMedios = data;
-                      var i = $scope.opcionesMedios.length -1;
-                      $scope.nota.medio = data[i];
-                      $scope.opcionesAutores = [];
+                      switch(data[1]){
+                        case 1:
+                          $http.post("data/consultas/consultasAdmin.php",{'sentencia':7}).success(function(response){
+                            $scope.areas = response;
+                            if($scope.temas)
+                              delete($scope.temas);
+                              if($scope.subtemas);
+                                delete($scope.subtemas);
+                          });
+                          break;
+                        case 2:
+                          $http.post("data/consultas/consultasAdmin.php",{'sentencia':8,'area':data[0].idArea}).success(function(response){
+                            $scope.temas = response;
+                              if($scope.subtemas);
+                                delete($scope.subtemas);
+                          });
+                          break;
+                        case 3:
+                          $http.post("data/consultas/consultasAdmin.php",{'sentencia':9,'tema':data[0].idTema}).success(function(response){
+                            $scope.subtemas = response;
+                          });
+                          break;
+                      }
                     }
                   });
               };
 
               var deleteModalCtrl = function($scope,$modalInstance,val) {
-                $scope.tipo = val[0];
-                $scope.idDato = val[2];
-                $scope.nm = val[1];
-
-                $scope.borrarArea = function (){
-                  // EL ID A BORRAR ESTA EN LA VARIABLE $scope.idDato
-                  console.log(val);
-                };
-                $scope.borrarTema = function(){
-                  console.log(val);
-                };
-                $scope.borrarSubtema = function(){
-                  console.log(val);
-                };
-
-
+                console.log(val);
+                switch(val[1]){
+                  case 1: 
+                    console.log(val[0]);
+                    $scope.tipo = "Area";
+                    $scope.nm = val[0].nombreArea;
+                    $scope.borrarArea = function (){
+                      $http.post("data/borrar/deleteAdmin.php",{'sentencia':4,'id':val[0].idArea}).success(function(respuesta){
+                        if(respuesta==1){
+                          $modalInstance.close(val);
+                        }
+                      });
+                      };
+                    break;
+                  case 2:
+                    console.log(val[0]);
+                    $scope.tipo = "Tema";
+                    $scope.nm = val[0].nombreTema;
+                    $scope.borrarTema = function (){
+                      $http.post("data/borrar/deleteAdmin.php",{'sentencia':5,'id':val[0].idTema}).success(function(respuesta){
+                        if(respuesta==1){
+                          $modalInstance.close(val);
+                        }
+                      });
+                      };
+                    break;
+                  case 3:
+                    console.log(val[0]);
+                    $scope.tipo = "Subtema";
+                    $scope.nm = val[0].nombreSubtema;
+                    $scope.borrarSubtema = function (){
+                      $http.post("data/borrar/deleteAdmin.php",{'sentencia':6,'id':val[0].idSubtema}).success(function(respuesta){
+                        if(respuesta==1){
+                          $modalInstance.close(val);
+                        }
+                      });
+                      };
+                    break;  
+                } 
                 $scope.cancel = function () {
                   $modalInstance.close();
                 }; 
@@ -525,19 +567,39 @@
                   });
 
                   modalInstance.result.then(function(data) {
- 
+                    switch(data[1]){
+                      case 1:
+                        $http.post("data/consultas/consultasAdmin.php",{'sentencia':5}).success(function(respuesta){
+                          $scope.protagonistas=respuesta;
+                          if($scope.cargosProtagonista)
+                            delete($scope.cargosProtagonista);
+                        });
+                        break;
+                      case 2:
+                        $http.post("data/consultas/consultasAdmin.php",{'sentencia':6,'protagonista':data[0].idProtagonista}).success(function(respuesta){
+                          $scope.cargosProtagonista=respuesta;
+                        });                      
+                        break;
+                      case 3:
+                        $http.post("data/consultas/consultasAdmin.php",{'sentencia':13}).success(function(respuesta){
+                          $scope.cargos=respuesta;
+                        });                      
+                        break;
+                    }
                   });
               };
 
               var modalBorrarCtrl = function($scope,$modalInstance,val) {
-                
                 switch(val[1]){
                   case 1:
                    $scope.tipo="Protagonista";
                    $scope.nm = val[0].nombreProtagonista;
-                   $scope.idDato = val[0].idProtagonista;
                    $scope.borrarProtagonista = function (){
-                    // EL ID A BORRAR ESTA EN LA VARIABLE $scope.idDato
+                      $http.post("data/borrar/deleteAdmin.php",{'sentencia':13,'id':val[0].idProtagonista}).success(function(response){
+                        if(response==1){
+                          $modalInstance.close(val);
+                        }
+                      });
                     console.log(val[0]);
                   };                 
                     break;
@@ -547,7 +609,11 @@
                     $scope.prot= val[2];
                     $scope.nm = val[0].nombreCargo;
                     $scope.borrarCP = function(){
-                      console.log(val[0]);
+                      $http.post("data/borrar/deleteAdmin.php",{'sentencia':15,'id':val[0].idCP}).success(function(response){
+                        if(response==1){
+                          $modalInstance.close(val);
+                        }
+                      });
                     };
                     break;
                   case 3:
@@ -555,7 +621,11 @@
                     $scope.tipo="Cargo";
                     $scope.nm = val[0].nombreCargo;
                     $scope.borrarCargo = function(){
-                      console.log(val[0]);
+                      $http.post("data/borrar/deleteAdmin.php",{'sentencia':14,'id':val[0].idCargo}).success(function(response){
+                        if(response==1){
+                          $modalInstance.close(val);
+                        }
+                      });
                     };
                     break;
                 }
@@ -711,7 +781,7 @@
                 }; 
               };
      /*---------------------------------------------  Borrar Paises ------------------------------------------------*/                              
-              $scope.eliminaPaises = function(tipo,nombre,id){
+              $scope.eliminaPaises = function(dato,query){
                   var modalInstance = $modal.open({
                     templateUrl: 'partials/admin/editar/eliminarPaises.html',
                     controller: eliminaPaisesCtrl,
@@ -719,32 +789,91 @@
                     resolve: {
                       val: function () {
                           datos = [];
-                          datos.push(tipo,nombre,id);
+                          datos.push(dato,query);
                           return datos;
                       } 
                     }
                   });
-
                   modalInstance.result.then(function(data) {
+                    if(data!=undefined){
+                      switch(data[1]){
+                        case 1:
+                          $http.post("data/consultas/consultasAdmin.php",{'sentencia':10}).success(function(respuesta){
+                              $scope.paises = respuesta;
+                              if($scope.estados)
+                                delete($scope.estados);
+                                if($scope.municipios)
+                                  delete($scope.municipios);
 
+                          });
+                          break;
+                        case 2:
+                          $http.post("data/consultas/consultasAdmin.php",{'sentencia':11,'pais':data[0].idPais}).success(function(respuesta){
+                              $scope.estados = respuesta;
+                              if($scope.municipios)
+                                delete($scope.municipios);
+                          });
+                          break;  
+                        case 3:
+                          $http.post("data/consultas/consultasAdmin.php",{'sentencia':12,'estado':data[0].idEstado}).success(function(respuesta){
+                              $scope.municipios=respuesta;
+                          });
+                          break;
+                      }
+                    }
                   });
               };
 
-              var eliminaPaisesCtrl = function($scope,$modalInstance,val) {
-                $scope.tipo = val[0];
-                $scope.idDato = val[2];
-                $scope.nm = val[1];
+              var eliminaPaisesCtrl = function($scope,$modalInstance,val) {              
+                switch(val[1]){
+                  case 1:
+                    $scope.tipo = "País";
+                    $scope.nm = val[0].nombrePais;
+                    $scope.borrarPais = function (){
+                      $http.post("data/borrar/deleteAdmin.php",{'sentencia':8,'id':val[0].idPais}).success(function(respuesta){
+                        if(respuesta==1){
+                          $modalInstance.close(val);
+                        }else{
+                          $modalInstance.close();
+                        }
 
-                $scope.borrarPais = function (){
-                  // EL ID A BORRAR ESTA EN LA VARIABLE $scope.idDato
+                      });
+                    };
+                    break;
+                  case 2:
                   console.log(val);
-                };
-                $scope.borrarEstado = function(){
-                  console.log(val);
-                };
-                $scope.borrarMunicipio = function(){
-                  console.log(val);
-                };
+                    $scope.tipo = "Estado";
+                    $scope.nm = val[0].nombreEstado;
+                    $scope.borrarEstado = function(){
+                      $http.post("data/borrar/deleteAdmin.php",{'sentencia':9,'id':val[0].idEstado}).success(function(respuesta){
+                        if(respuesta==1){
+                          $modalInstance.close(val);
+                        }else{
+                          $modalInstance.close();
+                        }
+                    });
+                    };
+                    break;
+                  case 3:
+                    $scope.tipo = "Municipio";
+                    $scope.nm = val[0].nombreMunicipio;
+                    $scope.borrarMunicipio = function(){
+                      $http.post("data/borrar/deleteAdmin.php",{'sentencia':10,'id':val[0].idMunicipio}).success(function(respuesta){
+                        if(respuesta==1){
+                          $modalInstance.close(val);
+                        }else{
+                          $modalInstance.close();
+                        }
+                    });
+                    };
+                    break;
+                }
+
+
+
+
+                
+                
 
 
                 $scope.cancel = function () {
@@ -846,7 +975,7 @@
                 }; 
               };
      /*---------------------------------------------  Eliminar Seccion  ------------------------------------------------*/                              
-              $scope.eliminaSeccion = function(tipo,nombre){
+              $scope.eliminaSeccion = function(dato,query){
                   var modalInstance = $modal.open({
                     templateUrl: 'partials/admin/editar/eliminarSeccion.html',
                     controller: eliminaSeccionCtrl,
@@ -854,13 +983,27 @@
                     resolve: {
                       val: function () {
                           datos = [];
-                          datos.push(tipo,nombre);
+                          datos.push(dato,query);
                           return datos;
                       } 
                     }
                   });
 
                   modalInstance.result.then(function(data) {
+                    if(data!=undefined){
+                      switch(data[1]){
+                        case 1:
+                          $http.post("data/consultas/consultasAdmin.php",{'sentencia':4}).success(function(respuesta){
+                            $scope.secciones=respuesta;
+                          });
+                          break;
+                        case 2:
+                          $http.post("data/consultas/consultasAdmin.php",{'sentencia':1}).success(function(respuesta){
+                            $scope.tipos=respuesta;
+                          });
+                          break;
+                      } 
+                    }
 
                   });
               };
@@ -868,22 +1011,29 @@
               var eliminaSeccionCtrl = function($scope,$modalInstance,val) {
                 switch (val[1]){
                   case 1:
-                    $scope.cambios = val[0];
+      
                     $scope.tipo = 'Seccion';
                     $scope.nm = val[0].nombreSeccion;
-                    $scope.idDato = val[0].idSeccion;
                     $scope.borrarSeccion = function (){
-                      // EL ID A BORRAR ESTA EN LA VARIABLE $scope.idDato
-                      console.log(val);
+                      $http.post("data/borrar/deleteAdmin.php",{'sentencia':11,'id':val[0].idSeccion}).success(function(respuesta){
+                        if(respuesta==1){
+                          $modalInstance.close(val);
+                        }
+                      });
                     };
                     break;
                   case 2:
-                    $scope.cambios= val[0];
+                    console.log(val);
                     $scope.tipo = 'Tipo de Nota';
                     $scope.nm = val[0].nombreTipoNota;
-                    $scope.idDato = val[0].idTipoNota;                    
                     $scope.borrarTipoNota = function(){
-                      console.log(val);
+                      $http.post("data/borrar/deleteAdmin.php",{'sentencia':12,'id':val[0].idTipoNota}).success(function(respuesta){
+                        if(respuesta==1){
+                          $modalInstance.close(val);
+                        }else{
+                          console.log("rerro")
+                        }
+                      });
                     };
                     break;
                 }
