@@ -10,7 +10,7 @@
     $scope.op2 = false;
     $scope.op3 = false;
     $scope.op4 = false;
-    $scope.op4 = false;
+    $scope.op5 = false;
     $scope.rProtagonista = 0;
 
 $scope.add1 = function(){
