@@ -5,9 +5,12 @@
     $scope.rArea = 0;
     $scope.rAutor = 0;
     $scope.rMedio = 0;
+    $scope.op0 = false;
     $scope.op1 = false;
     $scope.op2 = false;
     $scope.op3 = false;
+    $scope.op4 = false;
+    $scope.op4 = false;
     $scope.rProtagonista = 0;
 
 $scope.add1 = function(){

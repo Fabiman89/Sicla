@@ -2,11 +2,12 @@
 <div class="container-fluid">
 <div class="">
 <div class="col-md-12 col-xs-12">
-
+    <button class="btn btn-primary " ng-click="op0 = !op0">Medio </button>
     <button class="btn btn-primary " ng-click="op1 = !op1">Autor </button>
     <button class="btn btn-primary " ng-click="op2 = !op2" >Protagonista</button>
     <button class="btn btn-primary " ng-click="op3 = !op3" >Sección</button>
-
+    <button class="btn btn-primary " ng-click="op4 = !op4" >Tipo</button>
+    <button class="btn btn-primary " ng-click="op5 = !op5" >Valor</button>
 
 </div>
 
@@ -18,7 +19,7 @@
   <div class="form-inline ">
         <div class="form-group  col-md-12" >
         <div class="row">
-          <div class=" col-md-2 control-label" for="input-medio">
+          <div class=" col-md-2 control-label" for="">
             <label>Fecha:</label>
           </div>
           <div class="col-md-3 ">
@@ -58,6 +59,25 @@
           </div>
           <hr> 
         </div>
+
+<!-- Form Group Medio ---->
+          <div class="form-group col-md-12 " ng-if="op0">
+        <div class="row">
+          <div class=" col-md-4 control-label" for="">
+            <label>Medio:</label>
+          </div>
+            <div class="col-md-8 ">
+              <select  ng-model="reporte.Medio" ng-options="" ng-change="" class="form-control">
+                <option value="0" >El Heraldo</option>
+                <option value="1" >Proceso </option>
+                <option value="2" >... </option>
+              </select>
+            </div>
+          </div>
+          <hr>
+        </div>
+
+
 
 <!--       FORM GROUP AUTOR  ---->
 
@@ -100,7 +120,7 @@
 <!--       FORM GROUP Protagonista  ---->
         <div class="form-group col-md-12 " ng-if="op2">
         <div class="row">
-          <div class=" col-md-3 control-label" for="input-medio">
+          <div class=" col-md-3 control-label" for="">
             <label>Protagonista:</label>
           </div>
           <div class="col-md-3 ">
@@ -136,13 +156,13 @@
 <!--       FORM GROUP Seccion  ---->
         <div class="form-group col-md-12 " ng-if="op3">
         <div class="row">
-          <div class=" col-md-4 control-label" for="input-medio">
+          <div class=" col-md-4 control-label" for="">
             <label>Seccion:</label>
           </div>
             <div class="col-md-8 ">
               <select  ng-model="reporte.Seccion" ng-options="" ng-change="" class="form-control">
-                <option value="0" >Ocho columnas</option>
-                <option value="1" >Reportage </option>
+                <option value="0" >Ciudad</option>
+                <option value="1" >Cronicas </option>
                 <option value="2" >... </option>
               </select>
             </div>
@@ -150,7 +170,37 @@
           <hr>
         </div>
 
-
+<!--       FORM GROUP Tipo  ---->
+        <div class="form-group col-md-12 " ng-if="op4">
+        <div class="row">
+          <div class=" col-md-4 control-label" for="">
+            <label>Tipo:</label>
+          </div>
+            <div class="col-md-8 ">
+              <select  ng-model="reporte.tipo" ng-options="" ng-change="" class="form-control">
+                <option value="0" >Ocho Columnas</option>
+                <option value="1" >Notas </option>
+                <option value="2" >... </option>
+              </select>
+            </div>
+          </div>
+          <hr>
+        </div>
+<!--       FORM GROUP Tipo  ---->
+        <div class="form-group col-md-12 " ng-if="op5">
+        <div class="row">
+          <div class=" col-md-4 control-label" for="">
+            <label>Tipo:</label>
+          </div>
+            <div class="col-md-8 ">
+              <select  ng-model="reporte.valor" ng-options="" ng-change="" class="form-control">
+                <option value="0" >Positiva</option>
+                <option value="1" >Negativa </option>
+              </select>
+            </div>
+          </div>
+          <hr>
+        </div>
 
 
  
