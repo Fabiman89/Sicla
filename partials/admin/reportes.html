@@ -1,63 +1,237 @@
 <br />
 <div class="container-fluid">
-  <div class="col-lg-10 col-xs-10 col-lg-offset-1">
-    <div class="col-lg-2 col-md-2 col-sm-2">
+<div class="">
+<div class="col-md-12 col-xs-12">
+
+    <button class="btn btn-primary " ng-click="op1 = !op1">Autor </button>
+    <button class="btn btn-primary " ng-click="op2 = !op2" >Protagonista</button>
+    <button class="btn btn-primary " ng-click="op3 = !op3" >Sección</button>
+
+
+</div>
+
+
+<div class="">
+  
+
+<div class="col-md-5   " style="padding-top:25px">
+  <div class="form-inline ">
+        <div class="form-group  col-md-12" >
+        <div class="row">
+          <div class=" col-md-2 control-label" for="input-medio">
+            <label>Fecha:</label>
+          </div>
+          <div class="col-md-3 ">
+            <select  ng-model="opcion.fecha" ng-options="" ng-change="" class="form-control">
+              <option value="0" >Historico</option>
+              <option value="1"  >Anual</option>
+              <option value="2"  >Mensual</option>
+              <option value="3" >Semanal</option>
+            </select>
+          </div>
+          <div class="col-md-3" ng-if="opcion.fecha==1" >
+            <select  ng-model="reporte.fechaAno" ng-options="" ng-change="" class="form-control ">
+              <option value="0" >2014</option>
+              <option value="1" >2013</option>
+              <option value="2" >2012</option>
+              <option value="3" >...</option>
+            </select>
+          </div>
+          <div class="col-md-3" ng-if="opcion.fecha==2||opcion.fecha==3" >
+            <div class="row">
+              <div class="col-md-3">
+              <label class=" ">de</label>
+              </div>
+            <div class="col-md-9 ">
+              <input class="form-control" ng-model="reporte.fechaInicio" type="date"/>
+            </div>
+            <div>
+              <label class=" col-md-3 ">a</label>
+            </div>
+                  <div class="col-md-9 ">
+                    <input class="form-control"  ng-model="reporte.fechaFinal" type="date" />
+                  </div>
+            </div>
+
+            </div>
+
+          </div>
+          <hr> 
+        </div>
+
+<!--       FORM GROUP AUTOR  ---->
+
+        <div class="form-group col-md-12 "  ng-if="op1">
+        <div class="row">
+          <div class=" col-md-2 control-label" >
+            <label>Autor:</label>
+          </div>
+          <div class="col-md-3 ">
+            <select  ng-model="opcion.autor" ng-options="" ng-change="" class="form-control">
+              <option value="0" >Todos</option>
+              <option value="1" >Particular</option>
+            </select>
+          </div>
+          <div class="col-md-3" ng-if="opcion.autor==0" >
+                <select  ng-model="reporte.generoAutor" ng-options="" ng-change="" class="form-control">
+                  <option value="0" >Todos</option>
+                  <option value="1" >Femenino</option>
+                  <option value="1" >Masculino</option>
+                </select>
+          </div>
+          <div class="col-md-3" ng-if="opcion.autor==1" >
+            <div class="row">
+              <div class="col-md-6"> 
+                <label>Nombre:</label>
+              </div>
+              <div class="col-md-6">
+                <select ng-model="reporte.autor" class="form-control" >
+                  <option > Heriberto Ortiz</option>
+                  <option > Jose Lopez </option>
+                </select>
+              </div>
+            </div>
+          </div>
+          </div>
+          <hr>
+        </div>
+
+
+<!--       FORM GROUP Protagonista  ---->
+        <div class="form-group col-md-12 " ng-if="op2">
+        <div class="row">
+          <div class=" col-md-3 control-label" for="input-medio">
+            <label>Protagonista:</label>
+          </div>
+          <div class="col-md-3 ">
+            <select  ng-model="opcion.prot" ng-options="" ng-change="" class="form-control">
+              <option value="0" >Todos</option>
+              <option value="1" >Particular</option>
+            </select>
+          </div>
+          <div class="col-md-3" ng-if="opcion.prot==0" >
+                <select  ng-model="opcion.prot" ng-options="" ng-change="" class="form-control">
+                  <option value="0" >Todos</option>
+                  <option value="1" >Femenino</option>
+                  <option value="1" >Masculino</option>
+                </select>
+          </div>
+          <div class="col-md-3" ng-if="opcion.prot==1" >
+            <div class="row">
+              <div class="col-md-6"> 
+                <label>Nombre:</label>
+              </div>
+              <div class="col-md-6">
+                <select ng-model="reporte.protagonista" class="form-control" >
+                  <option value="11">Rafael M.V.</option>
+                  <option value="12">EPN</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          </div>
+          <hr>
+        </div>
+
+<!--       FORM GROUP Seccion  ---->
+        <div class="form-group col-md-12 " ng-if="op3">
+        <div class="row">
+          <div class=" col-md-4 control-label" for="input-medio">
+            <label>Seccion:</label>
+          </div>
+            <div class="col-md-8 ">
+              <select  ng-model="reporte.Seccion" ng-options="" ng-change="" class="form-control">
+                <option value="0" >Ocho columnas</option>
+                <option value="1" >Reportage </option>
+                <option value="2" >... </option>
+              </select>
+            </div>
+          </div>
+          <hr>
+        </div>
+
+
+
+
+ 
+  </div>  
+</div>
+  
+<div class="col-md-7 ">
+  
+    <div class="well  ">
+     Vista Previa del Reporte
+  </div>
+</div>
+
+
+</div>
+ </div>
+ 
+  
+
+
+<!--
+  <div class="col-md-10 col-xs-10 col-md-offset-1">
+    <div class="col-md-2 col-md-2 col-sm-2">
       <h4 class="control-label">Medio</h4>
     </div>
-    <div class="col-lg-4">
+    <div class="col-md-4">
         <select class="form-control" ng-model="thisMedio" ng-change="getAutores(thisMedio.idMedio)" ng-options="m.nombreMedio for m in medios"> <option></option></select>
     </div>
-    <div class="col-lg-3">
+    <div class="col-md-3">
         <input type="radio" name="radioMedio" value="0" ng-model="rMedio">Todos General
         <input type="radio" value="1" name="radioMedio" ng-model="rMedio"> Uno
         <input type="radio" value="2" name="radioMedio" ng-model="rMedio"> Todos Especifico
     </div>
   </div>
 
-  <div class="col-lg-10 col-xs-10 col-lg-offset-1">
-    <div class="col-lg-2 col-md-2 col-sm-2">
+  <div class="col-md-10 col-xs-10 col-md-offset-1">
+    <div class="col-md-2 col-md-2 col-sm-2">
       <h4 class="control-label">Autor</h4>
     </div>
-    <div class="col-lg-4">
+    <div class="col-md-4">
         <select class="form-control" ng-model="thisAutor" ng-options="a.nombreAutor for a in autores"> <option></option></select>
     </div>
-    <div class="col-lg-3">
+    <div class="col-md-3">
         <input type="radio" name="radioAutor" value="0" ng-model="rAutor">Todos General
         <input type="radio" value="1" name="radioAutor" ng-model="rAutor"> Uno
         <input type="radio" value="2" name="radioAutor" ng-model="rAutor"> Todos Especificando
     </div>
   </div>
 
-  <div class="col-lg-10 col-xs-10 col-lg-offset-1">
-    <div class="col-lg-2 col-md-2 col-sm-2">
+  <div class="col-md-10 col-xs-10 col-md-offset-1">
+    <div class="col-md-2 col-md-2 col-sm-2">
       <h4 class="control-label">Protagonista</h4>
     </div>
-    <div class="col-lg-4">
+    <div class="col-md-4">
         <select class="form-control" ng-model="thisProt" ng-options="p.nombreProtagonista for p in protagonistas"> <option></option></select>
     </div>
-    <div class="col-lg-3">
+    <div class="col-md-3">
         <input type="radio" name="radioProtagonista" value="0" ng-model="rProtagonista">Todos General
         <input type="radio" value="1" name="radioProtagonista" ng-model="rProtagonista"> Uno
         <input type="radio" value="2" name="radioProtagonista" ng-model="rProtagonista"> Todos Especifico
     </div>
   </div>
 
-  <div class="col-lg-10 col-xs-10 col-lg-offset-1">
-    <div class="col-lg-2 col-md-2 col-sm-2">
+  <div class="col-md-10 col-xs-10 col-md-offset-1">
+    <div class="col-md-2 col-md-2 col-sm-2">
       <h4 class="control-label">Area</h4>
     </div>
-    <div class="col-lg-4">
+    <div class="col-md-4">
         <select class="form-control" ng-model="thisArea" ng-options="ar.nombreArea for ar in areas"> <option></option></select>
     </div>
-    <div class="col-lg-3">
+    <div class="col-md-3">
         <input type="radio" name="radioArea" value="0" ng-model="rArea">Todos General
         <input type="radio" value="1" name="radioArea" ng-model="rArea"> Uno
         <input type="radio" value="2" name="radioArea" ng-model="rArea"> Todos Especifico
     </div>
   </div>
-  <div class="col-lg-12">
+  <div class="col-md-12">
     <button class="btn btn-success pull-right" ng-click="getReporte(rArea,rAutor,rMedio,rProtagonista)"> Generar </button>
   </div>
+
+  -->
 </div>
 <hr>
 

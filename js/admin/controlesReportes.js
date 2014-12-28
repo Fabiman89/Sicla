@@ -5,7 +5,16 @@
     $scope.rArea = 0;
     $scope.rAutor = 0;
     $scope.rMedio = 0;
+    $scope.op1 = false;
+    $scope.op2 = false;
+    $scope.op3 = false;
     $scope.rProtagonista = 0;
+
+$scope.add1 = function(){
+    console.log($scope.op1);
+    $scope.op1= $scope.op1+1;
+}
+
     $http.post("data/consultas/consultasAdmin.php",{'sentencia':2}).success(function(rOp){
       $scope.medios = rOp;
       console.log($scope.medios);
