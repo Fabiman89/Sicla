@@ -320,7 +320,7 @@ switch ($instruccion){
 
 //  NOTAS RECIENTES  (ERROR 317)
 			case 17:
-				$result = $mysqli->query("SELECT n.idNota, n.idNota, n.tituloNota as titulo, m.nombreMedio, t.nombreTipoNota as tipo, u.nombreUsuario as usuario 
+				$result = $mysqli->query("SELECT n.idNota, n.idNota, n.tituloNota as titulo, n.fecha, m.nombreMedio, t.nombreTipoNota as tipo, u.nombreUsuario as usuario 
 					from Nota n, Medio m, user u, tipoNota t, colabora_en ce 
 					where n.idCE= ce.idCE and ce.idMedio = m.idMedio and n.idAdmin = u.idUsuario and n.idTipoNota = t.idTipoNota 
 					order by n.idNota 
@@ -340,7 +340,7 @@ switch ($instruccion){
 
 //  ENCONTRAR NOTAS  (ERROR 318)
 			case 18:
-				$result = $mysqli->query("SELECT n.idNota, n.tituloNota as titulo, m.nombreMedio, t.nombreTipoNota as tipo, u.nombreUsuario as usuario 
+				$result = $mysqli->query("SELECT n.idNota, n.tituloNota as titulo, n.fecha, m.nombreMedio, t.nombreTipoNota as tipo, u.nombreUsuario as usuario 
 							from Nota n, Medio m, user u, tipoNota t, colabora_en ce 
 							where n.idCE = ce.idCE and ce.idMedio = m.idMedio and n.idAdmin = u.idUsuario and n.idTipoNota = t.idTipoNota 
 							order by n.idNota desc");
@@ -401,7 +401,7 @@ switch ($instruccion){
 		case 21:
 			$result=mysqli_query($mysqli,
 					"SELECT * 
-					 FROM Autor  
+					 FROM Autor
 					 order by nombreAutor asc
 					 ");
 			$arr = array();

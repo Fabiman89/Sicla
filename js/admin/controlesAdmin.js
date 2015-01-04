@@ -1,5 +1,5 @@
-  siclaApp.controller('UsrCtrl', ['$scope','$http','$filter',
-  function($scope,$http,$filter) {
+  siclaApp.controller('UsrCtrl', ['$scope','$http',
+  function($scope,$http) {
     var nm="";
     $http.post("data/consultas/consultasLogin.php",{'sentencia':2}).success(function(data){ 
       if (data != "Error 202")
@@ -468,7 +468,12 @@ $scope.invalidaCargo = function(){
           }
           if( k.municipio == false||k.municipio == undefined)
             delete($scope.nota.municipio);
-        
+          if( k.titulo == false||k.titulo == undefined)
+            delete($scope.nota.titulo);
+          if( k.sintesis == false||k.sintesis == undefined)
+            delete($scope.nota.sintesis);
+          if( k.texto == false||k.texto == undefined)
+            delete($scope.nota.texto);     
 
           $scope.nota.pagina=1;
           $scope.nota.num = 1;      
@@ -479,9 +484,7 @@ $scope.invalidaCargo = function(){
           $scope.nota.otroTema=[];
           $scope.nota.otroSubtema=[];
           delete($scope.nota.url);
-          delete($scope.nota.titulo);
-          delete($scope.nota.texto);
-          delete($scope.nota.sintesis);
+
         };
 
 

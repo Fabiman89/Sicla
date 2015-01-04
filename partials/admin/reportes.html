@@ -1,57 +1,66 @@
 
 <div class="row">
-  <div class="col-lg-5 well ">
+  <div class="col-lg-4 ">
+    <br>
     <div class="col-lg-12 form-group">      
       <div class="col-lg-1 col-md-1 col-sm-1 control-label">
+
         <h5> Fecha</h5>
       </div>
-          <div class="col-lg-3 col-md-3 col-sm-3 ">
+          <div class="col-lg-4 col-md-4  col-sm-4 ">
             <select ng-model="sup.fecha"  class="form-control input-sm">
-              <option   value="0" > Hoy </option>
-              <option   value="1" > Periodo </option>
+              <option  value="0" > Hoy </option>
+              <option  value="1" > Periodo </option>
             </select>
           </div>
+          <div class="col-lg-12"> 
+                <div class="col-lg-4 col-md-4 col-sm-4 col-lg-offset-1">
+                  <input type="date" ng-model="reporte.fecha1" class="form-control input-sm" />
+                </div>
+                <div class="col-lg-1">
+                  <h5   ng-if="sup.fecha"> a </h5>
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-4">
+                  <input type="date" ng-if="sup.fecha" class="form-control input-sm" ng-model="reporte.fecha2" /> 
+                </div>
+          </div>
 
-          <div class="col-lg-3 col-md-3 col-sm-3 ">
-            <input type="date"  ng-model="reporte.fecha1" class="form-control input-sm"/>
-          </div>
-          <div class="col-lg-1">
-            <h5   ng-if="sup.fecha"> a </h5>
-          </div>
-          <div class="col-lg-3 col-md-3 col-sm-3">
-            <input type="date" ng-if="sup.fecha" class="form-control input-sm" ng-model="reporte.fecha2" /> 
-          </div>
 
         </div>
     <!-- Medio -->
         <div class="form-group col-lg-12 " >
+        <hr>
           <div class=" col-lg-1 col-md-1 col-sm-1 control-label" for="">
             <h5>Medio</h5>
           </div>
-            <div class="col-lg-3 col-md-3 col-sm-3 ">
+            <div class="col-lg-4  ">
               <select ng-change="checkState(2)" ng-model="sup.medio" class="form-control input-sm">
                 <option value="0" >Todos</option>
                 <option value="1" >Particular </option>
               </select>
             </div>
-            <div class="col-lg-3 col-md-3 col-sm-3" ng-if="sup.medio==1">
-              <select class="form-control input-sm" ng-model="reporte.medio " ng-options="n.nombreMedio for n in Medios">
+            <div class="col-lg-12"> 
+              <div class="col-lg-5 " ng-if="sup.medio==1">
+                <select class="form-control input-sm" ng-model="reporte.medio " ng-options="n.nombreMedio for n in Medios">
 
-              </select>
+                </select>
+              </div>
             </div>
+
         </div>    
     <!-- Autor -->
         <div class="col-lg-12 form-group">
+        <hr>
           <div class="col-lg-1 col-md-1 col-sm-1 control-label">
             <h5>Autor</h5>  
           </div>
           <div class="col-md-3">
               <select class="form-control" ng-model="sup.autor" > 
-                <option value="0" selected> Todos</option>
+                <option value="0" > Todos</option>
                 <option value="1"> Particular</option>
               </select>
           </div>
-          <div class="col-lg-3 col-md-3 col-sm-3"  ng-if="reporte.autor==1">
+          <div class="col-lg-3 col-md-3 col-sm-3"  ng-if="sup.autor==1">
             <select class="form-control" ng-model="reporte.autor" ng-options="autor.nombreAutor for autor in Autores">
               
             </select>
@@ -75,9 +84,9 @@
           <div class="col-lg-2 col-md-2 col-sm-2 control-label">
             <h5>Valoracion</h5>  
           </div>
-          <div class="col-md-3">
+          <div class="col-md-4">
               <select class="form-control" ng-model="reporte.clasificacion"  > 
-                <option value="0" selected>Sin considerar</option>
+                <option value="0" >Sin considerar</option>
                 <option value="1"> Positiva </option>
                 <option value="2"> Negativa </option>
               </select>
@@ -87,29 +96,29 @@
     <!-- Seccion -->
         <div class="col-lg-12 form-group">
         <hr>
-          <div class="col-lg-1 col-md-1 col-sm-1 control-label">
+          <div class="col-lg-2  control-label">
             <h5>Seccion</h5>  
           </div>
-          <div class="col-md-3">
+          <div class="col-md-4">
               <select class="form-control" ng-model="reporte.seccion" ng-options="tn.nombreSeccion for tn in Seccion" > 
               </select>
           </div>
         </div>
     <!-- Genero -->
         <div class="col-lg-12 form-group">
-          <div class="col-lg-1 col-md-1 col-sm-1 control-label">
+          <div class="col-lg-2  control-label">
             <h5>Genero </h5>  
           </div>
-          <div class="col-md-3">
+          <div class="col-md-4">
               <select class="form-control" ng-model="reporte.genero" > 
-                <option value="0" selected > Sin considerar </option>
+                <option value="0"  > Sin considerar </option>
                 <option value="1"> Femenino </option>
                 <option value="2"> Masculino </option>
               </select>
           </div>
-          <div class="col-md-3" ng-if="reporte.genero!=0">
+          <div class="col-md-4" ng-if="reporte.genero!=0">
               <select class="form-control" ng-model="reporte.generoTipo" > 
-                <option value="0" selected> todos </option>
+                <option value="0" > todos </option>
                 <option value="1"> Protagonistas </option>
                 <option value="2"> Autores </option>
               </select>
@@ -211,11 +220,7 @@
 
     <button class="btn btn-success" ng-click="saveToPDF()">Guardar en pdf</button>
   </div>
-  {{previewArray}}
-  <hr>
-  {{pdf}}
-  <hr>
-  {{reporte}}
+
 </div>
 <!--
   <div class="col-md-10 col-xs-10 col-md-offset-1">

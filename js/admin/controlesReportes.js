@@ -168,14 +168,6 @@
     $scope.previewSize = 0;
 
 
-
-
-
-
-
-
-
-
     $scope.appendVar = function(arr,objt,size){
         array = [];
         console.log(arr);
