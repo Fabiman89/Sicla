@@ -24,30 +24,23 @@ switch ($instruccion){
 	$municipio = $datos['municipio']['idMunicipio'];
 	$url = $datos['url'];
 	$per = $datos['num'];
-
-	if($mysqli->query("insert into Nota values(null,'$titulo','$fecha',$pagina,$tipo,'$pos','$sintesis','$texto',$per,'$url',null,$municipio,$usr,$autor,'$seccion')")===true)
+	$mysqli->query("insert into Nota values(null,'$titulo','$fecha',$pagina,$tipo,'$pos','$sintesis','$texto',$per,'$url',null,$municipio,$usr,$autor,'$seccion')");
+	$nota = mysqli_insert_id($mysqli);
+	$mysqli->query("insert into trata_de values($nota,$subtema)");
+	$mysqli->query("insert into notaProtagonista values($nota,$cargo,1)");
+	for ($i = 0; $i < count($otroSB);$i++)
+		if ($otroSB[$i]!=null)
 		{
-			$nota = mysqli_insert_id($mysqli);
-			$mysqli->query("insert into trata_de values($nota,$subtema)");
-			$mysqli->query("insert into notaProtagonista values($nota,$cargo,1)");
-			for ($i = 0; $i < count($otroSB);$i++)
-				if ($otroSB[$i]!=null)
-				{
-					$aux = $otroSB[$i]['idSubtema'];
-					$mysqli->query("insert into trata_de values($nota,$aux)");
-				}
-			for ($i=0; $i < count($otrosCG); $i++)
-				if($otrosCG[$i]!=null)
-				{
-					$aux = $otrosCG[$i]['idCP'];
-					$mysqli->query("insert into notaProtagonista values($nota,$aux,2)");
-				}
-				echo $nota;	
-		
-	}else{
-		//echo($mysqli);
-		echo "error";
-	}	
+			$aux = $otroSB[$i]['idSubtema'];
+			$mysqli->query("insert into trata_de values($nota,$aux)");
+		}
+	for ($i=0; $i < count($otrosCG); $i++)
+		if($otrosCG[$i]!=null)
+		{
+			$aux = $otrosCG[$i]['idCP'];
+			$mysqli->query("insert into notaProtagonista values($nota,$aux,2)");
+		}
+	echo $nota;	
 	mysqli_close($mysqli);
 	break; 
 
