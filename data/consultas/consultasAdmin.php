@@ -397,6 +397,25 @@ switch ($instruccion){
 			}
 			mysqli_close($mysqli);			
 			break;
+// Toos autores
+		case 21:
+			$result=mysqli_query($mysqli,
+					"SELECT * 
+					 FROM Autor  
+					 order by nombreAutor asc
+					 ");
+			$arr = array();
+			if($result) {
+				 while($row = $result->fetch_assoc()) {
+					 $arr[] = $row;
+				 }
+				 echo json_encode($arr);
+				 mysqli_free_result($result);
+			}else{
+				echo ("Error 321");
+			}
+			mysqli_close($mysqli);			
+			break;
 
 //RESPUESTA DEFAULT
 	default:

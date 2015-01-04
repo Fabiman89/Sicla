@@ -25,13 +25,13 @@
           </div>
 
           <div class="col-lg-3 ">
-            <input type="date"  ng-model="reporte.fecha1" class="form-control"/>
+            <input type="date"  ng-model="report.fecha1" class="form-control"/>
           </div>
           <div class="col-lg-1">
             <h4   ng-if="sup.fecha"> a </h4>
           </div>
           <div class="col-lg-3">
-            <input type="date" ng-if="sup.fecha" class="form-control" ng-model="reporte.fecha2" /> 
+            <input type="date" ng-if="sup.fecha" class="form-control" ng-model="report.fecha2" /> 
           </div>
 
         </div>
@@ -125,7 +125,7 @@
               </select>
             </div>
             <div class="col-md-3" ng-if="sup.medio">
-              <select class="form-control input-sm" ng-model="reporte.medio ">
+              <select class="form-control input-sm" ng-model="report.medio ">
                 <option value="0">Sicla</option>
                 <option value="1">El Heraldo</option>
                 <option value="2">Proceso</option>
@@ -147,7 +147,7 @@
   </form>
 </div>
 <div class="modal-footer">
-  {{reporte}}
+  {{report}}
   <button class=" btn btn-primary btn-md btn-block" ng-disabled="formPIE.$invalid"  >Guardar</button>
   
 </div>

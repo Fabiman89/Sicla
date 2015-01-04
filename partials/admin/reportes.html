@@ -1,12 +1,12 @@
 
 <div class="row">
-  <div class="col-lg-5  ">
+  <div class="col-lg-5 well ">
     <div class="col-lg-12 form-group">      
       <div class="col-lg-1 col-md-1 col-sm-1 control-label">
         <h5> Fecha</h5>
       </div>
           <div class="col-lg-3 col-md-3 col-sm-3 ">
-            <select ng-model="sup.fecha" ng-change="checkState(1)" id="fechaSelect" class="form-control input-sm">
+            <select ng-model="sup.fecha"  class="form-control input-sm">
               <option   value="0" > Hoy </option>
               <option   value="1" > Periodo </option>
             </select>
@@ -34,11 +34,9 @@
                 <option value="1" >Particular </option>
               </select>
             </div>
-            <div class="col-lg-3 col-md-3 col-sm-3" ng-if="sup.medio">
-              <select class="form-control input-sm" ng-model="reporte.medio ">
-                <option value="0">Sicla</option>
-                <option value="1">El Heraldo</option>
-                <option value="2">Proceso</option>
+            <div class="col-lg-3 col-md-3 col-sm-3" ng-if="sup.medio==1">
+              <select class="form-control input-sm" ng-model="reporte.medio " ng-options="n.nombreMedio for n in Medios">
+
               </select>
             </div>
         </div>    
@@ -48,13 +46,13 @@
             <h5>Autor</h5>  
           </div>
           <div class="col-md-3">
-              <select class="form-control" ng-model="reporte.autor" > 
-                <option value="0"> Todos</option>
+              <select class="form-control" ng-model="sup.autor" > 
+                <option value="0" selected> Todos</option>
                 <option value="1"> Particular</option>
               </select>
           </div>
-          <div class="col-lg-3 col-md-3 col-sm-3" ng-model="reporte.nombreAutor" ng-if="reporte.autor==1">
-            <select class="form-control" ng-options="a.nombreAutor for a in autores">
+          <div class="col-lg-3 col-md-3 col-sm-3"  ng-if="reporte.autor==1">
+            <select class="form-control" ng-model="reporte.autor" ng-options="autor.nombreAutor for autor in Autores">
               
             </select>
           </div>
@@ -66,7 +64,7 @@
                 <h5>Tipo de nota</h5>  
             </div>
               <div class="col-md-4">
-                  <select class="form-control" ng-model="reporte.tipoNota" ng-options="tn.nombreTipoNota for tn in tipoNotab" > 
+                  <select class="form-control" ng-model="reporte.tipoNota" ng-options="tn.nombreTipoNota for tn in tipoNotas" > 
                     <option value="0"> sin considerar </option>
                   </select>
               </div>
@@ -78,8 +76,8 @@
             <h5>Valoracion</h5>  
           </div>
           <div class="col-md-3">
-              <select class="form-control" ng-model="reporte.tipoNota"  > 
-                <option value="0">sin considerar</option>
+              <select class="form-control" ng-model="reporte.clasificacion"  > 
+                <option value="0" selected>Sin considerar</option>
                 <option value="1"> Positiva </option>
                 <option value="2"> Negativa </option>
               </select>
@@ -93,8 +91,7 @@
             <h5>Seccion</h5>  
           </div>
           <div class="col-md-3">
-              <select class="form-control" ng-model="reporte.tipoNota" ng-options="tn.nombreSeccion for tn in Seccion" > 
-                <option value="0"> sin considerar </option>
+              <select class="form-control" ng-model="reporte.seccion" ng-options="tn.nombreSeccion for tn in Seccion" > 
               </select>
           </div>
         </div>
@@ -105,14 +102,14 @@
           </div>
           <div class="col-md-3">
               <select class="form-control" ng-model="reporte.genero" > 
-                <option value="0"> Sin considerar </option>
+                <option value="0" selected > Sin considerar </option>
                 <option value="1"> Femenino </option>
                 <option value="2"> Masculino </option>
               </select>
           </div>
           <div class="col-md-3" ng-if="reporte.genero!=0">
               <select class="form-control" ng-model="reporte.generoTipo" > 
-                <option value="0"> todos </option>
+                <option value="0" selected> todos </option>
                 <option value="1"> Protagonistas </option>
                 <option value="2"> Autores </option>
               </select>
@@ -127,23 +124,23 @@
 
               <h5> Area </h5>
             </div>
-            <select class="form-control" ng-model="reporte.area" ng-options="area.nombreArea for area in Areas"> 
+            <select class="form-control" ng-model="reporte.area" ng-change="getTema(reporte.area.idArea)" ng-options="area.nombreArea for area in Areas"> 
               <option value="0"> sin considerar  </option>
             </select>
           </div>
-          <div class="col-lg-4 col-md-1 col-sm-1 text-center" ng-if="reporte.area==0">
+          <div class="col-lg-4 col-md-1 col-sm-1 text-center" ng-if="reporte.area">
               <div class="col-lg-12">
                 <h5> Tema </h5>  
               </div>
-              <select class="form-control" ng-model="reporte.tema"  ng-options="tema.nombreTema for tema in Temas"> 
+              <select class="form-control" ng-model="reporte.tema" ng-change="getSubtema(reporte.tema.idTema)" ng-options="tema.nombreTema for tema in Temas"> 
                 <option value="0">Todos</option>
               </select>
           </div>
-          <div class="col-lg-4 col-md-1 col-sm-1 text-center" ng-if="reporte.tema==0">
+          <div class="col-lg-4 col-md-1 col-sm-1 text-center" ng-if="reporte.tema">
             <div class="col-lg-12">
               <h5> Subtema </h5>  
             </div>
-            <select class="form-control" ng-model="reporte.subtema" ng-options="subtema.nombreSubtema for subtetema in Subtemas" > 
+            <select class="form-control" ng-model="reporte.subtema" ng-options="subtema.nombreSubtema for subtema in Subtemas" > 
                 <option value="0">Todos</option>
             </select>
           </div>
@@ -157,19 +154,19 @@
             <div class="col-lg-12 text-center" >
               <h5> Pais </h5>
             </div>
-            <select class="form-control" ng-model="reporte.pais" ng-options="pais.nombrePais for pais in Paises"> 
+            <select class="form-control" ng-model="reporte.pais" ng-change="getEstado(reporte.pais.idPais)" ng-options="pais.nombrePais for pais in Paises"> 
               <option value="0"> sin considerar  </option>
             </select>
           </div>
-          <div class="col-lg-4 col-md-1 col-sm-1 text-center" ng-if="reporte.pais==0">
+          <div class="col-lg-4 col-md-1 col-sm-1 text-center" ng-if="reporte.pais">
               <div class="col-lg-12">
                 <h5> Estado </h5>  
               </div>
-              <select class="form-control" ng-model="reporte.estado" ng-options="estado.nombreEstado for estado in Estados"> 
+              <select class="form-control" ng-model="reporte.estado" ng-change="getMunicipio(reporte.estado.idEstado)" ng-options="estado.nombreEstado for estado in Estados"> 
                 <option value="0">Todos</option>
               </select>
           </div>
-          <div class="col-lg-4 col-md-1 col-sm-1 text-center" ng-if="reporte.tema==0">
+          <div class="col-lg-4 col-md-1 col-sm-1 text-center" ng-if="reporte.estado">
             <div class="col-lg-12">
               <h5> Municipio </h5>  
             </div>
@@ -217,6 +214,8 @@
   {{previewArray}}
   <hr>
   {{pdf}}
+  <hr>
+  {{reporte}}
 </div>
 <!--
   <div class="col-md-10 col-xs-10 col-md-offset-1">

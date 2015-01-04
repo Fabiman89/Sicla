@@ -1,9 +1,10 @@
-  siclaApp.controller('reportCtrl', ['$scope','$http','$modal',function($scope,$http,$modal) {
+  siclaApp.controller('reportCtrl', ['$scope','$http','$modal','$filter',function($scope,$http,$modal,$filter) {
 // PRIMERA PROPUESTA
 
-
+    $scope.reporte = {};
+    $scope.sup = {}; //support
     $scope.medios = {};
-    $scope.autores = {};  
+    $scope.Autores = {};  
     $scope.areas = {};
     $scope.rArea = 0;
     $scope.rAutor = 0;
@@ -15,11 +16,15 @@
     $scope.op3 = false;
     $scope.op4 = false;
     $scope.op5 = false;
+    $scope.sup.fecha=0;
+    $scope.sup.medio = 0;
+    $scope.sup.autor=0;
+    $scope.reporte.clasificacion = 0;
+    $scope.reporte.genero=0;
     $scope.rProtagonista = 0;
-
+    $scope.reporte.fecha1 = $filter("date")(Date.now(), 'yyyy-MM-dd');
     $scope.selec = "Seleccionar";
 
-    $scope.periodos = [{"name":"Histórico","val":0},{name:'Anual',val:1},{"name":" en rango","val":2}];
 
         $scope.Sustituye = function(a,d){
                 a = angular.copy(d);
@@ -37,32 +42,105 @@
           };
 
 
+        $scope.init = function(arr,obj){
+            console.log(arr);
+            nar = [];
+            nar.push(obj);
+            for (i=0;i<arr.length;i++){
+                nar.push(arr[i]);
+            }
+            return nar;
+        };
+
+
+
         $scope.add1 = function(){
             console.log($scope.op1);
             $scope.op1= $scope.op1+1;
         }
 
             $http.post("data/consultas/consultasAdmin.php",{'sentencia':2}).success(function(rOp){
-              $scope.medios = rOp;
-              console.log($scope.medios);
+              objt = {"nombreMedio":"Sin Considerar","idMedio":0};
+              $scope.Medios = $scope.init(rOp,objt);
+              $scope.reporte.medio= $scope.Medios[0];
             });
 
-            $scope.getAutores = function(idMedio){
+
               
-              $http.post("data/consultas/consultasAdmin.php",{'sentencia':3,'id':idMedio}).success(function(rOp){
-                $scope.autores = rOp;
-                console.log($scope.autores);
+              $http.post("data/consultas/consultasAdmin.php",{'sentencia':21}).success(function(rOp){
+                objt= {'nombreAutor':'Sin Considerar','idAutor':0}
+                $scope.Autores = $scope.init(rOp,objt);
+                $scope.reporte.autor= $scope.Autores[0];
               });      
-            }
+
 
             $http.post("data/consultas/consultasAdmin.php",{'sentencia':7}).success(function(rOp){
-              $scope.areas = rOp;
+              objt = {"nombreArea":"Sin Considerar","idArea":0};
+              $scope.Areas = $scope.init(rOp,objt);
+              $scope.reporte.area = $scope.Areas[0];
+
+            });
+            $scope.getTema = function (id)
+            {
+                $http.post("data/consultas/consultasAdmin.php",{'sentencia':8,'area':id}).success(function(rOp){
+                  objt = {"nombreTema":"Sin Considerar","idTema":0};
+                  $scope.Temas = $scope.init(rOp,objt);
+                  $scope.reporte.tema= $scope.Temas[0];
+                });
+            };
+
+            $scope.getSubtema = function(id){
+                $http.post("data/consultas/consultasAdmin.php",{'sentencia':9,'tema':id}).success(function(rOp){
+                  objt = {"nombreSubtema":"Sin Considerar","idSubtema":0};
+                  $scope.Subtemas = $scope.init(rOp,objt);
+                  $scope.reporte.subtema = $scope.Subtemas[0];
+                  console.log($scope.Subtemas)
+                });
+            };
+            
+
+            $http.post("data/consultas/consultasAdmin.php",{'sentencia':10}).success(function(rOp){
+               objt = {"nombrePais":"Sin Considerar","idPais":0}; 
+              $scope.Paises = $scope.init(rOp,objt);
+              $scope.reporte.pais = $scope.Paises[0];
             });
 
+            $scope.getEstado = function (id){
+                console.log("trigered")
+                        $http.post("data/consultas/consultasAdmin.php",{'sentencia':11,'pais':id}).success(function(rOp){
+                            objt = {"nombreEstado":"Sin Considerar","idEstado":0};
+                          $scope.Estados = $scope.init(rOp,objt);
+                          $scope.reporte.estado= $scope.Estados[0];
+                        });
+                    };
+            $scope.getMunicipio = function (id){
+                        $http.post("data/consultas/consultasAdmin.php",{'sentencia':12,'estado':id}).success(function(rOp){
+                          objt = {"nombreMunicipio":"Sin Considerar","idMunicipio":0};
+                          $scope.Municipios = $scope.init(rOp,objt);
+                          $scope.reporte.municipio= $scope.Municipios[0];
+                        });
+                    };
+
+
             $http.post("data/consultas/consultasAdmin.php",{'sentencia':5}).success(function(rOp){
-              $scope.protagonistas = rOp;
+                objt = {"nombreProtagonista":"Sin Considerar","idProtagonista":0};
+              $scope.Protagonistas = $scope.init(rOp,objt);
+              $scope.reporte.protagonista = $scope.Protagonistas[0];
             });
             
+            $http.post("data/consultas/consultasAdmin.php",{'sentencia':1}).success(function(rOp){
+                objt = {"nombreTipoNota":"Sin Considerar","idTipoNota":0};
+              $scope.tipoNotas = $scope.init(rOp,objt);
+              $scope.reporte.tipoNota = $scope.tipoNotas[0];
+
+            });
+
+            $http.post("data/consultas/consultasAdmin.php",{'sentencia':4}).success(function(rOp){
+                objt = {"nombreSeccion":"Sin Considerar","idSeccion":0};
+              $scope.Seccion = $scope.init(rOp,objt);
+              $scope.reporte.seccion = $scope.Seccion[0]; 
+            });
+
             $scope.getReporte = function(area,autor,medio,protagonista) 
             {
             	var areas=[], autores=[], medios=[], protagonistas=[], clasificacion=[];
@@ -196,9 +274,9 @@ $scope.deleteFromPreview = function (toDelete){
         var pieCtrl = function($filter,$scope,$modalInstance, notaOpc){
             hoy = $filter("date")(Date.now(), 'yyyy-MM-dd');
             $scope.permiso = false;
-            $scope.sup = {}; //support
+            $scope.sup ={}
             $scope.reporte = {};
-            $scope.reporte.fecha1 = $filter("date")(Date.now(), 'yyyy-MM-dd');
+            
             $scope.sup.fecha = 0;
 
 

@@ -1,5 +1,5 @@
-  siclaApp.controller('UsrCtrl', ['$scope','$http',
-  function($scope,$http) {
+  siclaApp.controller('UsrCtrl', ['$scope','$http','$filter',
+  function($scope,$http,$filter) {
     var nm="";
     $http.post("data/consultas/consultasLogin.php",{'sentencia':2}).success(function(data){ 
       if (data != "Error 202")
