@@ -24,7 +24,7 @@ switch ($instruccion){
 	$municipio = $datos['municipio']['idMunicipio'];
 	$url = $datos['url'];
 	$per = $datos['num'];
-	$mysqli->query("insert into Nota values(null,'$titulo','$fecha',$pagina,$tipo,'$pos','$sintesis','$texto',$per,'$url',null,$municipio,$usr,$autor,'$seccion')");
+	$mysqli->query("insert into Nota values(null,'$titulo','$fecha',$pagina,$tipo,'$pos','$sintesis','$texto',$per,'$url',null,$municipio,$usr,$autor,$seccion)");
 	$nota = mysqli_insert_id($mysqli);
 	$mysqli->query("insert into trata_de values($nota,$subtema)");
 	$mysqli->query("insert into notaProtagonista values($nota,$cargo,1)");

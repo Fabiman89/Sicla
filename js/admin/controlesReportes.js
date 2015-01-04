@@ -41,12 +41,16 @@ $scope.add1 = function(){
     
     $scope.getReporte = function(area,autor,medio,protagonista) 
     {
-    	var areas=[], autores=[], medios=[], protagonistas=[], clasificacion=[];
+    	var areas=[], autores=[], medios=[], protagonistas=[], clasificacion=[], fecha=[], tipo = [], seccion = [], genero = [];
     	areas.push(0);
     	autores.push(autor);
     	medios.push(medio);
     	protagonistas.push(protagonista);
     	clasificacion.push(0);
+    	fecha.push(0);
+    	tipo.push(0);
+    	seccion.push(0);
+    	genero.push(0);
     	if(medio == 1 )
     		medios.push($scope.thisMedio);
     	if(protagonista == 1)
@@ -56,7 +60,7 @@ $scope.add1 = function(){
     	if(area == 1)
     		areas.push($scope.thisArea)
     	$http.post("data/consultas/consultaReportes.php",
-    	{'autor':autores, 'medio':medios, 'protagonista':protagonistas, 'tema':areas, 'clasificacion':clasificacion}).success(function(data) {
+    	{'autor':autores, 'medio':medios, 'protagonista':protagonistas, 'tema':areas, 'clasificacion':clasificacion,'fecha':fecha, 'tipo':tipo, 'seccion':seccion,'genero':genero}).success(function(data) {
     		console.log(data);
     	});    	
     };
