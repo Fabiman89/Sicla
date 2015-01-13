@@ -22,7 +22,9 @@
 
 
     siclaApp.controller('FormNotasCtrl',['$scope','$http','$filter','$modal',function($scope,$http,$filter,$modal){
-        $scope.nota={};    
+        $scope.nota={};  
+        $scope.keep = {};
+        $scope.notaCopy={};   
         //$scope.nota.fecha = date();
         $scope.auxiliarST = [0];
         $scope.auxiliarPT = [0];
@@ -35,11 +37,16 @@
         $scope.opcionesOtroTema = [];
         $scope.opcionesSubtema = {};
         $scope.opcionesMedios = {};
+        $scope.cargoValido = false;
+        //$scope.opcionesCargo ={};
+        //$scope.keep.medio = false;
+        $scope.medioRecuerdo=1;
         $scope.opcionesSeccion = {};
         $scope.opcionesArea = {};
         $scope.nota.otrosPT = [];
         $scope.opcionesPT = [];
         $scope.nota.otrosCargo = [];
+        $scope.notaCopy.fecha = $filter("date")(Date.now(), 'yyyy-MM-dd');
         $scope.nota.fecha = $filter("date")(Date.now(), 'yyyy-MM-dd');
         $scope.alerta = {"tipo":"","mensaje":""};
         $scope.permitir = false;
@@ -49,6 +56,23 @@
           $scope.opcionesNota = data;
           console.log(data);
         });
+
+$scope.validarCargo = function(id){
+  $scope.getCargo(id);
+  $scope.cargoValido = true;
+};
+
+$scope.invalidaCargo = function(){
+  $scope.cargoValido = false;
+};
+
+
+ $scope.changeType = function(s){
+  if(s==1)
+    {$scope.cls = "fa fa-square-o";}
+  else
+    {$scope.cls = "fa fa-check-square-o";}
+ }
 
     // OPCIONES PARA MEDIOS
           $http.post("data/consultas/consultasAdmin.php",{'sentencia':2}).success(function(dataMedios){
@@ -137,33 +161,44 @@
               };
 
     // GUARDAR NOTA
-              $scope.updateNota = function(nota){
+
+              $scope.updateNota = function(nota,k){
+                if( nota!=undefined ){
                 console.log(nota);
                 $http.post("data/inserciones/insercionesAdmin.php",{'sentencia':1,'nota':nota}).success(function(nota){
                   console.log(nota);
-                  if (document.getElementById("exampleInputFile").value != "")
-                  {
-                    var file = document.getElementById("exampleInputFile"), formData = new FormData();
-                    formData.append("imagen", file.files[0]);
-                    formData.append("nota",nota);
-                    $.ajax({
-                      url:'data/inserciones/insercionPortada.php',
-                      type: 'POST',
-                      data: formData,
-                      processData: false,
-                      contentType: false,
-                      dataType: 'json',
-                      success: function(ev) {       
-                        console.log(ev); 
-                        document.getElementById("exampleInputFile").value = "";                                              
-                      }
-                    });
-                  }                        
-                         $scope.nota = angular.copy($scope.master);                           
+                  if(nota != "error"){
+                    if (document.getElementById("exampleInputFile").value != "")
+                      {
+                        var file = document.getElementById("exampleInputFile"), formData = new FormData();
+                        formData.append("imagen", file.files[0]);
+                        formData.append("nota",nota);
+                        $.ajax({
+                          url:'data/inserciones/insercionPortada.php',
+                          type: 'POST',
+                          data: formData,
+                          processData: false,
+                          contentType: false,
+                          dataType: 'json',
+                          success: function(ev) {       
+                            console.log(ev); 
+                            document.getElementById("exampleInputFile").value = "";                                              
+                          }
+                        });
+                      console.log("IMAGEN RECONOSIDA");
+                      }  
+
+                    $scope.resetFields(k);
+                  }else{
+                    console.log("99999999999999999999");
+                  }                         
                          $scope.permitir = false; 
                          $scope.auxiliarST = [0];
                          $scope.auxiliarPT = [0];                    
                 }); 
+}else{
+  console.log("nota no definida");
+}
               };
               
     //Opciones para Otros Temas
@@ -345,7 +380,7 @@
 
 
     /*----------------------------------------------Modal Vista Previa-----------------------------------------------*/ 
-         
+      //modal 
 
         $scope.modalVista = function(nota){
           var modalInstance = $modal.open({ 
@@ -367,10 +402,90 @@
               $modalInstance.close();
             };
         };
-    $scope.vistaPrevia = function (nota){
-      $scope.permitir = true;
-      $scope.modalVista(nota);
-    }
+      //vista previa
+
+      $scope.vistaPrevia = function(n,k){
+        $scope.modalVista(n);
+      //  $scope.resetFields(k);
+      };
+
+
+        $scope.resetFields = function (k){
+          //$scope.permitir = true;
+          if( k.medio == false||k.medio == undefined)
+          {
+            delete($scope.nota.medio); 
+            if($scope.nota.autor){
+              delete($scope.nota.autor);
+              if($scope.keep.autor)
+                delete($scope.keep.autor);
+            }
+          }
+          if( k.autor == false||k.autor == undefined)
+            delete($scope.nota.autor);
+          if( k.fecha == false||k.fecha == undefined)
+            $scope.nota.fecha = $filter("date")(Date.now(), 'yyyy-MM-dd'); // MEJORAR
+          if( k.tipo == false||k.tipo == undefined)
+            delete($scope.nota.tipo);
+          if( k.seccion == false||k.seccion == undefined)
+            delete($scope.nota.seccion);
+          if( k.protagonista == false||k.protagonista == undefined)
+          {
+            delete($scope.nota.protagonista);
+            if($scope.nota.cargo)
+              {
+                delete($scope.nota.cargo);
+                if($scope.keep.cargo)
+                  delete($scope.keep.cargo);
+              } 
+          }
+          if( k.cargo == false||k.cargo == undefined)
+            delete($scope.nota.cargo);
+          if( k.area == false||k.area == undefined)
+            {
+              delete($scope.nota.area);
+
+              delete($scope.nota.tema);
+              delete($scope.nota.subtema);
+            }
+          if( k.tema == false||k.tema == undefined)
+          {
+            delete($scope.nota.tema);
+            delete($scope.nota.subtema);
+          }
+          if( k.subtema == false||k.subtema == undefined)
+            delete($scope.nota.subtema);
+          if( k.pais == false||k.pais == undefined)
+          {
+            delete($scope.nota.pais);
+            delete($scope.nota.estado);
+            delete($scope.nota.municipio);
+          }
+          if( k.estado == false||k.estado == undefined)
+          {
+            delete($scope.nota.estado);
+            delete($scope.nota.municipio);
+          }
+          if( k.municipio == false||k.municipio == undefined)
+            delete($scope.nota.municipio);
+          if( k.titulo == false||k.titulo == undefined)
+            delete($scope.nota.titulo);
+          if( k.sintesis == false||k.sintesis == undefined)
+            delete($scope.nota.sintesis);
+          if( k.texto == false||k.texto == undefined)
+            delete($scope.nota.texto);     
+
+          $scope.nota.pagina=1;
+          $scope.nota.num = 1;      
+          $scope.nota.otrosPT = [] ;
+          $scope.nota.otrosCargo= [] ;
+          $scope.nota.posneg = "positiva";
+          $scope.nota.otraArea=[];
+          $scope.nota.otroTema=[];
+          $scope.nota.otroSubtema=[];
+          delete($scope.nota.url);
+
+        };
 
 
     /*----------------------------------------------Modal Sección------------------------------------------------*/ 
@@ -953,6 +1068,23 @@
            }          
          });
          };
+         
+// ESTADOS
+              $scope.getEstados = function(idPais){
+               $http.post("data/consultas/consultasAdmin.php",{'sentencia':11,'pais':idPais}).success(function(dataEstados){
+                  $scope.opcionesEstado = dataEstados;
+                  console.log($scope.opcionesEstado);
+               });
+              };
+
+    // MUNICIPIO
+              $scope.getMunicipio = function(estado){
+                console.log(estado);
+                $http.post("data/consultas/consultasAdmin.php",{'sentencia':12,'estado':estado}).success(function(dataMunicipio){
+                          $scope.opcionesMunicipios = dataMunicipio;
+                          console.log(dataMunicipio);
+                      });
+              };         
 
 /**** GET AUTOR    ***/
         $scope.getAutor=function(medio){

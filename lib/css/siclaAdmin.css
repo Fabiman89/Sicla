@@ -1,0 +1,26 @@
+.reportContent{
+	padding:10px 6px 10px;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	min-height: 50px;
+
+}
+
+.row-control{
+	padding-right: 15px;
+	padding-left: 15px;
+	background-color:#ccc;
+	padding:10px 6px 10px;
+}
+
+.btn-report{
+	font-size: 18px;
+}
+
+
+.close-sign{
+	zoom: 150%;
+	border-color:#000;
+	margin-top:10px 6px 10px;
+	padding:10px 6px 10px;
+}

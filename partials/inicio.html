@@ -58,9 +58,15 @@
         <div class="post-image">
             <img ng-hide="!columnas.img8col" ng-src="{{columnas.img8col}}" style="height:338px;" ng-click="datosModal(columnas)" class="img-responsive center-block clickable">
             <img ng-hide="columnas.img8col" ng-src="{{columnas.imagen}}"  ng-click="datosModal(columnas)" class=" img-responsive center-block clickable" style="height:53px;width:222px;">
+        </div> 
+         <div class="post-titulo" ng-hide="!columnas.img8col"> 
+            <p> {{columnas.fecha}} </p>
         </div>  
         <div class="post-titulo"> 
             <p> {{columnas.tituloNota}} </p>
+        </div>  
+         <div class="post-titulo" ng-hide="columnas.img8col"> 
+            <p> {{columnas.fecha}} </p>
         </div>  
         <div class="post-desc clickable" ng-hide="columnas.img8col" ng-click="datosModal(columnas)"> 
             <p>{{columnas.sintesis}} </p>

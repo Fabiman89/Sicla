@@ -276,15 +276,27 @@ switch ($instruccion){
 // EDITAR NOTA (ERROR 316)	
 		case 16:
 			$id = $sentencia['id'];
-			$result = $mysqli->query("select n.idNota, n.tituloNota, n.fecha, n.paginaNota, n.idTipoNota, n.Clasificacion, n.sintesis, n.texto, n.numeroPeriodico, n.urlNota, n.imagenNota, n.idMunicipio, n.idSeccion, n.idCE, m.idMedio, p.idPais, es.idEstado, pt.idProtagonista, cp.idCP
-			from Nota n, Medio m, Autor a, colabora_en ce, municipio mu, estado es, pais p, seccion se, tipoNota tp, notaProtagonista np, cargoProtagonista cp, Cargo c, Protagonista pt 
-			where n.idNota = $id and n.idCE = ce.idCE and ce.idAutor = a.idAutor and ce.idMedio = m.idMedio and n.idMunicipio = mu.idMunicipio and mu.idEstado = es.idEstado and es.idPais = p.idPais and n.idSeccion = se.idSeccion and n.idTipoNota = tp.idTipoNota and np.idNota = n.idNota and np.tipoProtagonista = 1 and np.idCP = cp.idCP and cp.idProtagonista = pt.idProtagonista and cp.idCargo = c.idCargo");
+			$result = $mysqli->query("select n.idNota, n.tituloNota, n.fecha, n.paginaNota, n.idTipoNota, n.Clasificacion, n.sintesis, n.texto, n.numeroPeriodico, n.urlNota, n.imagenNota, n.idMunicipio, n.idSeccion, n.idCE, ce.idMedio
+			from Nota n, colabora_en ce
+			where n.idNota = $id and n.idCE = ce.idCE");
 			$arr = array();
 			$aux = array();
 			if ($result)
 			{
 				$row = mysqli_fetch_assoc($result); 
-				$arr[] = $row;	
+				$arr[] = $row;
+				if(isset($row["idMunicipio"]))
+				{
+					$mun = $row["idMunicipio"];
+					$result = $mysqli->query("select e.idPais, e.idEstado from estado e, municipio m where m.idMunicipio = $mun and m.idEstado = e.idEstado");
+					$row = mysqli_fetch_assoc($result);
+					$arr[0]["idPais"] = $row["idPais"];
+					$arr[0]["idEstado"] = $row["idEstado"];
+				}
+				else {
+					$arr[0]['idPais'] = 0;
+					$arr[0]['idEstado'] = 0;
+				}	
 				$result = $mysqli->query("select sb.idSubtema, t.idTema, a.idArea
 				from trata_de td, subtema sb, tema t, Area a
 				where td.idNota_ = $id and td.idSubtema = sb.idSubtema and sb.idTema = t.idTema and t.idArea = a.idArea");
@@ -292,25 +304,41 @@ switch ($instruccion){
 				{
 					while($row = mysqli_fetch_assoc($result))
 						$aux[] = $row;
-					$arr[] = $aux;
+					if(isset($aux[0]['idSubtema']))
+						$arr[] = $aux;
+					else {
+						$arr[1][0]["idSubtema"] = 0;
+						$arr[1][0]["idTema"] = 0;
+						$arr[1][0]["idArea"] = 0;
+					}
 				}else 
 					echo "Error 316-2";
-				$result = $mysqli->query("select count(*) as total from notaProtagonista where idNota = $id and tipoProtagonista = 2");
+				$result = $mysqli->query("select count(*) as total from notaProtagonista where idNota = $id");
 				$row = mysqli_fetch_assoc($result); 				
 				if ($row['total']>0)
 				{
 					$aux = array();
-					$result = $mysqli->query("select pt.idProtagonista, cp.idCP
-					from notaProtagonista np, cargoProtagonista cp, Cargo c, Protagonista pt 
-					where np.idNota = $id and np.tipoProtagonista = 2 and np.idCP = cp.idCP and cp.idProtagonista = pt.idProtagonista and cp.idCargo = c.idCargo");
+					$result = $mysqli->query("select cp.idProtagonista, cp.idCP, np.tipoProtagonista
+					from notaProtagonista np, cargoProtagonista cp
+					where np.idNota = $id and np.idCP = cp.idCP");
 					if ($result)
 					{
 						while ($row = mysqli_fetch_assoc($result))
-							$aux[] = $row;
+							if($row['tipoProtagonista'] == 2)
+								$aux[] = $row;
+							else
+							{
+								$arr[0]["idProtagonista"] = $row["idProtagonista"];
+								$arr[0]["idCP"] = $row["idCP"];	
+							}
 						$arr[] = $aux;
 						mysqli_free_result($result);
 					}else
 						echo "Error 316-3";
+				}
+				else {
+					$arr[0]["idProtagonista"] =0;
+					$arr[0]["idCP"] = "";
 				}
 			}else
 				echo "Error 316-1";
@@ -320,7 +348,7 @@ switch ($instruccion){
 
 //  NOTAS RECIENTES  (ERROR 317)
 			case 17:
-				$result = $mysqli->query("SELECT n.idNota, n.idNota, n.tituloNota as titulo, m.nombreMedio, t.nombreTipoNota as tipo, u.nombreUsuario as usuario 
+				$result = $mysqli->query("SELECT n.idNota, n.idNota, n.tituloNota as titulo, n.fecha, m.nombreMedio, t.nombreTipoNota as tipo, u.nombreUsuario as usuario 
 					from Nota n, Medio m, user u, tipoNota t, colabora_en ce 
 					where n.idCE= ce.idCE and ce.idMedio = m.idMedio and n.idAdmin = u.idUsuario and n.idTipoNota = t.idTipoNota 
 					order by n.idNota 
@@ -340,7 +368,7 @@ switch ($instruccion){
 
 //  ENCONTRAR NOTAS  (ERROR 318)
 			case 18:
-				$result = $mysqli->query("SELECT n.idNota, n.tituloNota as titulo, m.nombreMedio, t.nombreTipoNota as tipo, u.nombreUsuario as usuario 
+				$result = $mysqli->query("SELECT n.idNota, n.tituloNota as titulo, n.fecha, m.nombreMedio, t.nombreTipoNota as tipo, u.nombreUsuario as usuario 
 							from Nota n, Medio m, user u, tipoNota t, colabora_en ce 
 							where n.idCE = ce.idCE and ce.idMedio = m.idMedio and n.idAdmin = u.idUsuario and n.idTipoNota = t.idTipoNota 
 							order by n.idNota desc");
@@ -394,6 +422,25 @@ switch ($instruccion){
 				 mysqli_free_result($result);
 			}else{
 				echo ("Error 320");
+			}
+			mysqli_close($mysqli);			
+			break;
+// Toos autores
+		case 21:
+			$result=mysqli_query($mysqli,
+					"SELECT * 
+					 FROM Autor
+					 order by nombreAutor asc
+					 ");
+			$arr = array();
+			if($result) {
+				 while($row = $result->fetch_assoc()) {
+					 $arr[] = $row;
+				 }
+				 echo json_encode($arr);
+				 mysqli_free_result($result);
+			}else{
+				echo ("Error 321");
 			}
 			mysqli_close($mysqli);			
 			break;

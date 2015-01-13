@@ -31,13 +31,19 @@ switch ($instruccion){
 	case 2:
 
 		$result=mysqli_query($mysqli,
-		"SELECT DISTINCT m.nombreMedio, m.urlMedio as idPeriodico, m.imagenMedio as imagen
-		 from Nota n, colabora_en ce, Medio m
-		 where ce.idCE = n.idCE and ce.idMedio = m.idMedio  ORDER BY n.idNota DESC limit 50; ");
+		"SELECT distinct m.nombreMedio, m.urlMedio as idPeriodico, m.imagenMedio as imagen 
+		from Medio m, (
+			select * 
+			from Nota 
+			order by Nota.idNota desc 
+			limit  50) AS n, colabora_en ce 
+		where ce.idCE = n.idCE 
+		and ce.idMedio = m.idMedio  
+		ORDER BY m.nombreMedio");
 		$arr = array();
 		if($result==true) {
 		 while($row = $result->fetch_assoc()) {
-		 $arr[] = $row;
+		 	$arr[] = $row;
 		 }
 		 echo json_encode($arr);
 		 mysqli_free_result($result);

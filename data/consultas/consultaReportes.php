@@ -1,7 +1,7 @@
 <?php  
 	require_once("../conexion.php");
 	$datos = json_decode(file_get_contents('php://input'), true);
-	if($datos['medio'][0]==1 || $datos['autor'][0]==1 || $datos['protagonista'][0]==1 || $datos['tema'][0]==1 || $datos['medio'][0]==2 || $datos['autor'][0]==2 || $datos['protagonista'][0]==2 || $datos['tema'][0]==2 || $datos['clasificacion'][0]==1 || $datos['clasificacion'][0]==2 || $datos['fecha'][0]==1 || $datos['fecha'][0]==2 || $datos['tipo'][0]==1 || $datos['tipo'][0]==2 || $datos['seccion'][0]==1 || $datos['seccion'][0]==2 || ($datos['genero'][0]>=1 && $datos['genero'][0]<=6) || $datos['pais'][0]==1 || $datos['pais'][0]==2 || $datos['estado'][0]==1 || $datos['estado'][0]==2 || $datos['subtema'][0]==1 || $datos['subtema'][0]==2 || $datos['area'][0]==1 || $datos['area'][0]==2)
+	if($datos['medio'][0]==1 || $datos['autor'][0]==1 || $datos['protagonista'][0]==1 || $datos['tema'][0]==1 || $datos['medio'][0]==2 || $datos['autor'][0]==2 || $datos['protagonista'][0]==2 || $datos['tema'][0]==2 || $datos['clasificacion'][0]==1 || $datos['clasificacion'][0]==2 || $datos['fecha'][0]==1 || $datos['fecha'][0]==2 || $datos['tipo'][0]==1 || $datos['tipo'][0]==2 || $datos['seccion'][0]==1 || $datos['seccion'][0]==2 || ($datos['genero'][0]>=1 && $datos['genero'][0]<=6) || $datos['pais'][0]==1 || $datos['pais'][0]==2 || $datos['estado'][0]==1 || $datos['estado'][0]==2 || $datos['subtema'][0]==1 || $datos['subtema'][0]==2 || $datos['area'][0]==1 || $datos['area'][0]==2 || $datos['cargo'][0]==1 || $datos['cargo'][0]==2 || $datos['municipio'][0]==1 || $datos['municipio'][0]==2)
 	{		
 		$resultado = [];
 		$medio = [];
@@ -18,45 +18,46 @@
 		$municipio = [];
 		$tema = [];
 		$area = [];
+		$cargo = [];
 		switch ($datos['genero'][0]) 
 		{
-			case 1:	$result = $mysqli->query("select idAutor from Autor where generoAutor = 'F'");
+			case 1:	$result = $mysqli->query("select idAutor, nombreAutor from Autor where generoAutor = 'F'");
 					while($row = mysqli_fetch_assoc($result))
-						$genero[0][] = $row['idAutor'];
-					$result = $mysqli->query("select idProtagonista from Protagonista where genero = 'F'");
+						$genero[0][] = $row;
+					$result = $mysqli->query("select idProtagonista, nombreProtagonista from Protagonista where genero = 'F'");
 					while($row = mysqli_fetch_assoc($result))
-						$genero[1][] = $row['idProtagonista'];
+						$genero[1][] = $row;
 					$resultado['genero'] = "Femenino";
 					break;
-			case 2:	$result = $mysqli->query("select idAutor from Autor where generoAutor = 'M'");
+			case 2:	$result = $mysqli->query("select idAutor, nombreAutor from Autor where generoAutor = 'M'");
 					while($row = mysqli_fetch_assoc($result))
-						$genero[0][] = $row['idAutor'];
-					$result = $mysqli->query("select idProtagonista from Protagonista where genero = 'M'");
+						$genero[0][] = $row;
+					$result = $mysqli->query("select idProtagonista, nombreProtagonista from Protagonista where genero = 'M'");
 					while($row = mysqli_fetch_assoc($result))
-						$genero[1][] = $row['idProtagonista'];
+						$genero[1][] = $row;
 					$resultado['genero'] = "Masculino";
 					break;
-			case 3:	$result = $mysqli->query("select idAutor from Autor where generoAutor = 'F'");
+			case 3:	$result = $mysqli->query("select idAutor, nombreAutor from Autor where generoAutor = 'F'");
 					while($row = mysqli_fetch_assoc($result))
-						$genero[0][] = $row['idAutor'];
+						$genero[0][] = $row;
 					$resultado['genero'] = "AutorFemenino";
 					$genero[1] = [];
 					break;
-			case 4:	$result = $mysqli->query("select idProtagonista from Protagonista where genero = 'F'");
+			case 4:	$result = $mysqli->query("select idProtagonista, nombreProtagonista from Protagonista where genero = 'F'");
 					while($row = mysqli_fetch_assoc($result))
 						$genero[1][] = $row['idProtagonista'];
 					$resultado['genero'] = "ProtagonistaFemenino";
 					$genero[0] = [];
 					break;
-			case 5:	$result = $mysqli->query("select idAutor from Autor where generoAutor = 'M'");
+			case 5:	$result = $mysqli->query("select idAutor, nombreAutor from Autor where generoAutor = 'M'");
 					while($row = mysqli_fetch_assoc($result))
-						$genero[0][] = $row['idAutor'];
+						$genero[0][] = $row;
 					$resultado['genero'] = "AutorMasculino";
 					$genero[1] = [];
 					break;
-			case 6:	$result = $mysqli->query("select idProtagonista from Protagonista where genero = 'M'");
+			case 6:	$result = $mysqli->query("select idProtagonista, nombreProtagonista from Protagonista where genero = 'M'");
 					while($row = mysqli_fetch_assoc($result))
-						$genero[1][] = $row['idProtagonista'];
+						$genero[1][] = $row;
 					$resultado['genero'] = "ProtagonistaMasculino";
 					$genero[0] = [];
 					break;		
@@ -68,93 +69,99 @@
 		if ($datos['pais'][0]==1)
 		{
 			for ($i = 1; $i<count($datos['medio']); $i++)			
-				$pais[] = $datos['pais'][$i]['idPais'];
+				$pais[] = $datos['pais'][$i];
 		}
 		if ($datos['estado'][0]==1)
 		{			
 			for ($i = 1; $i<count($datos['medio']); $i++)
-				$estado[] = $datos['estado'][$i]['idEstado'];
+				$estado[] = $datos['estado'][$i];
 		}
 		if ($datos['municipio'][0]==1)
 		{			
 			for ($i = 1; $i<count($datos['medio']); $i++)
-				$municipio[] = $datos['municipio'][$i]['idMunicipio'];
+				$municipio[] = $datos['municipio'][$i];
 		}
 		if ($datos['area'][0]==1)
 		{			
 			for ($i = 1; $i<count($datos['medio']); $i++)
-				$area[] = $datos['area'][$i]['idArea'];
+				$area[] = $datos['area'][$i];
 		}
 		if ($datos['tema'][0]==1)
 		{			
 			for ($i = 1; $i<count($datos['medio']); $i++)
-				$tema[] = $datos['tema'][$i]['idTema'];
+				$tema[] = $datos['tema'][$i];
 		}
-		if (count($datos['medio'])>1)
+		if ($datos['medio'][0]==1 )
 		{
 			for ($i = 1; $i<count($datos['medio']); $i++)
-				$medio[] = $datos['medio'][$i]['idMedio'];
+				$medio[] = $datos['medio'][$i];
 		}
-		if (count($datos['autor'])>1)
+		if ($datos['autor'][0]==1)
 		{
 			for ($i = 1; $i<count($datos['autor']); $i++)
-				$autor[] = $datos['autor'][$i]['idAutor'];
+				$autor[] = $datos['autor'][$i];
 		}
-		if (count($datos['protagonista'])>1)
+		if ($datos['protagonista'][0]==1)
 		{
 			for ($i = 1; $i<count($datos['protagonista']); $i++)
-				$protagonista[] = $datos['protagonista'][$i]['idProtagonista'];
+				$protagonista[] = $datos['protagonista'][$i];
 		}
-		if (count($datos['subtema'])>1)
+		if ($datos['subtema'][0]==1)
 		{
 			for ($i = 1; $i<count($datos['subtema']); $i++)
-				$subtema[] = $datos['subtema'][$i]['idSubtema'];
+				$subtema[] = $datos['subtema'][$i];
 		}
 		if (count($datos['fecha'])>1)
 		{
 			for ($i = 1; $i<count($datos['fecha']); $i++)
 				$fecha[] = $datos['fecha'][$i];
 		}
-		if (count($datos['tipo'])>1)
+		if ($datos['tipo'][0]==1)
 		{
 			for ($i = 1; $i<count($datos['tipo']); $i++)
 				$tipo[] = $datos['tipo'][$i];
 		}
-		if (count($datos['seccion'])>1)
+		if ($datos['seccion'][0]==1)
 		{
 			for ($i = 1; $i<count($datos['seccion']); $i++)
-				$seccion[] = $datos['seccion'][$i]['idSeccion'];
+				$seccion[] = $datos['seccion'][$i];
+		}
+		if ($datos['cargo'][0]==1)
+		{
+			for ($i = 1; $i<count($datos['cargo']); $i++)
+				$cargo[] = $datos['cargo'][$i];
 		}
 		if($datos['medio'][0]==2)
 		{
-			$result = $mysqli->query("select idMedio from Medio");
+			$result = $mysqli->query("select idMedio, nombreMedio from Medio");
 			while($row = mysqli_fetch_assoc($result))
-				$medio[] = $row['idMedio'];
+				$medio[] = $row;
 		}
 		if($datos['autor'][0]==2)
 		{
-			$result = $mysqli->query("select idAutor from Autor");
+			$aMedio = (isset($datos['medio'][1]["idMedio"]))? : "ce.idMedio";
+			$result = $mysqli->query("select a.idAutor, a.nombreAutor from Autor a, colabora_en ce where a.idAutor = ce.idAutor and ce.idMedio = ".$aMedio);
 			while($row = mysqli_fetch_assoc($result))
-				$autor[] = $row['idAutor'];
+				$autor[] = $row;
 		}
 		if($datos['protagonista'][0]==2)
 		{
-			$result = $mysqli->query("select idProtagonista from Protagonista");
+			$result = $mysqli->query("select idProtagonista, nombreProtagonista from Protagonista");
 			while($row = mysqli_fetch_assoc($result))
-				$protagonista[] = $row['idProtagonista'];
+				$protagonista[] = $row;
 		}
 		if($datos['subtema'][0]==2)
 		{
 			$atema = $datos['tema'][1]['idTema'];
-			$result = $mysqli->query("select idSubtema from subtema where idTema = $atema");
+			$result = $mysqli->query("select idSubtema, nombreSubtema from subtema where idTema = $atema");
 			while($row = mysqli_fetch_assoc($result))
-				$subtema[] = $row['idSubtema'];
+				$subtema[] = $row;
 		}
 		if($datos['seccion'][0]==2)
 		{
-			$result = $mysqli->query("select idSeccion from seccion");
+			$result = $mysqli->query("select idSeccion, nombreSeccion from seccion");
 			while($row = mysqli_fetch_assoc($result))
-				$seccion[] = $row['idSeccion'];
+				$seccion[] = $row;
 		}
 		if ($datos['clasificacion'][0]==2)
 		{
@@ -163,44 +170,50 @@
 		} 		
 		if ($datos['tipo'][0]==2)
 		{
-			$result = $mysqli->query("select idTipoNota from tipoNota");
+			$result = $mysqli->query("select idTipoNota, nombreTipoNota from tipoNota");
 			while($row = mysqli_fetch_assoc($result))
-				$tipo[] = $row['idTipoNota'];
+				$tipo[] = $row;
 		}		
 		if ($datos['pais'][0]==2)
 		{
-			$result = $mysqli->query("select idPais from pais");
+			$result = $mysqli->query("select idPais, nombrePais from pais");
 			while($row = mysqli_fetch_assoc($result))
-				$pais[] = $row['idPais'];
+				$pais[] = $row;
 		}
 		if ($datos['estado'][0]==2)
 		{
 			$apais = $datos['pais'][1]['idPais'];
-			$result = $mysqli->query("select idEstado from estado where idPais = $apais");
+			$result = $mysqli->query("select idEstado, nombreEstado from estado where idPais = $apais");
 			while($row = mysqli_fetch_assoc($result))
-				$estado[] = $row['idEstado'];
+				$estado[] = $row;
 		}
 		if ($datos['municipio'][0]==2)
 		{
 			$aestado = $datos['estado'][1]['idEstado'];
-			$result = $mysqli->query("select idMunicipio from municipio where idEstado = $aestado");
+			$result = $mysqli->query("select idMunicipio, nombreMunicipio from municipio where idEstado = $aestado");
 			while($row = mysqli_fetch_assoc($result))
-				$municipio[] = $row['idMunicipio'];
+				$municipio[] = $row;
 		}
 		if($datos['area'][0]==2)
 		{
-			$result = $mysqli->query("select idArea from Area");
+			$result = $mysqli->query("select idArea, nombreArea from Area");
 			while($row = mysqli_fetch_assoc($result))
-				$area[] = $row['idArea'];
+				$area[] = $row;
 		}
 		if($datos['tema'][0]==2)
 		{
 			$aarea = $datos['tema'][1]['idArea'];
-			$result = $mysqli->query("select idTema from tema where idArea = $atema");
+			$result = $mysqli->query("select idTema, nombreTema from tema where idArea = $atema");
 			while($row = mysqli_fetch_assoc($result))
-				$tema[] = $row['idTema'];
+				$tema[] = $row;
 		}
-		$auxm = 0;
+		if ($datos['cargo'][0]==2)
+		{
+			$aprot = $datos['protagonista'][1]['idProtagonista'];
+			$result = $mysqli->query("select c.idCargo, c.nombreCargo from cargoProtagonista cp, Cargo c where cp.idProtagonista = $aprot and cp.idCargo = c.idCargo");
+			while($row = mysqli_fetch_assoc($result))
+				$cargo[] = $row;
+		}
 		$auxa = 0;
 		$auxp = 0;
 		$auxs = 0;
@@ -213,10 +226,14 @@
 		$auxe = 0;
 		$auxmu = 0;
 		$auxt = 0;
-		$auxaa = 0;
+		$auxaa = 0;		
+		$auxcg = 0;			
+		$auxm = 0;
 		$total = [];		
-		while($auxf < count($fecha) || $auxg < count($genero) || $auxm < count($medio) || $auxa < count($autor) || $auxp < count($protagonista) || $auxs < count($subtema) || $auxc < count($clasificacion) || $auxtp <count($tipo) || $auxsc < count($seccion) || $auxps<count($pais) || $auxe < count($estado) || $auxmu < count($municipio) || $auxt < count($tema) || $auxaa < count($area))
+		while($auxf < count($fecha) || $auxg < count($genero) || $auxm < count($medio) || $auxa < count($autor) || $auxp < count($protagonista) || $auxs < count($subtema) || $auxc < count($clasificacion) || $auxtp <count($tipo) || $auxsc < count($seccion) || $auxps<count($pais) || $auxe < count($estado) || $auxmu < count($municipio) || $auxt < count($tema) || $auxaa < count($area) || $auxcg < count($cargo))
 		{
+			$tablaux = "";
+			$whereaux = "";
 			$auxa = 0;
 			$auxp = 0;
 			$auxs = 0;
@@ -229,21 +246,19 @@
 			$auxe = 0;
 			$auxmu = 0;
 			$auxt = 0;
-			$auxaa = 0;			
-			$sql = "select count(distinct n.idNota) as total 
-				from Nota n, colabora_en ce, Medio m, cargoProtagonista cp, notaProtagonista np, trata_de td, pais p, estado e, municipio mu, Area a, tema t, subtema sb
-				where ce.idCE = n.idCE and cp.idCP = np.idCP and np.idNota = n.idNota and td.idNota_ = n.idNota and n.idMunicipio = mu.idMunicipio and mu.idEstado = e.idEstado and e.idPais = p.idPais and td.idSubtema = sb.idSubtema and sb.idTema = t.idTema and t.idArea = a.idArea";
+			$auxaa = 0;		
+			$auxcg = 0;	
 			if($auxm < count($medio))
 			{
-				$sqla = "and ce.idMedio = ".$medio[$auxm]." ";	
-				$sql = $sql . $sqla;				
-				$resultado['medio']=$medio[$auxm];	
+				$tablaux = (strpos($tablaux, "colabora_en ce") !== false) ? $tablaux : $tablaux.", colabora_en ce";
+				$whereaux .= "and ce.idMedio = ".$medio[$auxm]['idMedio']." ";
+				$whereaux = (strpos($whereaux, "ce.idCE = n.idCE") !== false) ? $whereaux : $whereaux."and ce.idCE = n.idCE ";									
+				$resultado['medio']=$medio[$auxm]['nombreMedio'];	
 				$auxm++;
 			}
 			if(count($clasificacion) == 1)
-			{
-				$sqla = "and np.Clasificacion = '".$clasificacion[0]."' ";
-				$sql = $sql . $sqla;
+			{				
+				$whereaux .= "and n.Clasificacion = '".$clasificacion[0]."' ";
 				$resultado['clasificacion']=$clasificacion[0];
 				$auxc++;	
 			}
@@ -251,35 +266,39 @@
 			{
 				if(count($fecha) == 1)
 				{
-					$sqla = "and np.fecha = '".$fecha[0]."' ";
-					$sql = $sql . $sqla;
+					$whereaux .= "and n.fecha = '".$fecha[0]."' ";					
 					$resultado['fecha'] = $fecha[0];
 					$auxf = 1;
 				}
 				if(count($fecha) == 2)
 				{
-					$sqla = "and np.fecha between '".$fecha[0]."' and '".$fecha[1]."' ";
-					$sql = $sql . $sqla;
+					$whereaux .= "and n.fecha between '".$fecha[0]."' and '".$fecha[1]."' ";
 					$resultado['fecha'] = $fecha[0]." - ".$fecha[1];
 					$auxf =2;
 				}
 			}
 			if(0 < count($genero))
 			{
-				$sqla = "";
+				$tablaux = (strpos($tablaux, "notaProtagonista np") !== false) ? $tablaux : $tablaux.", notaProtagonista np";
+				$tablaux = (strpos($tablaux, "cargoProtagonista cp") !== false) ? $tablaux : $tablaux.", cargoProtagonista ce";
+				$tablaux = (strpos($tablaux, "colabora_en ce") !== false) ? $tablaux : $tablaux.", colabora_en ce";
 				for($i=0; $i<count($genero[0]); $i++)
-					$sqla = $sqla . "or ce.idAutor = ".$genero[0][$i]." ";
+					$whereaux .= "or ce.idAutor = ".$genero[0][$i]['idAutor']." ";
 				for($i=0; $i<count($genero[1]); $i++)
-					$sqla = $sqla . "or np.idProtagonista = ".$genero[1][$i]." ";
-				$sql = $sql . $sqla;
+					$whereaux .= "or cp.idProtagonista = ".$genero[1][$i]['idProtagonista']." ";
+				$whereaux = (strpos($whereaux, "cp.idCP = np.idCP") !== false) ? $whereaux : $whereaux."and cp.idCP = np.idCP ";
+				$whereaux = (strpos($whereaux, "n.idNota = np.idNota") !== false) ? $whereaux : $whereaux."and n.idNota = np.idNota ";
+				$whereaux = (strpos($whereaux, "ce.idCE = n.idCE") !== false) ? $whereaux : $whereaux."and ce.idCE = n.idCE ";	
 				$auxg = 2;
 			}	
-			$asql1 = $sql;
-			if ($auxa < count($autor) || $auxp < count($protagonista) || $auxs < count($subtema) || $auxc < count($clasificacion) || $auxtp <count($tipo) || $auxsc < count($seccion) || $auxps<count($pais) || $auxe < count($estado) || $auxmu < count($municipio) || $auxt < count($tema) || $auxaa < count($area))
+			$tablaux1 = $tablaux;
+			$whereaux1 = $whereaux;
+			if ($auxa < count($autor) || $auxp < count($protagonista) || $auxs < count($subtema) || $auxc < count($clasificacion) || $auxtp <count($tipo) || $auxsc < count($seccion) || $auxps<count($pais) || $auxe < count($estado) || $auxmu < count($municipio) || $auxt < count($tema) || $auxaa < count($area) || $auxcg < count($cargo))
 			{						
-				while($auxa < count($autor) || $auxp < count($protagonista) || $auxs < count($subtema) || $auxc < count($clasificacion) || $auxtp <count($tipo) || $auxsc < count($seccion) || $auxps<count($pais) || $auxe < count($estado) || $auxmu < count($municipio) || $auxt < count($tema) || $auxaa < count($area))
+				while($auxa < count($autor) || $auxp < count($protagonista) || $auxs < count($subtema) || $auxc < count($clasificacion) || $auxtp <count($tipo) || $auxsc < count($seccion) || $auxps<count($pais) || $auxe < count($estado) || $auxmu < count($municipio) || $auxt < count($tema) || $auxaa < count($area) || $auxcg < count($cargo))
 				{
-					$sql = $asql1;
+					$tablaux = $tablaux1;
+					$whereaux = $whereaux1;
 					$auxp = 0;
 					$auxs = 0;
 					$auxc = 0;
@@ -289,20 +308,24 @@
 					$auxe = 0;
 					$auxmu = 0;
 					$auxt = 0;
-					$auxaa = 0;																	
+					$auxaa = 0;
+					$auxcg = 0;																	
 					if($auxa < count($autor))
 					{
-						$sqla = "and ce.idAutor = ".$autor[$auxa]." ";	
-						$sql = $sql . $sqla;
-						$resultado['autor']=$autor[$auxa];
+						$tablaux = (strpos($tablaux, "colabora_en ce") !== false) ? $tablaux : $tablaux.", colabora_en ce";
+						$whereaux .= "and ce.idAutor = ".$autor[$auxa]['idAutor']." ";	
+						$whereaux = (strpos($whereaux, "ce.idCE = n.idCE") !== false) ? $whereaux : $whereaux."and ce.idCE = n.idCE ";	
+						$resultado['autor']=$autor[$auxa]['nombreAutor'];
 						$auxa++;								
 					}
-					$asql2 = $sql;
-					if($auxp < count($protagonista) || $auxs < count($subtema) || $auxc < count($clasificacion) || $auxtp <count($tipo) || $auxsc < count($seccion) || $auxps<count($pais) || $auxe < count($estado) || $auxmu < count($municipio) || $auxt < count($tema) || $auxaa < count($area))
+					$tablaux2 = $tablaux;
+					$whereaux2 = $whereaux;
+					if($auxp < count($protagonista) || $auxs < count($subtema) || $auxc < count($clasificacion) || $auxtp <count($tipo) || $auxsc < count($seccion) || $auxps<count($pais) || $auxe < count($estado) || $auxmu < count($municipio) || $auxt < count($tema) || $auxaa < count($area) || $auxcg < count($cargo))
 					{
-						while($auxp < count($protagonista) || $auxs < count($subtema) || $auxc < count($clasificacion) || $auxtp <count($tipo) || $auxsc < count($seccion) || $auxps<count($pais) || $auxe < count($estado) || $auxmu < count($municipio) || $auxt < count($tema) || $auxaa < count($area))
+						while($auxp < count($protagonista) || $auxs < count($subtema) || $auxc < count($clasificacion) || $auxtp <count($tipo) || $auxsc < count($seccion) || $auxps<count($pais) || $auxe < count($estado) || $auxmu < count($municipio) || $auxt < count($tema) || $auxaa < count($area) || $auxcg < count($cargo))
 						{
-							$sql = $asql2;					
+							$tablaux = $tablaux2;
+							$whereaux = $whereaux2;
 							$auxs = 0;
 							$auxc = 0;
 							$auxtp = 0;
@@ -312,19 +335,25 @@
 							$auxmu = 0;
 							$auxt = 0;
 							$auxaa = 0;
+							$auxcg = 0;
 							if($auxp < count($protagonista))
 							{
-								$sqla = "and cp.idProtagonista = ".$protagonista[$auxp]." ";	
-								$sql = $sql . $sqla;
-								$resultado['protagonista']=$protagonista[$auxp];
+								$tablaux = (strpos($tablaux, "cargoProtagonista cp") !== false) ? $tablaux : $tablaux.", cargoProtagonista cp";
+								$tablaux = (strpos($tablaux, "notaProtagonista np") !== false) ? $tablaux : $tablaux.", notaProtagonista np";
+								$whereaux .= "and cp.idProtagonista = ".$protagonista[$auxp]['idProtagonista']." ";
+								$whereaux = (strpos($whereaux, "cp.idCP = np.idCP") !== false) ? $whereaux : $whereaux."and cp.idCP = np.idCP ";	
+								$whereaux = (strpos($whereaux, "n.idNota = np.idNota") !== false) ? $whereaux : $whereaux."and n.idNota = np.idNota ";
+								$resultado['protagonista']=$protagonista[$auxp]['nombreProtagonista'];
 								$auxp++;						
 							}
-							$asql3 = $sql;
-							if ($auxs < count($subtema) || $auxc < count($clasificacion) || $auxtp <count($tipo) || $auxsc < count($seccion) || $auxps<count($pais) || $auxe < count($estado) || $auxmu < count($municipio) || $auxt < count($tema) || $auxaa < count($area))
+							$tablaux3 = $tablaux;
+							$whereaux3 = $whereaux;
+							if ($auxs < count($subtema) || $auxc < count($clasificacion) || $auxtp <count($tipo) || $auxsc < count($seccion) || $auxps<count($pais) || $auxe < count($estado) || $auxmu < count($municipio) || $auxt < count($tema) || $auxaa < count($area) || $auxcg < count($cargo))
 							{
-								while($auxs < count($subtema)|| $auxc < count($clasificacion) || $auxtp <count($tipo) || $auxsc < count($seccion) || $auxps<count($pais) || $auxe < count($estado) || $auxmu < count($municipio) || $auxt < count($tema) || $auxaa < count($area))
+								while($auxs < count($subtema)|| $auxc < count($clasificacion) || $auxtp <count($tipo) || $auxsc < count($seccion) || $auxps<count($pais) || $auxe < count($estado) || $auxmu < count($municipio) || $auxt < count($tema) || $auxaa < count($area) || $auxcg < count($cargo))
 								{
-									$sql = $asql3;
+									$tablaux = $tablaux3;
+									$whereaux = $whereaux3;
 									$auxc = 0;
 									$auxtp = 0;
 									$auxsc = 0;
@@ -333,19 +362,23 @@
 									$auxmu = 0;
 									$auxt = 0;
 									$auxaa = 0;
+									$auxcg = 0;
 									if($auxs < count($subtema))
 									{
-										$sqla = "and td.idSubtema = ".$subtema[$auxs]." ";	
-										$sql = $sql . $sqla;
-										$resultado['subtema']=$subtema[$auxs];
+										$tablaux = (strpos($tablaux, "trata_de td") !== false) ? $tablaux : $tablaux.", trata_de td";
+										$whereaux .= "and td.idSubtema = ".$subtema[$auxs]['idSubtema']." ";	
+										$whereaux = (strpos($whereaux, "td.idNota = n.idNota") !== false) ? $whereaux : $whereaux."and cp.idCP = np.idCP ";	
+										$resultado['subtema']=$subtema[$auxs]['nombreSubtema'];
 										$auxs++;						
 									}
-									$asql4 = $sql;
-									if($auxc < count($clasificacion) || $auxtp <count($tipo) || $auxsc < count($seccion) || $auxps<count($pais) || $auxe < count($estado) || $auxmu < count($municipio) || $auxt < count($tema) || $auxaa < count($area))
+									$tablaux4 = $tablaux;
+									$whereaux4 = $whereaux;
+									if($auxc < count($clasificacion) || $auxtp <count($tipo) || $auxsc < count($seccion) || $auxps<count($pais) || $auxe < count($estado) || $auxmu < count($municipio) || $auxt < count($tema) || $auxaa < count($area) || $auxcg < count($cargo))
 									{
-										while($auxc < count($clasificacion) || $auxtp <count($tipo) || $auxsc < count($seccion) || $auxps<count($pais) || $auxe < count($estado) || $auxmu < count($municipio) || $auxt < count($tema) || $auxaa < count($area))
+										while($auxc < count($clasificacion) || $auxtp <count($tipo) || $auxsc < count($seccion) || $auxps<count($pais) || $auxe < count($estado) || $auxmu < count($municipio) || $auxt < count($tema) || $auxaa < count($area) || $auxcg < count($cargo))
 										{
-											$sql = $asql4;
+											$tablaux = $tablaux4;
+											$whereaux = $whereaux4;
 											$auxtp = 0;
 											$auxsc = 0;
 											$auxps = 0;
@@ -355,220 +388,312 @@
 											$auxaa = 0;
 											if($auxc < count($clasificacion))
 											{
-												$sqla = "and np.Clasificacion = ".$clasificacion[$auxc]." ";
-												$sql = $sql . $sqla;
+												$whereaux .= "and n.Clasificacion = ".$clasificacion[$auxc]." ";
 												$resultado['clasificacion']=$clasificacion[$auxc];
 												$auxc++;
 											}
-											$asql5 = $sql;
-											if($auxtp <count($tipo) || $auxsc < count($seccion) || $auxps<count($pais) || $auxe < count($estado) || $auxmu < count($municipio) || $auxt < count($tema) || $auxaa < count($area))
+											$tablaux5 = $tablaux;
+											$whereaux5 = $whereaux;
+											if($auxtp <count($tipo) || $auxsc < count($seccion) || $auxps<count($pais) || $auxe < count($estado) || $auxmu < count($municipio) || $auxt < count($tema) || $auxaa < count($area) || $auxcg < count($cargo))
 											{
-												while($auxtp <count($tipo) || $auxsc < count($seccion) || $auxps<count($pais) || $auxe < count($estado) || $auxmu < count($municipio) || $auxt < count($tema) || $auxaa < count($area))
+												while($auxtp <count($tipo) || $auxsc < count($seccion) || $auxps<count($pais) || $auxe < count($estado) || $auxmu < count($municipio) || $auxt < count($tema) || $auxaa < count($area) || $auxcg < count($cargo))
 												{
-													$sql = $asql5;
+													$tablaux = $tablaux5;
+													$whereaux = $whereaux5;
 													$auxsc = 0;
 													$auxps = 0;
 													$auxe = 0;
 													$auxmu = 0;
 													$auxt = 0;
 													$auxaa = 0;
-													if($auxtp <count($tipo) || $auxsc < count($seccion) || $auxps<count($pais) || $auxe < count($estado) || $auxmu < count($municipio) || $auxt < count($tema) || $auxaa < count($area))
+													$auxcg = 0;
+													if($auxtp <count($tipo))
 													{														
-														$sqla = "and np.idTipoNota = ".$tipo[$auxtp]." ";
-														$sql = $sql . $sqla;
-														$resultado['tipo']=$tipo[$auxtp];
+														$whereaux .= "and n.idTipoNota = ".$tipo[$auxtp]['idTipoNota']." ";
+														$resultado['tipo']=$tipo[$auxtp]['nombreTipoNota'];
 														$auxtp++;
 													}
-													$asql6 = $sql;
-													if($auxsc < count($seccion) || $auxps<count($pais) || $auxe < count($estado) || $auxmu < count($municipio) || $auxt < count($tema) || $auxaa < count($area))
+													$tablaux6 = $tablaux;
+													$whereaux6 = $whereaux;
+													if($auxsc < count($seccion) || $auxps<count($pais) || $auxe < count($estado) || $auxmu < count($municipio) || $auxt < count($tema) || $auxaa < count($area) || $auxcg < count($cargo))
 													{
-														while($auxsc < count($seccion) || $auxps<count($pais) || $auxe < count($estado) || $auxmu < count($municipio) || $auxt < count($tema) || $auxaa < count($area))
+														while($auxsc < count($seccion) || $auxps<count($pais) || $auxe < count($estado) || $auxmu < count($municipio) || $auxt < count($tema) || $auxaa < count($area) || $auxcg < count($cargo))
 														{
-															$sql = $asql6;
+															$tablaux = $tablaux6;
+															$whereaux = $whereaux6;
 															$auxps = 0;
 															$auxe = 0;
 															$auxmu = 0;
 															$auxt = 0;
 															$auxaa = 0;
+															$auxcg = 0;
 															if($auxsc < count($seccion))
 															{
-																$sqla = "and np.idSeccion = ".$seccion[$auxsc]." ";
-																$sql = $sql . $sqla;
-																$resultado['seccion']=$seccion[$auxsc];
+																$whereaux .= "and n.idSeccion = ".$seccion[$auxsc]['idSeccion']." ";
+																$resultado['seccion']=$seccion[$auxsc]['nombreSeccion'];
 																$auxsc++;
 															}
-															$asql7 = $sql;
-															if($auxps<count($pais) || $auxe < count($estado) || $auxmu < count($municipio) || $auxt < count($tema) || $auxaa < count($area))
+															$tablaux7 = $tablaux;
+															$whereaux7 = $whereaux;
+															if($auxps<count($pais) || $auxe < count($estado) || $auxmu < count($municipio) || $auxt < count($tema) || $auxaa < count($area) || $auxcg < count($cargo))
 															{
-																while($auxps<count($pais) || $auxe < count($estado) || $auxmu < count($municipio) || $auxt < count($tema) || $auxaa < count($area))
+																while($auxps<count($pais) || $auxe < count($estado) || $auxmu < count($municipio) || $auxt < count($tema) || $auxaa < count($area) || $auxcg < count($cargo))
 																{
-																	$sql = $asql7;
+																	$tablaux = $tablaux7;
+																	$whereaux = $whereaux7;
 																	$auxe = 0;
 																	$auxmu = 0;
 																	$auxt = 0;
 																	$auxaa = 0;
+																	$auxcg = 0;
 																	if($auxps<count($pais))
 																	{
-																		$sqla = "and p.idPais = ".$pais[$auxps]." ";
-																		$sql = $sql . $sqla;
-																		$resultado['pais']=$pais[$auxps];
+																		$tablaux = (strpos($tablaux, "pais p") !== false) ? $tablaux : $tablaux.", pais p";
+																		$tablaux = (strpos($tablaux, "estado e") !== false) ? $tablaux : $tablaux.", estado e";
+																		$tablaux = (strpos($tablaux, "municipio m") !== false) ? $tablaux : $tablaux.", municipio m";
+																		$whereaux .= "and p.idPais = ".$pais[$auxps]['idPais']." ";
+																		$whereaux = (strpos($whereaux, "p.idPais = e.idPais") !== false) ? $whereaux : $whereaux."and p.idPais = e.idPais ";	
+																		$whereaux = (strpos($whereaux, "e.idEstado = m.idEstado") !== false) ? $whereaux : $whereaux."and e.idEstado = m.idEstado ";
+																		$whereaux = (strpos($whereaux, "m.idMunicipio = n.idMunicipio") !== false) ? $whereaux : $whereaux."and m.idMunicipio = n.idMunicipio ";	
+																		$resultado['pais']=$pais[$auxps]['nombrePais'];
 																		$auxps++;	
 																	}
-																	$asql8 = $sql;
-																	if($auxe < count($estado) || $auxmu < count($municipio) || $auxt < count($tema) || $auxaa < count($area))
+																	$tablaux8 = $tablaux;
+																	$whereaux8 = $whereaux;
+																	if($auxe < count($estado) || $auxmu < count($municipio) || $auxt < count($tema) || $auxaa < count($area) || $auxcg < count($cargo))
 																	{
-																		while($auxe < count($estado) || $auxmu < count($municipio) || $auxt < count($tema) || $auxaa < count($area))
+																		while($auxe < count($estado) || $auxmu < count($municipio) || $auxt < count($tema) || $auxaa < count($area) || $auxcg < count($cargo))
 																		{
-																			$sql = $asql8;
+																			$tablaux = $tablaux8;
+																			$whereaux = $whereaux8;
 																			$auxmu = 0;
 																			$auxt = 0;
 																			$auxaa = 0;
+																			$auxcg = 0;
 																			if($auxe < count($estado))
 																			{
-																				$sqla = "and e.idEstado = ".$estado[$auxe]." ";
-																				$sql = $sql . $sqla;
-																				$resultado['estado']=$estado[$auxe];
+																				$tablaux = (strpos($tablaux, "estado e") !== false) ? $tablaux : $tablaux.", estado e";
+																				$tablaux = (strpos($tablaux, "municipio m") !== false) ? $tablaux : $tablaux.", municipio m";
+																				$whereaux .= "and e.idEstado = ".$estado[$auxe]['idEstado']." ";
+																				$whereaux = (strpos($whereaux, "e.idEstado = m.idEstado") !== false) ? $whereaux : $whereaux."and e.idEstado = m.idEstado ";
+																				$whereaux = (strpos($whereaux, "m.idMunicipio = n.idMunicipio") !== false) ? $whereaux : $whereaux."and m.idMunicipio = n.idMunicipio ";
+																				$resultado['estado']=$estado[$auxe]['nombreEstado'];
 																				$auxe++;	
 																			}
-																			$asql9 = $sql;
-																			if($auxmu < count($municipio) || $auxt < count($tema) || $auxaa < count($area))
+																			$tablaux9 = $tablaux;
+																			$whereaux9 = $whereaux;
+																			if($auxmu < count($municipio) || $auxt < count($tema) || $auxaa < count($area) || $auxcg < count($cargo))
 																			{
-																				while($auxmu < count($municipio) || $auxt < count($tema) || $auxaa < count($area))
+																				while($auxmu < count($municipio) || $auxt < count($tema) || $auxaa < count($area) || $auxcg < count($cargo))
 																				{
-																					$sql = $asql9;
+																					$tablaux = $tablaux9;
+																					$whereaux = $whereaux9;
 																					$auxt = 0;
 																					$auxaa = 0;
+																					$auxcg = 0;
 																					if($auxmu < count($municipio))
-																					{
-																						$sqla = "and m.idMunicpio = ".$municipio[$auxmu]." ";
-																						$sql = $sql . $sqla;
-																						$resultado['municipio']=$municipio[$auxmu];
+																					{																					
+																						$whereaux .= "and n.idMunicpio = ".$municipio[$auxmu]['idMunicipio']." ";
+																						$resultado['municipio']=$municipio[$auxmu]['nombreMunicipio'];
 																						$auxmu++;	
 																					}
-																					$asql10 = $sql;
-																					if($auxt < count($tema) || $auxaa < count($area))
+																					$tablaux10 = $tablaux;
+																					$whereaux10 = $whereaux;
+																					if($auxt < count($tema) || $auxaa < count($area) || $auxcg < count($cargo))
 																					{
-																						while($auxt < count($tema) || $auxaa < count($area))
+																						while($auxt < count($tema) || $auxaa < count($area) || $auxcg < count($cargo))
 																						{
-																							$sql = $asql10;
+																							$tablaux = $tablaux10;
+																							$whereaux = $whereaux10;
 																							$auxt = 0;
+																							$auxcg = 0;
 																							if($auxaa < count($area))
 																							{
-																								$sqla = "and a.idArea = ".$area[$auxaa]." ";
-																								$sql = $sql . $sqla;
-																								$resultado['area']=$area[$auxaa];
+																								$tablaux = (strpos($tablaux, "Area a") !== false) ? $tablaux : $tablaux.", Area a";
+																								$tablaux = (strpos($tablaux, "tema t") !== false) ? $tablaux : $tablaux.", tema t";
+																								$tablaux = (strpos($tablaux, "subtema st") !== false) ? $tablaux : $tablaux.", subtema sb";
+																								$tablaux = (strpos($tablaux, "trata_de td") !== false) ? $tablaux : $tablaux.", trata_de td";
+																								$whereaux .= "and a.idArea = ".$area[$auxaa]['idArea']." ";
+																								$whereaux = (strpos($whereaux, "a.idArea = t.idArea") !== false) ? $whereaux : $whereaux."and a.idArea = t.idArea ";
+																								$whereaux = (strpos($whereaux, "t.idTema = st.idTema") !== false) ? $whereaux : $whereaux."and t.idTema = st.idTema ";
+																								$whereaux = (strpos($whereaux, "st.idSubtema = td.idSubtema") !== false) ? $whereaux : $whereaux."and st.idSubtema = td.idSubtema ";
+																								$whereaux = (strpos($whereaux, "td.idNota = n.idNota") !== false) ? $whereaux : $whereaux."and td.idNota = n.idNota ";
+																								$resultado['area']=$area[$auxaa]['nombreArea'];
 																								$auxaa++;
 																							}
-																							$asql11 = $sql;
-																							if($auxt < count($tema))
+																							$tablaux11 = $tablaux;
+																							$whereaux11 = $whereaux;
+																							if($auxt < count($tema) || $auxcg < count($cargo))
 																							{
-																								while($auxt < count($tema))
+																								while($auxt < count($tema) || $auxcg < count($cargo))
 																								{
-																									$sql = $asql11;
-																									$sqla = "and t.idTema = ".$tema[$auxt]." ";
-																									$sql = $sql . $sqla;
-																									$resultado['tema']=$tema[$auxt];
-																									$auxt++;	
-																									$result = $mysqli->query($sql);
-																									$row = mysqli_fetch_assoc($result);
-																									$resultado['total']=$row['total'];
-																									$total[] = $resultado;
+																									$auxcg = 0;
+																									$tablaux = $tablaux11;
+																									$whereaux = $whereaux11;
+																									if($auxt < count($tema))
+																									{
+																										$tablaux = (strpos($tablaux, "tema t") !== false) ? $tablaux : $tablaux.", tema t";
+																										$tablaux = (strpos($tablaux, "subtema st") !== false) ? $tablaux : $tablaux.", subtema sb";
+																										$tablaux = (strpos($tablaux, "trata_de td") !== false) ? $tablaux : $tablaux.", trata_de td";
+																										$whereaux .= "and t.idTema = ".$tema[$auxt]['idTema']." ";
+																										$whereaux = (strpos($whereaux, "t.idTema = st.idTema") !== false) ? $whereaux : $whereaux."and t.idTema = st.idTema ";
+																										$whereaux = (strpos($whereaux, "st.idSubtema = td.idSubtema") !== false) ? $whereaux : $whereaux."and st.idSubtema = td.idSubtema ";
+																										$whereaux = (strpos($whereaux, "td.idNota = n.idNota") !== false) ? $whereaux : $whereaux."and td.idNota = n.idNota ";
+																										$resultado['tema']=$tema[$auxt]['nombreArea'];
+																										$auxt++;	
+																									}
+																									$tablaux12 = $tablaux;
+																									$whereaux12 = $whereaux;
+																									if($auxcg < count($cargo))
+																									{
+																										while($auxcg < count($cargo))
+																										{
+																											$tablaux = $tablaux12;
+																											$whereaux = $whereaux12;
+																											$tablaux = (strpos($tablaux, "cargoProtagonista cp") !== false) ? $tablaux : $tablaux.", cargoProtagonista cp";
+																											$tablaux = (strpos($tablaux, "notaProtagonista np") !== false) ? $tablaux : $tablaux.", notaProtagonista np";
+																											$whereaux .= "and cp.idCargo = ".$cargo[$auxcg]['idCargo']." ";
+																											$whereaux = (strpos($whereaux, "cp.idCP = np.idCP") !== false) ? $whereaux : $whereaux."and cp.idCP = np.idCP ";	
+																											$whereaux = (strpos($whereaux, "n.idNota = np.idNota") !== false) ? $whereaux : $whereaux."and n.idNota = np.idNota ";
+																											$resultado['cargo']=$cargo[$auxcg]['nombreCargo'];
+																											$auxcg++;
+																											$sql = "select count(distinct n.idNota) as total from Nota n".$tablaux." where n.idNota = n.idNota ".$whereaux;	
+																											$result = $mysqli->query($sql);
+																											$row = mysqli_fetch_assoc($result);
+																											$resultado['total']=$row['total'];
+																											$resultado['dato'] = ($row['total'] > 0) ? true:false;
+																											$total[] = $resultado;
+																										}
+																									}
+																									else
+																									{
+																										$sql = "select count(distinct n.idNota) as total from Nota n".$tablaux." where n.idNota = n.idNota ".$whereaux;
+																										$result = $mysqli->query($sql);
+																										$row = mysqli_fetch_assoc($result);
+																										$resultado['total']=$row['total'];
+																										$resultado['dato'] = ($row['total'] > 0) ? true:false;
+																										$total[] = $resultado;
+																									}
 																								}
 																							}
 																							else	
 																							{
+																								$sql = "select count(distinct n.idNota) as total from Nota n".$tablaux." where n.idNota = n.idNota ".$whereaux;
 																								$result = $mysqli->query($sql);
 																								$row = mysqli_fetch_assoc($result);
 																								$resultado['total']=$row['total'];
+																								$resultado['dato'] = ($row['total'] > 0) ? true:false;
 																								$total[] = $resultado;
 																							}
 																						}
 																					}
 																					else
 																					{
+																						$sql = "select count(distinct n.idNota) as total from Nota n".$tablaux." where n.idNota = n.idNota ".$whereaux;
 																						$result = $mysqli->query($sql);
 																						$row = mysqli_fetch_assoc($result);
 																						$resultado['total']=$row['total'];
+																						$resultado['dato'] = ($row['total'] > 0) ? true:false;
 																						$total[] = $resultado;
 																					}
 																				}
 																			}
 																			else
 																			{
+																				$sql = "select count(distinct n.idNota) as total from Nota n".$tablaux." where n.idNota = n.idNota ".$whereaux;
 																				$result = $mysqli->query($sql);
 																				$row = mysqli_fetch_assoc($result);
 																				$resultado['total']=$row['total'];
+																				$resultado['dato'] = ($row['total'] > 0) ? true:false;
 																				$total[] = $resultado;
 																			}
 																		}
 																	}
 																	else
 																	{
+																		$sql = "select count(distinct n.idNota) as total from Nota n".$tablaux." where n.idNota = n.idNota ".$whereaux;
 																		$result = $mysqli->query($sql);
 																		$row = mysqli_fetch_assoc($result);
 																		$resultado['total']=$row['total'];
+																		$resultado['dato'] = ($row['total'] > 0) ? true:false;
 																		$total[] = $resultado;
 																	}
 																}
 															}
-															else {
+															else 
+															{
+																$sql = "select count(distinct n.idNota) as total from Nota n".$tablaux." where n.idNota = n.idNota ".$whereaux;
 																$result = $mysqli->query($sql);
 																$row = mysqli_fetch_assoc($result);
 																$resultado['total']=$row['total'];
+																$resultado['dato'] = ($row['total'] > 0) ? true:false;
 																$total[] = $resultado;	
 															}															
 														}
 													}
 													else
 													{
+														$sql = "select count(distinct n.idNota) as total from Nota n".$tablaux." where n.idNota = n.idNota ".$whereaux;
 														$result = $mysqli->query($sql);
 														$row = mysqli_fetch_assoc($result);
 														$resultado['total']=$row['total'];
+														$resultado['dato'] = ($row['total'] > 0) ? true:false;
 														$total[] = $resultado;
 													}
 												}
 											}
 											else
 											{
+												$sql = "select count(distinct n.idNota) as total from Nota n".$tablaux." where n.idNota = n.idNota ".$whereaux;
 												$result = $mysqli->query($sql);
 												$row = mysqli_fetch_assoc($result);
 												$resultado['total']=$row['total'];
+												$resultado['dato'] = ($row['total'] > 0) ? true:false;
 												$total[] = $resultado;
 											}
 										}
 									}
 									else 
 									{
+										$sql = "select count(distinct n.idNota) as total from Nota n".$tablaux." where n.idNota = n.idNota ".$whereaux;
 										$result = $mysqli->query($sql);
 										$row = mysqli_fetch_assoc($result);
 										$resultado['total']=$row['total'];
+										$resultado['dato'] = ($row['total'] > 0) ? true:false;
 										$total[] = $resultado;
 									}																				
 								}
 							}
 							else
 							{
+								$sql = "select count(distinct n.idNota) as total from Nota n".$tablaux." where n.idNota = n.idNota ".$whereaux;
 								$result = $mysqli->query($sql);
 								$row = mysqli_fetch_assoc($result);
 								$resultado['total']=$row['total'];
+								$resultado['dato'] = ($row['total'] > 0) ? true:false;
 								$total[] = $resultado;
 							}
 						}							
 					}
 					else 
 					{
+						$sql = "select count(distinct n.idNota) as total from Nota n".$tablaux." where n.idNota = n.idNota ".$whereaux;
 						$result = $mysqli->query($sql);
 						$row = mysqli_fetch_assoc($result);
 						$resultado['total']=$row['total'];
+						$resultado['dato'] = ($row['total'] > 0) ? true:false;
 						$total[] = $resultado;
 					}
 				}
 			}
 			else 
 			{
+				$sql = "select count(distinct n.idNota) as total from Nota n".$tablaux." where n.idNota = n.idNota ".$whereaux;
 				$result = $mysqli->query($sql);
 				$row = mysqli_fetch_assoc($result);
+				$resultado['sql']=$sql;
 				$resultado['total']=$row['total'];
+				$resultado['dato'] = ($row['total'] > 0) ? true:false;
 				$total[] = $resultado;
 			}
 		}									
@@ -579,6 +704,7 @@
 		$result = $mysqli->query("select count(*) as total from Nota");
 		$row = mysqli_fetch_assoc($result);
 		$total[0]['total'] = $row['total'];
+		$total[0]['dato'] = ($row['total'] > 0) ? true:false;
 	}
 	echo json_encode($total);
 ?>

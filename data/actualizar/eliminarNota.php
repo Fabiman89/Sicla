@@ -4,7 +4,7 @@
 	$id = $dato['idNota'];
 	$result = $mysqli->query("select imagenNota from Nota where idNota = $id");
 	$row = mysqli_fetch_assoc($result);
-	if($row['imagenNota'] != 'null')
+	if(isset($row['imagenNota']))
 		if (!unlink("../../".$row['imagenNota']))
 			echo "Error Imagen-5";
 	$mysqli->query("delete from notaProtagonista where idNota = $id");

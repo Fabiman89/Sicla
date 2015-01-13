@@ -15,11 +15,11 @@
 <div class="container-fluid">
 <table class="table table-hover">
 <thead>
-<tr><th>Id</th><th>Título</th><th>Medio</th><th>Tipo de Nota</th><th>Usuario</th></tr>
+<tr><th>Id</th><th>Fecha</th><th>Título</th><th>Medio</th><th>Tipo de Nota</th><th>Usuario</th></tr>
 </thead>
 <tbody>
 <tr ng-repeat="nota in notasArray |filter:search">
-<td>{{nota.idNota}}</td><td>{{nota.titulo| limitTo:20}}</td><td>{{nota.nombreMedio}}</td><td>{{nota.tipo}}</td><td>{{nota.usuario}}</td>
+<td>{{nota.idNota}}</td><td> {{nota.fecha}}</td><td>{{nota.titulo| limitTo:20}}</td><td>{{nota.nombreMedio}}</td><td>{{nota.tipo}}</td><td>{{nota.usuario}}</td>
 <td>
 <div class="btn-group">
   <a href="#/Editar/Nota/{{nota.idNota}}" class="btn btn-primary" role="button">Editar</a>
