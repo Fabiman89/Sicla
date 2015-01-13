@@ -3,7 +3,24 @@ require('../fpdf.php');
 
 class pdf {
 	function table($data, $header) {
+	for($i=0;$i <= $data.length ; $i++)
+	{
+			switch($data[$i].caso){
+				case 0:
+					break;
+				case 1:
+					echo "Cached";
+					break;
+			}
+	}
 
+
+
+	$prueba = array();
+	$prueba[0] = {"caso":1,"nombre":"Juan Peres","total":0};
+	$prueba[1] = {"caso":1,"nombre":"Pedro Bello","total":3};
+	$prueba[2] = {"caso":1,"nombre":"Juan Peres","total":1};
+	$prueba[3] = {"caso":1,"nombre":"Sergio Mayer","total":5};
 		// Colores, ancho de línea y fuente en negrita
 		$this->SetFillColor(255,0,0);
 		$this->SetTextColor(255);
@@ -14,7 +31,7 @@ class pdf {
 		$w = array(45, 50, 50, 45);
 
 	}
-
-}
-
+	
+	$pdf = new PDF();
+	$pdf->table($prueba,"Prueba");
 ?>
