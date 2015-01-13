@@ -371,7 +371,7 @@
 									{
 										$tablaux = (strpos($tablaux, "trata_de td") !== false) ? $tablaux : $tablaux.", trata_de td";
 										$whereaux .= "and td.idSubtema = ".$subtema[$auxs]['idSubtema']." ";	
-										$whereaux = (strpos($whereaux, "td.idNota = n.idNota") !== false) ? $whereaux : $whereaux."and cp.idCP = np.idCP ";	
+										$whereaux = (strpos($whereaux, "td.idNota_ = n.idNota") !== false) ? $whereaux : $whereaux."and cp.idCP = np.idCP ";	
 										$resultado['subtema']=$subtema[$auxs]['nombreSubtema'];
 										$auxs++;						
 									}
@@ -519,9 +519,9 @@
 																								$tablaux = (strpos($tablaux, "trata_de td") !== false) ? $tablaux : $tablaux.", trata_de td";
 																								$whereaux .= "and a.idArea = ".$area[$auxaa]['idArea']." ";
 																								$whereaux = (strpos($whereaux, "a.idArea = t.idArea") !== false) ? $whereaux : $whereaux."and a.idArea = t.idArea ";
-																								$whereaux = (strpos($whereaux, "t.idTema = st.idTema") !== false) ? $whereaux : $whereaux."and t.idTema = st.idTema ";
-																								$whereaux = (strpos($whereaux, "st.idSubtema = td.idSubtema") !== false) ? $whereaux : $whereaux."and st.idSubtema = td.idSubtema ";
-																								$whereaux = (strpos($whereaux, "td.idNota = n.idNota") !== false) ? $whereaux : $whereaux."and td.idNota = n.idNota ";
+																								$whereaux = (strpos($whereaux, "t.idTema = sb.idTema") !== false) ? $whereaux : $whereaux."and t.idTema = sb.idTema ";
+																								$whereaux = (strpos($whereaux, "sb.idSubtema = td.idSubtema") !== false) ? $whereaux : $whereaux."and sb.idSubtema = td.idSubtema ";
+																								$whereaux = (strpos($whereaux, "td.idNota_ = n.idNota") !== false) ? $whereaux : $whereaux."and td.idNota_ = n.idNota ";
 																								$resultado['area']=$area[$auxaa]['nombreArea'];
 																								$auxaa++;
 																							}
@@ -540,9 +540,9 @@
 																										$tablaux = (strpos($tablaux, "subtema st") !== false) ? $tablaux : $tablaux.", subtema sb";
 																										$tablaux = (strpos($tablaux, "trata_de td") !== false) ? $tablaux : $tablaux.", trata_de td";
 																										$whereaux .= "and t.idTema = ".$tema[$auxt]['idTema']." ";
-																										$whereaux = (strpos($whereaux, "t.idTema = st.idTema") !== false) ? $whereaux : $whereaux."and t.idTema = st.idTema ";
-																										$whereaux = (strpos($whereaux, "st.idSubtema = td.idSubtema") !== false) ? $whereaux : $whereaux."and st.idSubtema = td.idSubtema ";
-																										$whereaux = (strpos($whereaux, "td.idNota = n.idNota") !== false) ? $whereaux : $whereaux."and td.idNota = n.idNota ";
+																										$whereaux = (strpos($whereaux, "t.idTema = sb.idTema") !== false) ? $whereaux : $whereaux."and t.idTema = sb.idTema ";
+																										$whereaux = (strpos($whereaux, "sb.idSubtema = td.idSubtema") !== false) ? $whereaux : $whereaux."and sb.idSubtema = td.idSubtema ";
+																										$whereaux = (strpos($whereaux, "td.idNota_ = n.idNota") !== false) ? $whereaux : $whereaux."and td.idNota_ = n.idNota ";
 																										$resultado['tema']=$tema[$auxt]['nombreArea'];
 																										$auxt++;	
 																									}
