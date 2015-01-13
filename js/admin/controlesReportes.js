@@ -200,7 +200,7 @@
          		clasificacion.push($scope.sup.clasificacion);    		
          		tipo.push($scope.sup.tipo);
          		seccion.push($scope.sup.seccion);    		
-         		paises.push($scope.sup.pais);
+         		paises.push(parseInt($scope.sup.pais));
          		subtemas.push($scope.reporte.subtema.idSubtema);
          		temas.push($scope.reporte.tema.idTema);
          		estados.push($scope.reporte.estado.idEstado);

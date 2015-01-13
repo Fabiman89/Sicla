@@ -68,27 +68,27 @@
 		}		
 		if ($datos['pais'][0]==1)
 		{
-			for ($i = 1; $i<count($datos['medio']); $i++)			
+			for ($i = 1; $i<count($datos['pais']); $i++)			
 				$pais[] = $datos['pais'][$i];
 		}
 		if ($datos['estado'][0]==1)
 		{			
-			for ($i = 1; $i<count($datos['medio']); $i++)
+			for ($i = 1; $i<count($datos['estado']); $i++)
 				$estado[] = $datos['estado'][$i];
 		}
 		if ($datos['municipio'][0]==1)
 		{			
-			for ($i = 1; $i<count($datos['medio']); $i++)
+			for ($i = 1; $i<count($datos['municipio']); $i++)
 				$municipio[] = $datos['municipio'][$i];
 		}
 		if ($datos['area'][0]==1)
 		{			
-			for ($i = 1; $i<count($datos['medio']); $i++)
+			for ($i = 1; $i<count($datos['area']); $i++)
 				$area[] = $datos['area'][$i];
 		}
 		if ($datos['tema'][0]==1)
 		{			
-			for ($i = 1; $i<count($datos['medio']); $i++)
+			for ($i = 1; $i<count($datos['tema']); $i++)
 				$tema[] = $datos['tema'][$i];
 		}
 		if ($datos['medio'][0]==1 )
@@ -272,8 +272,12 @@
 				}
 				if(count($fecha) == 2)
 				{
-					$whereaux .= "and n.fecha between '".$fecha[0]."' and '".$fecha[1]."' ";
-					$resultado['fecha'] = $fecha[0]." - ".$fecha[1];
+					$datetime1 = date_create($fecha[0]);
+					$datetime2 = date_create($fecha[1]);
+					$afecha1 = ($datetime1 < $datetime2) ? $fecha[0] : $fecha[1];
+					$afecha2 = ($datetime1 < $datetime2) ? $fecha[1] : $fecha[0];
+					$whereaux .= "and n.fecha between '".$afecha1."' and '".$afecha2."' ";
+					$resultado['fecha'] = $afecha1." - ".$afecha2;
 					$auxf =2;
 				}
 			}
@@ -493,7 +497,7 @@
 																					$auxcg = 0;
 																					if($auxmu < count($municipio))
 																					{																					
-																						$whereaux .= "and n.idMunicpio = ".$municipio[$auxmu]['idMunicipio']." ";
+																						$whereaux .= "and n.idMunicipio = ".$municipio[$auxmu]['idMunicipio']." ";
 																						$resultado['municipio']=$municipio[$auxmu]['nombreMunicipio'];
 																						$auxmu++;	
 																					}
@@ -560,6 +564,7 @@
 																											$sql = "select count(distinct n.idNota) as total from Nota n".$tablaux." where n.idNota = n.idNota ".$whereaux;	
 																											$result = $mysqli->query($sql);
 																											$row = mysqli_fetch_assoc($result);
+																											$resultado['sql']=$sql;
 																											$resultado['total']=$row['total'];
 																											$resultado['dato'] = ($row['total'] > 0) ? true:false;
 																											$total[] = $resultado;
@@ -570,6 +575,7 @@
 																										$sql = "select count(distinct n.idNota) as total from Nota n".$tablaux." where n.idNota = n.idNota ".$whereaux;
 																										$result = $mysqli->query($sql);
 																										$row = mysqli_fetch_assoc($result);
+																										$resultado['sql']=$sql;
 																										$resultado['total']=$row['total'];
 																										$resultado['dato'] = ($row['total'] > 0) ? true:false;
 																										$total[] = $resultado;
@@ -581,6 +587,7 @@
 																								$sql = "select count(distinct n.idNota) as total from Nota n".$tablaux." where n.idNota = n.idNota ".$whereaux;
 																								$result = $mysqli->query($sql);
 																								$row = mysqli_fetch_assoc($result);
+																								$resultado['sql']=$sql;
 																								$resultado['total']=$row['total'];
 																								$resultado['dato'] = ($row['total'] > 0) ? true:false;
 																								$total[] = $resultado;
@@ -592,6 +599,7 @@
 																						$sql = "select count(distinct n.idNota) as total from Nota n".$tablaux." where n.idNota = n.idNota ".$whereaux;
 																						$result = $mysqli->query($sql);
 																						$row = mysqli_fetch_assoc($result);
+																						$resultado['sql']=$sql;
 																						$resultado['total']=$row['total'];
 																						$resultado['dato'] = ($row['total'] > 0) ? true:false;
 																						$total[] = $resultado;
@@ -603,6 +611,7 @@
 																				$sql = "select count(distinct n.idNota) as total from Nota n".$tablaux." where n.idNota = n.idNota ".$whereaux;
 																				$result = $mysqli->query($sql);
 																				$row = mysqli_fetch_assoc($result);
+																				$resultado['sql']=$sql;
 																				$resultado['total']=$row['total'];
 																				$resultado['dato'] = ($row['total'] > 0) ? true:false;
 																				$total[] = $resultado;
@@ -614,6 +623,7 @@
 																		$sql = "select count(distinct n.idNota) as total from Nota n".$tablaux." where n.idNota = n.idNota ".$whereaux;
 																		$result = $mysqli->query($sql);
 																		$row = mysqli_fetch_assoc($result);
+																		$resultado['sql']=$sql;
 																		$resultado['total']=$row['total'];
 																		$resultado['dato'] = ($row['total'] > 0) ? true:false;
 																		$total[] = $resultado;
@@ -625,6 +635,7 @@
 																$sql = "select count(distinct n.idNota) as total from Nota n".$tablaux." where n.idNota = n.idNota ".$whereaux;
 																$result = $mysqli->query($sql);
 																$row = mysqli_fetch_assoc($result);
+																$resultado['sql']=$sql;
 																$resultado['total']=$row['total'];
 																$resultado['dato'] = ($row['total'] > 0) ? true:false;
 																$total[] = $resultado;	
@@ -636,6 +647,7 @@
 														$sql = "select count(distinct n.idNota) as total from Nota n".$tablaux." where n.idNota = n.idNota ".$whereaux;
 														$result = $mysqli->query($sql);
 														$row = mysqli_fetch_assoc($result);
+														$resultado['sql']=$sql;
 														$resultado['total']=$row['total'];
 														$resultado['dato'] = ($row['total'] > 0) ? true:false;
 														$total[] = $resultado;
@@ -647,6 +659,7 @@
 												$sql = "select count(distinct n.idNota) as total from Nota n".$tablaux." where n.idNota = n.idNota ".$whereaux;
 												$result = $mysqli->query($sql);
 												$row = mysqli_fetch_assoc($result);
+												$resultado['sql']=$sql;
 												$resultado['total']=$row['total'];
 												$resultado['dato'] = ($row['total'] > 0) ? true:false;
 												$total[] = $resultado;
@@ -658,6 +671,7 @@
 										$sql = "select count(distinct n.idNota) as total from Nota n".$tablaux." where n.idNota = n.idNota ".$whereaux;
 										$result = $mysqli->query($sql);
 										$row = mysqli_fetch_assoc($result);
+										$resultado['sql']=$sql;
 										$resultado['total']=$row['total'];
 										$resultado['dato'] = ($row['total'] > 0) ? true:false;
 										$total[] = $resultado;
@@ -669,6 +683,7 @@
 								$sql = "select count(distinct n.idNota) as total from Nota n".$tablaux." where n.idNota = n.idNota ".$whereaux;
 								$result = $mysqli->query($sql);
 								$row = mysqli_fetch_assoc($result);
+								$resultado['sql']=$sql;
 								$resultado['total']=$row['total'];
 								$resultado['dato'] = ($row['total'] > 0) ? true:false;
 								$total[] = $resultado;
@@ -680,6 +695,7 @@
 						$sql = "select count(distinct n.idNota) as total from Nota n".$tablaux." where n.idNota = n.idNota ".$whereaux;
 						$result = $mysqli->query($sql);
 						$row = mysqli_fetch_assoc($result);
+						$resultado['sql']=$sql;
 						$resultado['total']=$row['total'];
 						$resultado['dato'] = ($row['total'] > 0) ? true:false;
 						$total[] = $resultado;
