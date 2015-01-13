@@ -1,0 +1,874 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"get",
+				"getProtagonista"
+			],
+			[
+				"tipoN",
+				"tipoNota"
+			],
+			[
+				"min",
+				"min-height"
+			],
+			[
+				"peso",
+				"pesoDatosClinicos"
+			],
+			[
+				"modal",
+				"modalPie"
+			],
+			[
+				"pre",
+				"previewSize"
+			],
+			[
+				"va",
+				"variableTemporal"
+			],
+			[
+				"vista",
+				"vistaPrevia"
+			],
+			[
+				"delete",
+				"deleteAdmin"
+			],
+			[
+				"cargos",
+				"cargosProtagonista"
+			],
+			[
+				"del",
+				"deleteAdmin"
+			],
+			[
+				"dele",
+				"deleteAdmin"
+			],
+			[
+				"de",
+				"deleteAdmin"
+			],
+			[
+				"S",
+				"Sinaloa"
+			],
+			[
+				"tipo",
+				"tipoNota"
+			],
+			[
+				"pais",
+				"paises"
+			],
+			[
+				"rP",
+				"rPais2"
+			],
+			[
+				"nombreP",
+				"nombrePais"
+			],
+			[
+				"car",
+				"cargosProtagonista"
+			],
+			[
+				"con",
+				"consultasAdmin"
+			],
+			[
+				"cam",
+				"cambiosE"
+			],
+			[
+				"idC",
+				"idCargo"
+			],
+			[
+				"id",
+				"idArea"
+			],
+			[
+				"actua",
+				"actualizacionAdmin"
+			],
+			[
+				"rA",
+				"rArea2"
+			],
+			[
+				"consl",
+				"consultasAdmin"
+			],
+			[
+				"mys",
+				"mysqli"
+			],
+			[
+				"genero",
+				"generoAutor"
+			],
+			[
+				"nombre",
+				"nombreAutor"
+			],
+			[
+				"cambios",
+				"cambiosAutor"
+			],
+			[
+				"url",
+				"urlMedio"
+			],
+			[
+				"nomb",
+				"nombreMedio"
+			],
+			[
+				"su",
+				"subtemas"
+			],
+			[
+				"json",
+				"json_encode"
+			],
+			[
+				"nota",
+				"notaView"
+			],
+			[
+				"cont",
+				"consultasAdmin"
+			],
+			[
+				"CON",
+				"consultasAdmin"
+			],
+			[
+				"my",
+				"mysqli"
+			],
+			[
+				"mysq",
+				"mysql_close"
+			],
+			[
+				"opcionesN",
+				"opcionesNota"
+			],
+			[
+				"consultas",
+				"consultasAdmin"
+			],
+			[
+				"op",
+				"opcionesProtagonsita"
+			],
+			[
+				"edi",
+				"dataEdicion"
+			],
+			[
+				"opci",
+				"opcionesProtagonsita"
+			],
+			[
+				"opcione",
+				"opcionesNota"
+			],
+			[
+				"opcionesM",
+				"opcionesMunicipio"
+			],
+			[
+				"home",
+				"homeCtrl"
+			],
+			[
+				"margin",
+				"margin-right"
+			],
+			[
+				"border-r",
+				"border-right-width"
+			],
+			[
+				"border-ri",
+				"border-right-style"
+			],
+			[
+				"padding",
+				"padding-bottom"
+			],
+			[
+				"font",
+				"font-size"
+			],
+			[
+				"padd",
+				"padding"
+			],
+			[
+				"mar",
+				"margin"
+			],
+			[
+				"paddin",
+				"padding-bottom"
+			],
+			[
+				"h",
+				"height"
+			],
+			[
+				"padding-",
+				"padding-top"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"contents": "'use strict';\nvar nuba = angular.module('nuba', [\n  'ui.bootstrap'    \n]);\n\n\nnuba.controller('mainCtrl',['$scope','$http', function($scope,$http){\n\n\n	$scope.send = function (data){\n		 var msj = {\n			 method: 'POST',\n			 url: '../../../nubaAPI/v1/nuevoDoctor',\n			 headers: {\n			   'Content-Type': application/json\n			 },\n			 data: { \n			 	test: 'test' \n			 },\n		}\n		$http.post(req).success(function(SuccessResponse){\n			$scope.testResponse = \"Exito en llamada a api\";\n		}).error(function(){\n			$scope.testResponse = \"Error en llamada a api\";\n		});\n	$scope.holaMundo = \"Hola Mundo\";\n}]);\n",
+			"file": "/C/wamp/www/GitHub/nubaAPI/nubaFrontEnd/dis/js/app.js",
+			"file_size": 601,
+			"file_write_time": 130652406329588819,
+			"settings":
+			{
+				"buffer_size": 587,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "js/controllers/homeCtrl.js",
+			"settings":
+			{
+				"buffer_size": 4779,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"contents": "\n  siclaApp.controller('reportCtrl', ['$scope','$http','$modal','$filter',function($scope,$http,$modal,$filter) {\n// PRIMERA PROPUESTA\n    $scope.previewArray = [];\n    $scope.previewSize = 0;\n\n    $scope.reporte = {};\n    $scope.sup = {}; //support\n    $scope.sup.fecha=0;\n    $scope.sup.medio = 0;\n    $scope.sup.autor=0;\n    $scope.sup.tipo=0;\n    $scope.sup.area=0;\n    $scope.sup.pais=0;\n    $scope.sup.clasificacion = 0;\n    $scope.sup.seccion = 0;\n    $scope.sup.protagonista = 0;\n    $scope.reporte.clasificacion = 0;\n    $scope.reporte.genero=0;\n    $scope.reporte.medio = {\"nombreMedio\":\"Sin Considerar\",\"idMedio\":0};\n    $scope.reporte.autor = {'nombreAutor':'Sin Considerar','idAutor':0};\n    $scope.reporte.area = {\"nombreArea\":\"Sin Considerar\",\"idArea\":0};\n    $scope.reporte.tema = {\"nombreTema\":\"Sin Considerar\",\"idTema\":0};\n    $scope.reporte.subtema = {\"nombreSubtema\":\"Sin Considerar\",\"idSubtema\":0};\n    $scope.reporte.pais= {\"nombrePais\":\"Sin Considerar\",\"idPais\":0}; \n    $scope.reporte.estado ={\"nombreEstado\":\"Sin Considerar\",\"idEstado\":0};\n    $scope.reporte.municipio={\"nombreMunicipio\":\"Sin Considerar\",\"idMunicipio\":0};\n    $scope.reporte.protagonista = {\"nombreProtagonista\":\"Sin Considerar\",\"idProtagonista\":0};\n    $scope.reporte.tipoNota = {\"nombreTipoNota\":\"Sin Considerar\",\"idTipoNota\":0};\n    $scope.reporte.seccion = {\"nombreSeccion\":\"Sin Considerar\",\"idSeccion\":0};\n    $scope.reporte.fecha1 = $filter(\"date\")(Date.now(), 'yyyy-MM-dd');\n    $scope.selec = \"Seleccionar\";    	    	\n\n        $scope.Sustituye = function(a,d){\n                a = angular.copy(d);\n                return a;\n        };\n\n\n        $scope.DropdownCtrl = function (){\n\n        };\n        $scope.toggleDropdown = function($event) {\n            $event.preventDefault();\n            $event.stopPropagation();\n            $scope.status.isopen = !$scope.status.isopen;\n          };\n\n\n        $scope.init = function(arr,obj){\n            console.log(arr);\n            nar = [];\n            nar.push(obj);\n            for (i=0;i<arr.length;i++){\n                nar.push(arr[i]);\n            }\n            return nar;\n        };\n\n\n\n\n    // Autor\n        $scope.getAutorIf = function (){\n            if($scope.sup.medio==1 && ($scope.reporte.medio.idMedio != undefined || 0) ){\n                $http.post(\"data/consultas/consultasAdmin.php\",{'sentencia':3,\"id\":$scope.reporte.medio.idMedio}).success(function(rOp){\n                    objt= {'nombreAutor':'Sin Considerar','idAutor':0}\n                    $scope.Autores = $scope.init(rOp,objt);\n                    $scope.reporte.autor= $scope.Autores[0];\n                 });   \n            }else{\n                $http.post(\"data/consultas/consultasAdmin.php\",{'sentencia':21}).success(function(rOp){\n                    objt= {'nombreAutor':'Sin Considerar','idAutor':0}\n                    $scope.Autores = $scope.init(rOp,objt);\n                    $scope.reporte.autor= $scope.Autores[0];\n                 });   \n            }        \n        };\n\n    // Medios\n\n        $scope.getMedios= function (){\n            if($scope.sup.medio!=1){\n                $http.post(\"data/consultas/consultasAdmin.php\",{'sentencia':2}).success(function(rOp){\n                  objt = {\"nombreMedio\":\"Sin Considerar\",\"idMedio\":0};\n                  $scope.Medios = $scope.init(rOp,objt);\n                  $scope.reporte.medio= $scope.Medios[0];\n                });\n            }\n        };\n\n\n    // AREAS   \n            $scope.getArea = function(){\n                if($scope.sup.area!=1 ){\n                        $http.post(\"data/consultas/consultasAdmin.php\",{'sentencia':7}).success(function(rOp){\n                          objt = {\"nombreArea\":\"Sin Considerar\",\"idArea\":0};\n                          $scope.Areas = $scope.init(rOp,objt);\n                          $scope.reporte.area = $scope.Areas[0];\n                          $scope.reporte.tema = {\"nombreTema\":\"Sin Considerar\",\"idTema\":0};\n                          $scope.reporte.subtema = {\"nombreSubtema\":\"Sin Considerar\",\"idSubtema\":0};\n                        });\n                        }     \n\n            };\n            $scope.getTema = function (id)\n            {\n                $http.post(\"data/consultas/consultasAdmin.php\",{'sentencia':8,'area':id}).success(function(rOp){\n                  objt = {\"nombreTema\":\"Sin Considerar\",\"idTema\":0};\n                  $scope.Temas = $scope.init(rOp,objt);\n                  $scope.reporte.tema= $scope.Temas[0];\n                });\n            };\n\n            $scope.getSubtema = function(id){\n                $http.post(\"data/consultas/consultasAdmin.php\",{'sentencia':9,'tema':id}).success(function(rOp){\n                  objt = {\"nombreSubtema\":\"Sin Considerar\",\"idSubtema\":0};\n                  $scope.Subtemas = $scope.init(rOp,objt);\n                  $scope.reporte.subtema = $scope.Subtemas[0];\n                  console.log($scope.Subtemas)\n                });\n            };\n            \n\n\n    // PAIS\n            $scope.getPaises = function(){\n                if($scope.sup.pais!=1 ){\n                        $http.post(\"data/consultas/consultasAdmin.php\",{'sentencia':10}).success(function(rOp){\n                           objt = {\"nombrePais\":\"Sin Considerar\",\"idPais\":0}; \n                          $scope.Paises = $scope.init(rOp,objt);\n                          $scope.reporte.pais = $scope.Paises[0];\n                          $scope.reporte.estado = {\"nombreEstado\":\"Sin Considerar\",\"idEstado\":0};\n                          $scope.reporte.municipio = {\"nombreMunicipio\":\"Sin Considerar\",\"idMunicipio\":0}\n                        });   \n                        }     \n\n            };\n\n            $scope.getEstado = function (id){\n                console.log(\"trigered\")\n                        $http.post(\"data/consultas/consultasAdmin.php\",{'sentencia':11,'pais':id}).success(function(rOp){\n                            objt = {\"nombreEstado\":\"Sin Considerar\",\"idEstado\":0};\n                          $scope.Estados = $scope.init(rOp,objt);\n                          $scope.reporte.estado= $scope.Estados[0];\n                        });\n                    };\n            $scope.getMunicipio = function (id){\n                        $http.post(\"data/consultas/consultasAdmin.php\",{'sentencia':12,'estado':id}).success(function(rOp){\n                          objt = {\"nombreMunicipio\":\"Sin Considerar\",\"idMunicipio\":0};\n                          $scope.Municipios = $scope.init(rOp,objt);\n                          $scope.reporte.municipio= $scope.Municipios[0];\n                        });\n                    };\n\n\n    // PORTAGONISTA\n            $scope.getProtagonista = function (){\n                if($scope.sup.protagonista!=1 ){\n                    $http.post(\"data/consultas/consultasAdmin.php\",{'sentencia':5}).success(function(rOp){\n                        objt = {\"nombreProtagonista\":\"Sin Considerar\",\"idProtagonista\":0};\n                      $scope.Protagonistas = $scope.init(rOp,objt);\n                      $scope.reporte.protagonista = $scope.Protagonistas[0];\n                    });\n                }\n            };\n    // TIPO DE NOTA\n            $scope.getTipo = function (){\n                if($scope.sup.tipoNota!=1){\n                    $http.post(\"data/consultas/consultasAdmin.php\",{'sentencia':1}).success(function(rOp){\n                            objt = {\"nombreTipoNota\":\"Sin Considerar\",\"idTipoNota\":0};\n                          $scope.tipoNotas = $scope.init(rOp,objt);\n                          $scope.reporte.tipoNota = $scope.tipoNotas[0];\n\n                        });                    \n                }\n            };\n    \n    //Seccion\n            $scope.getSeccion = function(){\n                if($scope.sup.seccion!=1){\n                    $http.post(\"data/consultas/consultasAdmin.php\",{'sentencia':4}).success(function(rOp){\n                        objt = {\"nombreSeccion\":\"Sin Considerar\",\"idSeccion\":0};\n                      $scope.Seccion = $scope.init(rOp,objt);\n                      $scope.reporte.seccion = $scope.Seccion[0]; \n                    });\n                }\n            };\n\n    //Reporte \n         	$scope.getReporte = function() \n         	{\n         		var areas=[], autores=[], medios=[], protagonistas=[], clasificacion=[], fecha=[], tipo = [], seccion = [], genero = [];\n         		var subtemas = [], paises = [], estados = [], municipios = [], temas = [], cargos = [];\n         		cargos.push(0);    		\n         		areas.push($scope.sup.area);\n         		autores.push($scope.sup.autor);\n         		medios.push($scope.sup.medio);\n         		protagonistas.push($scope.sup.protagonista);\n         		clasificacion.push($scope.sup.clasificacion);    		\n         		tipo.push($scope.sup.tipo);\n         		seccion.push($scope.sup.seccion);    		\n         		paises.push($scope.sup.pais);\n         		subtemas.push($scope.reporte.subtema.idSubtema);\n         		temas.push($scope.reporte.tema.idTema);\n         		estados.push($scope.reporte.estado.idEstado);\n         		municipios.push($scope.reporte.municipio.idMunicipio);    		    		    		\n         		if($scope.reporte.genero == 1)\n         		{\n         			switch ($scope.reporte.generoTipo) \n         			{\n         				case 0:	genero.push(1);\n         						break;	\n         				case 1:	genero.push(4);\n         						break;\n         				case 2:	genero.push(3);\n         						break;;\n         			}\n         		}\n         		else \n         		{\n         			if($scope.reporte.genero == 2)\n         			{\n         				switch ($scope.reporte.generoTipo) \n         				{\n         					case 0:	genero.push(2);\n         							break;	\n         					case 1:	genero.push(6);\n         							break;\n         					case 2:	genero.push(5);\n         							break;;\n         				}\n         			}\n         			else \n         				genero.push(0);\n         		}\n         		if($scope.sup.fecha == 0)    	\n         			fecha.push(1,$scope.reporte.fecha1);\n         		else\n         			fecha.push(2,$scope.reporte.fecha1,$scope.reporte.fecha2);\n         		if(medios[0] == 1 )\n         			medios.push($scope.reporte.medio);\n         		if(protagonistas[0] == 1)\n         			protagonistas.push($scope.reporte.protagonista);\n         		if(autores[0] == 1)\n         			autores.push($scope.reporte.autor);\n         		if(areas[0] == 1)\n         			areas.push($scope.reporte.area);\n         		if(clasificacion[0] == 1 )\n         			clasificacion.push($scope.reporte.clasificacion);\n         		if(tipo[0] == 1)\n         			tipo.push($scope.reporte.tipoNota);\n         		if(seccion[0] == 1)\n         			seccion.push($scope.reporte.seccion);\n         		if(paises[0] == 1)\n         			paises.push($scope.reporte.pais);\n         		if(temas[0] != 0 )\n         		{\n         			temas[0] = 1;\n         			temas.push($scope.reporte.tema);\n         		}\n         		if(subtemas[0] != 0)\n         		{\n         			subtemas[0] = 1;\n         			subtemas.push($scope.reporte.subtema);\n         		}\n         		if(estados[0] != 0)\n         		{\n         			estados[0] = 1;\n         			estados.push($scope.reporte.estado);\n         		}\n         		if(municipios[0] != 0)\n         		{\n         			municipios[0] = 1;\n         			municipios.push($scope.reporte.municipio);\n         		}\n\n\n         		$http.post(\"data/consultas/consultaReportes.php\",\n         		{'autor':autores, 'medio':medios, 'protagonista':protagonistas, 'tema':temas, 'clasificacion':clasificacion,'fecha':fecha, 'tipo':tipo, 'seccion':seccion,'genero':genero, 'cargo':cargos, 'area':areas, 'pais':paises, 'subtema':subtemas, 'estado':estados, 'municipio':municipios}).success(function(data) {\n         			$scope.prueba = data;\n         			console.log(data);\n         		});    	\n         \n\n         	};  \n\n        $scope.prepareInfro = function (){\n            for(i=0;i<$scope.prueba.length;i++){\n\n            }\n        };\n\n    //Control de preview\n\n        $scope.appendVar = function(arr,objt,size){\n            array = [];\n            console.log(arr);\n            if(size>0){\n                for(i=0;i<size;i++){\n                    array.push(arr[i]);\n                    console.log(\"pushing\");\n                }   \n            }\n            array.push(objt);\n           \n            return array;\n        };\n\n        $scope.deleting = function(arr,este,size){\n            array = [];\n            if(size>0){\n                for(i=0;i<size;i++){\n                    if(i==este){\n                        console.log(i);\n                    }else{\n                        array.push(arr[i]);\n                    }\n                }\n            }\n            $scope.previewSize = $scope.previewSize - 1;\n            return array;\n\n        };\n\n        $scope.deleteFromPreview = function (toDelete){\n            console.log(toDelete);\n            $scope.previewArray = $scope.deleting($scope.previewArray,toDelete,$scope.previewSize);\n        };\n\n        $scope.addToPreview = function(obj){\n            switch(obj){\n                case 1:\n                    variableTemporal=\"\\nGenerar grafica de PIE\\n\\n\";\n                    $scope.previewArray = $scope.appendVar($scope.previewArray,variableTemporal,$scope.previewSize);\n                    $scope.previewSize = $scope.previewSize + 1 ;\n                    $scope.modalPie();\n                    break;\n                case 2:\n                \n                    $scope.modalTexto();\n                    break;\n                case 3:\n                    variableTemporal=\"Generar grafica de Barras\";\n                    $scope.previewArray =  $scope.appendVar($scope.previewArray,variableTemporal,$scope.previewSize);\n                    $scope.previewSize = $scope.previewSize + 1 ;\n                    break;\n            }\n            //console.log($scope.previewSize);\n            //$scope.previewArray = $scope.appendVar($scope.previewArray,obj,$scope.previewSize);\n            \n        };\n    \n        $scope.saveToPDF = function(){\n            $scope.pdf = $scope.previewArray;\n        };\n\n\n\n\n\n\n    // MODAL GRAFICA DE PIE\n        $scope.modalPie = function(){\n              var modalInstance = $modal.open({ \n                templateUrl: 'partials/admin/modals/reportes/reportePie.html',\n                controller: pieCtrl,\n                size: 'lg',\n                resolve: {\n                notaOpc: function() {\n                  //datos = [];\n                  //datos.push(datos1,datos2);\n                  //return datos;\n                }\n                }\n              });\n              \n              modalInstance.result.then(function(data) {\n                //\n              });\n            };\n\n            var pieCtrl = function($filter,$scope,$modalInstance, notaOpc){\n                hoy = $filter(\"date\")(Date.now(), 'yyyy-MM-dd');\n                $scope.permiso = false;\n                $scope.sup ={}\n                $scope.reporte = {};\n                \n                $scope.sup.fecha = 0;\n\n\n                $scope.op1 = false;\n                \n\n                $scope.borrar = function(obj){\n                    if($scope.reporte.obj){\n                        delete($scope.reporte.obj);\n                    };\n                };\n\n                $scope.cancel = function () {\n                  $modalInstance.close();\n                };      \n\n\n                }\n////  Modal Texto\n         $scope.modalTexto = function(){\n              var modalInstance = $modal.open({ \n                templateUrl: 'partials/admin/modals/reportes/reporteTxt.html',\n                controller: txtCtrl,\n                size: 'lg',\n                resolve: {\n                notaOpc: function() {\n                  //datos = [];\n                  //datos.push(datos1,datos2);\n                  //return datos;\n                }\n                }\n              });\n              \n              modalInstance.result.then(function(data) {\n                console.log(data);\n                if(data!=undefined){\n                    dTos = data;\n                    $scope.previewArray = $scope.appendVar($scope.previewArray,dTos,$scope.previewSize);\n                    $scope.previewSize = $scope.previewSize + 1 ;\n                }\n              });\n\n            };\n\n            var txtCtrl = function($filter,$scope,$modalInstance, notaOpc){\n                $scope.txt = \"\";\n                $scope.aceptar = function(txto){\n                    $modalInstance.close(txto);\n                };\n\n                $scope.cancel = function () {\n                  $modalInstance.close();\n                };      \n            };\n\n $scope.getMedios();\n $scope.getAutorIf();\n $scope.getSeccion();\n $scope.getArea();\n $scope.getPaises();\n $scope.getTipo();\n $scope.getProtagonista();\n\n}]);",
+			"file": "js/admin/controlesReportes.js",
+			"file_size": 16513,
+			"file_write_time": 130651287600000000,
+			"settings":
+			{
+				"buffer_size": 16644,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "data/actualizar/actualizacionAdmin.php",
+			"settings":
+			{
+				"buffer_size": 10294,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "partials/admin/reportes.html",
+			"settings":
+			{
+				"buffer_size": 15669,
+				"line_ending": "Windows"
+			}
+		}
+	],
+	"build_system": "",
+	"command_palette":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"console":
+	{
+		"height": 150.0,
+		"history":
+		[
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"expanded_folders":
+	[
+		"/C/wamp/www/GitHub/sicla",
+		"/C/wamp/www/GitHub/sicla/data",
+		"/C/wamp/www/GitHub/sicla/data/actualizar",
+		"/C/wamp/www/GitHub/sicla/js/core",
+		"/C/wamp/www/GitHub/sicla/partials/admin",
+		"/C/wamp/www/GitHub/nubaAPI/nubaAPI",
+		"/C/wamp/www/GitHub/nubaAPI/nubaAPI/libs/Slim",
+		"/C/wamp/www/GitHub/nubaAPI/nubaAPI/v1",
+		"/C/wamp/www/GitHub/nubaAPI/nubaFrontEnd/dis",
+		"/C/wamp/www/GitHub/nubaAPI/nubaFrontEnd/dis/js",
+		"/C/wamp/www/GitHub/nubaAPI/nubaFrontEnd/js",
+		"/C/wamp/www/GitHub/nubaAPI/nubaFrontEnd/js/angular"
+	],
+	"file_history":
+	[
+		"/C/wamp/www/GitHub/nubaAPI/nubaFrontEnd/index.html",
+		"/C/wamp/www/GitHub/nubaAPI/nubaAPI/include/DbHandler.php",
+		"/C/wamp/www/Dropbox/NUBA/motor.php",
+		"/C/wamp/www/GitHub/nubaAPI/nubaAPI/v1/.htaccess",
+		"/C/wamp/www/GitHub/nubaAPI/nubaAPI/v1/index.php",
+		"/C/wamp/www/ftp.txt",
+		"/C/wamp/www/GitHub/nubaAPI/nubaAPI/include/Config.php",
+		"/C/wamp/www/Dropbox/NUBA/motorFabian.php",
+		"/C/wamp/www/GitHub/nubaAPI/nubaAPI/include/Config2.php",
+		"/C/wamp/www/Dropbox/NUBA/Accesos/Datos Nuba.txt",
+		"/C/wamp/www/Dropbox/NUBA/Base de Datos/NubaDatos.sql",
+		"/C/wamp/www/GitHub/nubaAPI/include/DbHandler.php",
+		"/C/Users/Fabiman/Documents/Frameworks/Angular/1.2.x/uncompressed/angular.js",
+		"/C/Users/Fabiman/Documents/Bootstrap/dist/css/bootstrap.css",
+		"/C/wamp/www/GitHub/sicla/partials/admin/reportes.html",
+		"/C/wamp/www/GitHub/sicla/js/admin/controlesReportes.js",
+		"/C/wamp/www/GitHub/sicla/data/consultas/consultasAdmin.php",
+		"/C/Users/Fabiman/AppData/Local/Temp/scp23144/var/www/sicla.com.mx/js/admin/controlesReportes.js",
+		"/C/Users/Fabiman/AppData/Local/Temp/scp29029/var/www/sicla.com.mx/data/consultas/consultaReportes.php",
+		"/C/wamp/www/GitHub/sicla/SiclaProjectSublime.sublime-project",
+		"/C/wamp/www/GitHub/sicla/lib/css/siclaAdmin.css",
+		"/C/wamp/www/GitHub/sicla/partials/admin/editarNota.html",
+		"/C/Users/Fabiman/AppData/Local/Temp/scp16648/var/www/sicla.com.mx/data/conexion.php",
+		"/C/Users/Fabiman/AppData/Local/Temp/scp16721/var/www/pruebas/data/conexion(localhost).php",
+		"/C/Users/Fabiman/AppData/Local/Temp/scp14613/var/www/pruebas/data/consultas/consultasLogin.php",
+		"/C/Users/Fabiman/AppData/Local/Temp/scp13824/var/www/pruebas/data/consultas/consultas.php",
+		"/C/Users/Fabiman/AppData/Local/Temp/scp41572/var/www/pruebas/js/admin/controlesAdmin.js",
+		"/C/wamp/www/GitHub/sicla/js/controllers/homeCtrl.js",
+		"/C/wamp/www/GitHub/sicla/partials/admin/altaNotas.html",
+		"/C/wamp/www/GitHub/sicla/partials/inicio.html",
+		"/C/wamp/www/GitHub/sicla/partials/admin/modals/reportes/reporteTxt.html",
+		"/C/wamp/www/GitHub/sicla/partials/admin/modals/reportes/reportePie.html",
+		"/C/wamp/www/GitHub/sicla/admin.html",
+		"/C/wamp/www/GitHub/sicla/data/inserciones/insercionesAdmin.php",
+		"/C/wamp/www/GitHub/sicla/js/admin/controlesEdicion.js",
+		"/C/wamp/www/GitHub/sicla/js/admin/controlesAdmin.js",
+		"/C/Users/Fabiman/AppData/Local/Temp/scp09216/var/www/pruebas/data/consultas/consultasAdmin.php",
+		"/C/wamp/www/sicla.com.mx/Respaldos/respaldo 1-6-2015/data/consultas/consultasAdmin.php",
+		"/C/Users/Fabiman/AppData/Local/Temp/scp10808/var/www/pruebas/data/inserciones/insercionesAdmin.php",
+		"/C/wamp/www/GitHub/sicla/data/consultas/consultas.php",
+		"/C/wamp/www/sicla.com.mx/Respaldos/respaldo 1-6-2015/data/inserciones/insercionesAdmin.php",
+		"/C/wamp/www/sicla.com.mx/Respaldos/respaldo 1-6-2015/data/actualizar/actualizacionAdmin.php",
+		"/C/wamp/www/sicla.com.mx/Respaldos/respaldo 1-6-2015/data/consultas/consultas.php",
+		"/C/Users/Fabiman/AppData/Local/Temp/scp19577/var/www/pruebas/partials/inicio.html",
+		"/C/Users/Fabiman/AppData/Local/Temp/scp19658/var/www/pruebas/partials/home.html",
+		"/C/Users/Fabiman/AppData/Local/Temp/scp15983/var/www/pruebas/pruebas/data/conexionPrueba.php",
+		"/C/wamp/www/GitHub/sicla/partials/admin/modals/altaEstado.html",
+		"/C/wamp/www/GitHub/sicla/partials/home.html",
+		"/C/wamp/www/GitHub/sicla/partials/usuarios/notas.html",
+		"/C/wamp/www/GitHub/sicla/partials/usuarios/Portadas.html",
+		"/C/wamp/www/GitHub/sicla/partials/admin/notasRecientes.html",
+		"/C/wamp/www/GitHub/sicla/partials/admin/TodasLasNotas.html",
+		"/C/wamp/www/GitHub/sicla/data/borrar/deleteAdmin.php",
+		"/C/wamp/www/GitHub/sicla/partials/admin/reportes!.html",
+		"/C/Users/Fabiman/Desktop/motorFabian.php",
+		"/C/wamp/www/GitHub/sicla/partials/admin/modals/reportes/altaArea.html",
+		"/C/wamp/www/GitHub/sicla/lib/css/sicla.css",
+		"/C/wamp/www/GitHub/sicla/partials/modalsNotas.html",
+		"/C/wamp/www/GitHub/sicla/partials/usuarios/inicio.html",
+		"/C/wamp/www/Dropbox/NUBA/Mokups/mokups arreglados - Copy/Partes.txt",
+		"/C/wamp/www/Dropbox/Proyectos/NUBA/sqls.txt",
+		"/C/wamp/www/Dropbox/Proyectos/NUBA/NubaDatos.sql",
+		"/C/wamp/www/GitHub/sicla/js/admin/appAdminSicla.js",
+		"/C/wamp/www/Templates/HoverEffectIdeas/index2.html",
+		"/C/wamp/www/GitHub/sicla/partials/admin/editar/editarSeccion.html",
+		"/C/wamp/www/GitHub/sicla/partials/admin/editar/eliminarSeccion.html",
+		"/C/wamp/www/GitHub/sicla/partials/admin/editar/editarPais.html",
+		"/C/wamp/www/GitHub/sicla/partials/admin/editar/eliminarPaises.html",
+		"/C/wamp/www/GitHub/sicla/partials/admin/editar/eliminarTemas.html",
+		"/C/wamp/www/GitHub/sicla/partials/admin/editar/editarArea.html",
+		"/C/wamp/www/sicla.com.mx/Respaldos/Respaldos A2/22 diciembre 2014/js/admin/appAdminSicla.js",
+		"/C/wamp/www/GitHub/sicla/cdppcktl.xgx.txt",
+		"/C/wamp/www/sicla.com.mx/Pruebas/partials/admin/reportes.html",
+		"/C/wamp/www/sicla.com.mx/Pruebas/js/admin/controlesReportes.js",
+		"/C/wamp/www/sicla.com.mx/Pruebas/admin.html",
+		"/C/wamp/www/sicla.com.mx/Pruebas/partials/admin/notasRecientes.html",
+		"/C/wamp/www/sicla.com.mx/Pruebas/data/consultas/consultasAdmin.php",
+		"/C/wamp/www/sicla.com.mx/Pruebas/data/actualizar/actualizacionAdmin.php",
+		"/C/wamp/www/sicla.com.mx/Pruebas/js/admin/controlesAdmin.js",
+		"/C/wamp/www/sicla.com.mx/Pruebas/js/admin/appAdminSicla.js",
+		"/C/wamp/www/sicla.com.mx/Pruebas/partials/admin/editar/alertaModal.html",
+		"/C/wamp/www/sicla.com.mx/Pruebas/partials/admin/TodasLasNotas.html",
+		"/C/wamp/www/sicla.com.mx/Pruebas/js/admin/controlesEdicion.js",
+		"/C/wamp/www/sicla.com.mx/respaldo sicla a2h 12-03-2014/sicla.com.mx/data/consultas/consultasAdmin.php",
+		"/C/Users/Fabiman/AppData/Local/Temp/scp46727/js/catalogo.js",
+		"/C/wamp/www/sicla.com.mx/respaldo sicla a2h 12-03-2014/sicla.com.mx/js/admin/controlesEdicion.js",
+		"/C/wamp/www/sicla.com.mx/respaldo sicla a2h 12-03-2014/sicla.com.mx/admin.html",
+		"/C/wamp/www/sicla.com.mx/respaldo sicla a2h 12-03-2014/sicla.com.mx/partials/admin/TodasLasNotas.html",
+		"/C/wamp/www/sicla.com.mx/respaldo sicla a2h 12-03-2014/sicla.com.mx/data/borrar/deleteAdmin.php",
+		"/C/Users/Fabiman/Downloads/Compactador Liso Doble Rodillo - CL-02.jpg",
+		"/C/Users/Fabiman/AppData/Local/Temp/scp02475/img/Catalogo/pendiente.png",
+		"/C/wamp/www/sicla.com.mx/respaldo sicla a2h 12-03-2014/sicla.com.mx/js/admin/controlesAdmin.js",
+		"/C/Users/Fabiman/Desktop/Modificado en edicion/consultasAdmin.php",
+		"/C/wamp/www/Dropbox/NUBA/NUBA/www/_NUBA/reportes.php",
+		"/C/wamp/www/Dropbox/NUBA/Accesos/connexionBaseDeDatos.php",
+		"/C/Program Files/Prototipos/Balsamiq Mockups 2.2.16/SERIAL.txt",
+		"/C/wamp/www/Dropbox/NUBA/NUBA/www/_lib/AgregaSintoma.php",
+		"/C/wamp/www/sicla.com.mx/respaldo sicla a2h 12-03-2014/Respaldo 12-14-2014/conexion.php!",
+		"/C/wamp/www/sicla.com.mx/respaldo sicla a2h 12-03-2014/sicla.com.mx/data/actualizar/actualizacionAdmin.php",
+		"/C/wamp/www/sicla.com.mx/respaldo sicla a2h 12-03-2014/sicla.com.mx/js/admin/appAdminSicla.js",
+		"/C/wamp/www/sicla.com.mx/respaldo sicla a2h 12-03-2014/sicla.com.mx/partials/admin/altaNotas.html",
+		"/C/wamp/www/sicla.com.mx/respaldo sicla a2h 12-03-2014/sicla.com.mx/partials/admin/editar/editarPais.html",
+		"/C/wamp/www/sicla.com.mx/respaldo sicla a2h 12-03-2014/sicla.com.mx/partials/admin/notasRecientes.html",
+		"/C/wamp/www/sicla.com.mx/respaldo sicla a2h 12-03-2014/Respaldo 12-14-2014/info.php",
+		"/C/Users/Fabiman/Desktop/Modificado en edicion/controlesAdmin.js",
+		"/C/wamp/www/sicla.com.mx/respaldo sicla a2h 12-03-2014/sicla.com.mx/partials/admin/editar/editarSeccion.html",
+		"/C/wamp/www/sicla.com.mx/respaldo sicla a2h 12-03-2014/sicla.com.mx/partials/admin/editar/editProtagonistaModal.html",
+		"/C/wamp/www/sicla.com.mx/respaldo sicla a2h 12-03-2014/sicla.com.mx/partials/admin/editar/editarProtagonista.html",
+		"/C/Users/Fabiman/Documents/OCA10/Workshop I Ed 2/clase 10.txt",
+		"/C/wamp/www/sicla.com.mx/respaldo sicla a2h 12-03-2014/sicla.com.mx/partials/admin/editar/editTemasModal.html",
+		"/C/wamp/www/sicla.com.mx/respaldo sicla a2h 12-03-2014/sicla.com.mx/partials/admin/editar/editarArea.html",
+		"/C/wamp/www/sicla.com.mx/respaldo sicla a2h 12-03-2014/sicla.com.mx/partials/usuarios/inicio.html",
+		"/C/wamp/www/sicla.com.mx/respaldo sicla a2h 12-03-2014/sicla.com.mx/partials/admin/editar/editarMedios.html",
+		"/C/wamp/www/sicla.com.mx/respaldo sicla a2h 12-03-2014/sicla.com.mx/partials/admin/editar/eliminarMedio.html",
+		"/C/wamp/www/sicla.com.mx/respaldo sicla a2h 12-03-2014/sicla.com.mx/partials/admin/editar/editMedioModal.html",
+		"/C/wamp/www/sicla.com.mx/respaldo sicla a2h 12-03-2014/sicla.com.mx/data/actualizar/actualizarLogo.php",
+		"/C/wamp/www/sicla.com.mx/respaldo sicla a2h 12-03-2014/sicla.com.mx/partials/admin/editar/eliminarSeccion.html",
+		"/C/wamp/www/sicla.com.mx/respaldo sicla a2h 12-03-2014/sicla.com.mx/partials/admin/editar/editSeccionModal.html",
+		"/C/wamp/www/sicla.com.mx/respaldo sicla a2h 12-03-2014/sicla.com.mx/partials/admin/editar/eliminarProtagonista.html",
+		"/C/wamp/www/v2.1/data/conexion.php",
+		"/C/wamp/www/v2.1/js/admin/controlesAdmin.js",
+		"/C/wamp/www/sicla.com.mx/respaldo sicla a2h 12-03-2014/sicla.com.mx/partials/modalsNotas.html",
+		"/C/wamp/www/sicla.com.mx/respaldo sicla a2h 12-03-2014/sicla.com.mx/lib/css/sicla.css",
+		"/C/wamp/www/sicla.com.mx/respaldo sicla a2h 12-03-2014/sicla.com.mx/js/controllers/homeCtrl.js",
+		"/C/wamp/www/sicla.com.mx/respaldo sicla a2h 12-03-2014/sicla.com.mx/data/inserciones/insercionesAdmin.php",
+		"/C/wamp/www/sicla.com.mx/respaldo sicla dimesa 12-6-2014/js/admin/controlesAdmin.js",
+		"/C/wamp/www/sicla.com.mx/respaldo sicla a2h 12-03-2014/sicla.com.mx/data/consultas/consultas.php",
+		"/C/wamp/www/sicla.com.mx/respaldo sicla a2h 12-03-2014/sicla.com.mx/partials/inicio.html"
+	],
+	"find":
+	{
+		"height": 43.0
+	},
+	"find_in_files":
+	{
+		"height": 0.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"getRe",
+			"pdf",
+			"generar pdf",
+			"insert into ",
+			"insert ",
+			"insert",
+			"excecute",
+			"$$",
+			"!=2",
+			"!=1",
+			"getMedio",
+			"getMedios",
+			"protagonista",
+			"Autores",
+			"autores",
+			"check",
+			"editar",
+			"medio",
+			"url",
+			"required",
+			"editar",
+			"value=\"1\"",
+			"getCargo",
+			"required",
+			"this",
+			"getpatien",
+			"bind_res",
+			"prepare(",
+			"passhash",
+			"sub",
+			"$scope.reporte.medio",
+			"Medios",
+			"medios",
+			"medio",
+			"Areas",
+			"|",
+			"formnota",
+			"formnotas",
+			"formnota",
+			"titulo",
+			"tituo",
+			"reporte",
+			"hoy",
+			"reporte",
+			"fecha1",
+			"clasificacion",
+			"selected",
+			"$scope.sup",
+			"fecha1",
+			"well",
+			"add",
+			"tema",
+			"col-lg-1 ",
+			"col-lg-3",
+			"col-md-",
+			"hr",
+			"text",
+			"}",
+			"btn-sm ",
+			"\"btn ",
+			"angular.cop",
+			"cls",
+			"input",
+			"alergia",
+			"insert",
+			"input-medio",
+			"reporte",
+			"col-lg-",
+			"inpu",
+			"success 1",
+			"succes\"",
+			"succes ",
+			"ng-opt",
+			"ng-option",
+			"reportes",
+			"guar",
+			"Pata",
+			"508s",
+			"moto",
+			"f250",
+			"moto",
+			"san",
+			"2005",
+			"f250",
+			"272",
+			"275",
+			"AP-",
+			"580sm",
+			"580sm s",
+			"13",
+			"DD",
+			"DD130",
+			"sd11",
+			"col-xs-2 col-lg-2",
+			"col-xs-3 col-lg-3",
+			"col-xs-2",
+			"anct",
+			"ng-repea",
+			"anct",
+			"imagen",
+			"index",
+			"dele",
+			"modalsNo",
+			"modalNo",
+			"modalOtros",
+			"get",
+			"set",
+			"post",
+			"medio.",
+			"side-nav>li>ul",
+			"-submenu",
+			"toggle",
+			"close",
+			"close ",
+			"close",
+			"ident",
+			"datosNota",
+			"X0x",
+			"XOX",
+			"btn-success\"",
+			"btn-success\"><span class=\"fa fa-plus\"></span>",
+			"select",
+			" btn-success\"><span class=\"fa fa-plus\">",
+			"btn-success\"><span class=\"fa fa-plus\">",
+			"<span class=\"fa fa-plus\">",
+			"altaad",
+			"ng-model",
+			"updateNo"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 0,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "/C/wamp/www/GitHub/nubaAPI/nubaFrontEnd/dis/js/app.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 587,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								357,
+								357
+							]
+						],
+						"settings":
+						{
+							"auto_name": "",
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 180.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "js/controllers/homeCtrl.js",
+					"semi_transient": true,
+					"settings":
+					{
+						"buffer_size": 4779,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								13,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				}
+			]
+		},
+		{
+			"selected": 1,
+			"sheets":
+			[
+				{
+					"buffer": 2,
+					"file": "js/admin/controlesReportes.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 16644,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								13521,
+								13521
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 7011.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "data/actualizar/actualizacionAdmin.php",
+					"semi_transient": true,
+					"settings":
+					{
+						"buffer_size": 10294,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 420.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "partials/admin/reportes.html",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 15669,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								13255,
+								12935
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/HTML/HTML.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 4,
+					"type": "text"
+				}
+			]
+		},
+		{
+			"sheets":
+			[
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 28.0
+	},
+	"input":
+	{
+		"height": 0.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			],
+			[
+				0,
+				1,
+				1,
+				2
+			],
+			[
+				0,
+				2,
+				1,
+				3
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			0.412803532009,
+			0.881898454746,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"project": "SiclaProjectSublime.sublime-project",
+	"replace":
+	{
+		"height": 52.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": true,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 354.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}

@@ -1068,6 +1068,23 @@ $scope.invalidaCargo = function(){
            }          
          });
          };
+         
+// ESTADOS
+              $scope.getEstados = function(idPais){
+               $http.post("data/consultas/consultasAdmin.php",{'sentencia':11,'pais':idPais}).success(function(dataEstados){
+                  $scope.opcionesEstado = dataEstados;
+                  console.log($scope.opcionesEstado);
+               });
+              };
+
+    // MUNICIPIO
+              $scope.getMunicipio = function(estado){
+                console.log(estado);
+                $http.post("data/consultas/consultasAdmin.php",{'sentencia':12,'estado':estado}).success(function(dataMunicipio){
+                          $scope.opcionesMunicipios = dataMunicipio;
+                          console.log(dataMunicipio);
+                      });
+              };         
 
 /**** GET AUTOR    ***/
         $scope.getAutor=function(medio){

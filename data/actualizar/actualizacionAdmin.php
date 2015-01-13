@@ -159,52 +159,49 @@
 		case 9:	if(isset($datos['nota']))
 				{
 					session_start();
-					$user = $_SESSION['uid'];					
-					$dato = $datos['nota'];
-					$id = $dato['idNota'];
-					$ce = $dato['autor']['idCE'];
-					$titulo = $dato['titulo'];
-					$sintesis = $dato['sintesis'];
-					$texto = $dato['texto'];
-					$tipo = $dato['tipo']['idTipoNota'];
-					$pag = $dato['pagina'];
-					$fecha = $dato['fecha'];
-					$cargo = $dato['cargo']['idCP'];
-					$pos = $dato['posneg'];
-					$subtema = $dato['subtema']['idSubtema'];
-					$otroSB = $dato['otroSubtema'];
-					$otrosCG = $dato['otrosCargo'];
-					$seccion = $dato['seccion']['idSeccion'];
-					$mun = $dato['municipio']['idMunicipio'];
-					$url = $dato['url'];
-					$num = $dato['num'];
+					$user = (isset($_SESSION['uid'])) ? $_SESSION['uid'] : "null";
+					$datos = $datos['nota'];
+					$id = $datos['idNota'];
+					$ce = $datos['autor']['idCE'];
+					$titulo = $datos['titulo'];
+					$sintesis = $datos['sintesis'];
+					$texto = $datos['texto'];
+					$tipo = (isset($datos['tipo']['idTipoNota'])) ? $datos['tipo']['idTipoNota']: "null";
+					$pag = (isset($datos['pagina'])) ? $datos['pagina'] : "null";
+					$fecha = (isset($datos['fecha'])) ? $datos['fecha'] : "null";	
+					$cargo = (isset($datos['cargo']['idCP'])) ? $datos['cargo']['idCP'] : "null";
+					$pos = (isset($datos['posneg'])) ? $datos['posneg'] : "null";	
+					$subtema = (isset($datos['subtema']['idSubtema'])) ? $datos['subtema']['idSubtema'] : "null";
+					$otroSB = $datos['otroSubtema'];
+					$otrosCG = $datos['otrosCargo'];
+					$seccion = (isset($datos['seccion']['idSeccion'])) ? $datos['seccion']['idSeccion'] : "null";
+					$mun = (isset($datos['municipio']['idMunicipio'])) ? $datos['municipio']['idMunicipio'] : "null";
+					$url = $datos['url'];
+					$num = (isset($datos['num'])) ? $datos['num'] : "null";
+										
 					if($mysqli->query("UPDATE Nota 
 						set tituloNota = '$titulo', fecha = '$fecha', paginaNota = $pag, idTipoNota = $tipo, Clasificacion = '$pos', sintesis = '$sintesis', texto = '$texto', numeroPeriodico = $num, urlNota = '$url', idMunicipio = $mun, idAdmin = $user, idCE = $ce, idSeccion = $seccion
-					where idNota = $id")==TRUE){
-
-
-
-					$mysqli->query("delete from notaProtagonista where idNota = $id");
-					$mysqli->query("delete from trata_de where idNota_ = $id");
-					$mysqli->query("insert into trata_de values($id,$subtema)");
-					$mysqli->query("insert into notaProtagonista values($id,$cargo,1)");
-					for ($i = 0; $i < count($otroSB);$i++)
-						if ($otroSB[$i]!=null)
-						{
-							$aux = $otroSB[$i]['idSubtema'];
-							$mysqli->query("insert into trata_de values($id,$aux)");
-						}
-					for ($i=0; $i < count($otrosCG); $i++)
-						if($otrosCG[$i]!=null)
-						{
-							$aux = $otrosCG[$i]['idCP'];
-							$mysqli->query("insert into notaProtagonista values($id,$aux,2)");
-						}
-					echo 1;
-					}else{
+					where idNota = $id"))
+					{
+						$mysqli->query("delete from notaProtagonista where idNota = $id");
+						$mysqli->query("delete from trata_de where idNota_ = $id");
+						$mysqli->query("insert into trata_de values($id,$subtema)");
+						$mysqli->query("insert into notaProtagonista values($id,$cargo,1)");
+						for ($i = 0; $i < count($otroSB);$i++)
+							if ($otroSB[$i]!=null)
+							{
+								$aux = $otroSB[$i]['idSubtema'];
+								$mysqli->query("insert into trata_de values($id,$aux)");
+							}
+						for ($i=0; $i < count($otrosCG); $i++)
+							if($otrosCG[$i]!=null)
+							{
+								$aux = $otrosCG[$i]['idCP'];
+								$mysqli->query("insert into notaProtagonista values($id,$aux,2)");
+							}
+						echo 1;
+					}else
 						echo "Error en actualizacion 509-2";
-					}
-
 				}else
 					echo "Error 509-1";
 				mysqli_close($mysqli);

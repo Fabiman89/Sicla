@@ -1,0 +1,20 @@
+<?php
+require('../fpdf.php');
+
+class pdf {
+	function table($data, $header) {
+
+		// Colores, ancho de línea y fuente en negrita
+		$this->SetFillColor(255,0,0);
+		$this->SetTextColor(255);
+		$this->SetDrawColor(128,0,0);
+		$this->SetLineWidth(.3);
+		$this->SetFont('','B');
+		// Cabecera
+		$w = array(45, 50, 50, 45);
+
+	}
+
+}
+
+?>

@@ -4,6 +4,7 @@ app.controller('homeCtrl',['$scope','$http','$modal', function($scope,$http,$mod
   $http.post("data/consultas/consultas.php",{'sentencia':1}).success(function(Columnas){ 
    $http.post("data/consultas/consultas.php",{'sentencia':2}).success(function(Medios){ 
         $scope.angMedios=Medios;
+        console.log($scope.angMedios);
         $scope.angColumnas=Columnas;
         console.log(Columnas);
         // $scope.predicate = "";

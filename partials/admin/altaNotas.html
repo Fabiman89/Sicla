@@ -47,7 +47,7 @@
               <span class="input-group-addon">
                 <input ng-disabled="!nota.fecha" title="mantener fecha" ng-model="keep.fecha" type="checkbox" aria-label="...">
               </span>
-              <input type="date" ng-disabled="keep.fecha" ng-model="nota.fecha" class="form-control input-sm" required/> 
+              <input type="date" ng-disabled="keep.fecha" ng-model="nota.fecha" class="form-control input-sm" /> 
             </div>
           </div>
           <div class="col-xs-1 col-lg-1">
@@ -126,7 +126,7 @@
 
 
               <input type="text" ng-model="nota.protagonista" 
-               class="form-control input-sm" placeholder="Protagonista" ng-disabled="keep.protagonista" typeahead="opProtagonista as opProtagonista.nombreProtagonista for opProtagonista in opcionesProtagonsita| filter:$viewValue | limitTo:10" required/>
+               class="form-control input-sm" placeholder="Protagonista" ng-disabled="keep.protagonista" typeahead-on-select="getCargo(nota.protagonista)" typeahead="opProtagonista as opProtagonista.nombreProtagonista for opProtagonista in opcionesProtagonsita| filter:$viewValue | limitTo:10" />
             <!--
             <select class="form-control" ng-model="nota.protagonista" ng-options="opProtagonista.nombreProtagonista for opProtagonista in opcionesProtagonsita" ng-change="getCargo(nota.protagonista)"><option value=" " selected>Seleccione Protagonista</option>
             </select>
@@ -136,9 +136,6 @@
           <div class="col-xs-1 col-lg-1">
             <button type="button" title="Nuevo protagonista" ng-click="modalProt()" class="btn btn-sm btn-success"><span class="fa fa-plus"></span>
             </button>
-          </div>
-          <div class="col-lg-1">
-            <button ng-click="validarCargo(nota.protagonista) " class="btn btn-sm btn-default">Carg.</button>
           </div>
         </div>
 <!-- CARGO PROTAGONISTA      -->
@@ -151,7 +148,7 @@
                 <input ng-disabled="!nota.cargo" title="Mantener cargo"   ng-model="keep.cargo" type="checkbox" aria-label="...">
               </span>
 
-              <select class="form-control input-sm" ng-model="nota.cargo" ng-disabled="!cargoValido || keep.cargo" ng-options="opCargo.nombreCargo for opCargo in opcionesCargo" required><option value=" " selected>Seleccionar</option>
+              <select class="form-control input-sm" ng-model="nota.cargo" ng-disabled="!nota.protagonista || keep.cargo" ng-options="opCargo.nombreCargo for opCargo in opcionesCargo" ><option value=" " selected>Seleccionar</option>
               </select>
             </div>
 
@@ -212,7 +209,7 @@
           <div class="col-xs-3 col-lg-3 control-label"><label>Pos/Neg</label>
           </div>
           <div class="col-xs-6 col-lg-6">
-            <select class="form-control input-sm" ng-model="nota.posneg" required>
+            <select class="form-control input-sm" ng-model="nota.posneg" >
               <option value="positiva"> Positiva</option>
               <option value="negativa"> Negativa</option>
             </select>
@@ -230,7 +227,7 @@
                 <input ng-disabled="!nota.area" title="Mantener Área" ng-model="keep.area" type="checkbox" aria-label="...">
               </span>
 
-              <select class="form-control input-sm" ng-model="nota.area" ng-disabled="keep.area" ng-options="opArea.nombreArea for opArea in opcionesArea" ng-change="getTema(nota.area.idArea)" required>
+              <select class="form-control input-sm" ng-model="nota.area" ng-disabled="keep.area" ng-options="opArea.nombreArea for opArea in opcionesArea" ng-change="getTema(nota.area.idArea)" >
               </select>
             </div>
 
@@ -347,7 +344,7 @@
                 <input ng-disabled="!nota.pais" title="Mantener País" ng-model="keep.pais" type="checkbox" aria-label="...">
               </span>
 
-              <select class="form-control input-sm" ng-model="nota.pais" ng-disabled="keep.pais" ng-change="getEstados(nota.pais.idPais)" ng-options="opEstado.nombrePais for opEstado in opcionesPais" required>
+              <select class="form-control input-sm" ng-model="nota.pais" ng-disabled="keep.pais" ng-change="getEstados(nota.pais.idPais)" ng-options="opEstado.nombrePais for opEstado in opcionesPais" >
               <option value=" " selected>País</option>
               </select>
             </div>
@@ -406,7 +403,7 @@
           <div class="col-xs-3 col-lg-3 control-label"><label>URL</label>
           </div>
           <div class="col-xs-6 col-lg-6">
-            <input type="text" ng-model="nota.url" class="form-control input-sm" placeholder="Link de la nota"/>
+            <input type="text" ng-model="nota.url" class="form-control input-sm" placeholder="Link de la nota" required/>
           </div>
         </div>
 <!-- PORTADA      -->

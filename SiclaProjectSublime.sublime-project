@@ -1,0 +1,17 @@
+{
+	"folders":
+	[
+		{
+			"follow_symlinks": true,
+			"path": "."
+		},
+		{
+			"follow_symlinks": true,
+			"path": "C:\\wamp\\www\\GitHub\\nubaAPI"
+		},
+		{
+			"follow_symlinks": true,
+			"path": "C:\\wamp\\www\\GitHub\\nubaAPI\\nubaFrontEnd"
+		}
+	]
+}

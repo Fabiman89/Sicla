@@ -32,10 +32,10 @@ switch ($instruccion){
 
 		$result=mysqli_query($mysqli,
 		"SELECT distinct m.nombreMedio, m.urlMedio as idPeriodico, m.imagenMedio as imagen 
-		from medio m, (
+		from Medio m, (
 			select * 
-			from nota 
-			order by nota.fecha desc 
+			from Nota 
+			order by Nota.idNota desc 
 			limit  50) AS n, colabora_en ce 
 		where ce.idCE = n.idCE 
 		and ce.idMedio = m.idMedio  
@@ -43,7 +43,7 @@ switch ($instruccion){
 		$arr = array();
 		if($result==true) {
 		 while($row = $result->fetch_assoc()) {
-		 $arr[] = $row;
+		 	$arr[] = $row;
 		 }
 		 echo json_encode($arr);
 		 mysqli_free_result($result);

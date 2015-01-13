@@ -6,48 +6,41 @@ switch ($instruccion){
 // INSERCION NOTA  (ERROR 401)
 	case 1:
 	session_start();
-	$usr = $_SESSION['uid'];
+	$usr = (isset($_SESSION['uid'])) ? $_SESSION['uid'] : "null";
 	$datos = $sentencia['nota'];
 	$autor = $datos['autor']['idCE'];
 	$titulo = $datos['titulo'];
 	$sintesis = $datos['sintesis'];
 	$texto = $datos['texto'];
-	$tipo = $datos['tipo']['idTipoNota'];
-	$pagina = $datos['pagina'];
-	$fecha = $datos['fecha'];
-	$cargo = $datos['cargo']['idCP'];
-	$pos = $datos['posneg'];
-	$subtema = $datos['subtema']['idSubtema'];
+	$tipo = (isset($datos['tipo']['idTipoNota'])) ? $datos['tipo']['idTipoNota']: "null";
+	$pagina = (isset($datos['pagina'])) ? $datos['pagina'] : "null";
+	$fecha = (isset($datos['fecha'])) ? $datos['fecha'] : "null";	
+	$cargo = (isset($datos['cargo']['idCP'])) ? $datos['cargo']['idCP'] : "null";
+	$pos = (isset($datos['posneg'])) ? $datos['posneg'] : "null";	
+	$subtema = (isset($datos['subtema']['idSubtema'])) ? $datos['subtema']['idSubtema'] : "null";
 	$otroSB = $datos['otroSubtema'];
 	$otrosCG = $datos['otrosCargo'];
-	$seccion = $datos['seccion']['idSeccion'];
-	$municipio = $datos['municipio']['idMunicipio'];
+	$seccion = (isset($datos['seccion']['idSeccion'])) ? $datos['seccion']['idSeccion'] : "null";
+	$municipio = (isset($datos['municipio']['idMunicipio'])) ? $datos['municipio']['idMunicipio'] : "null";
 	$url = $datos['url'];
-	$per = $datos['num'];
-
-	if($mysqli->query("insert into Nota values(null,'$titulo','$fecha',$pagina,$tipo,'$pos','$sintesis','$texto',$per,'$url',null,$municipio,$usr,$autor,'$seccion')")===true)
+	$per = (isset($datos['num'])) ? $datos['num'] : "null";
+	$mysqli->query("insert into Nota values(null,'$titulo','$fecha',$pagina,$tipo,'$pos','$sintesis','$texto',$per,'$url',null,$municipio,$usr,$autor,$seccion)");
+	$nota = mysqli_insert_id($mysqli);
+	$mysqli->query("insert into trata_de values($nota,$subtema)");
+	$mysqli->query("insert into notaProtagonista values($nota,$cargo,1)");
+	for ($i = 0; $i < count($otroSB);$i++)
+		if ($otroSB[$i]!=null)
 		{
-			$nota = mysqli_insert_id($mysqli);
-			$mysqli->query("insert into trata_de values($nota,$subtema)");
-			$mysqli->query("insert into notaProtagonista values($nota,$cargo,1)");
-			for ($i = 0; $i < count($otroSB);$i++)
-				if ($otroSB[$i]!=null)
-				{
-					$aux = $otroSB[$i]['idSubtema'];
-					$mysqli->query("insert into trata_de values($nota,$aux)");
-				}
-			for ($i=0; $i < count($otrosCG); $i++)
-				if($otrosCG[$i]!=null)
-				{
-					$aux = $otrosCG[$i]['idCP'];
-					$mysqli->query("insert into notaProtagonista values($nota,$aux,2)");
-				}
-				echo $nota;	
-		
-	}else{
-		//echo($mysqli);
-		echo "error";
-	}	
+			$aux = $otroSB[$i]['idSubtema'];
+			$mysqli->query("insert into trata_de values($nota,$aux)");
+		}
+	for ($i=0; $i < count($otrosCG); $i++)
+		if($otrosCG[$i]!=null)
+		{
+			$aux = $otrosCG[$i]['idCP'];
+			$mysqli->query("insert into notaProtagonista values($nota,$aux,2)");
+		}
+	echo $nota;	
 	mysqli_close($mysqli);
 	break; 
 
@@ -89,7 +82,7 @@ switch ($instruccion){
 			echo ("ERROR 403");
 		}
 		$mysqli->query("insert into colabora_en values (null,$idAutor, $idMedio)");
-		$query = $mysqli->query("SELECT a.idAutor, a.nombreAutor, c.idCE FROM Autor a, colabora_en c WHERE c.idMedio=$idMedio and c.idAutor = a.idAutor");
+		$query = $mysqli->query("SELECT a.idAutor, a.nombreAutor, c.idCE FROM Autor a, colabora_en c WHERE c.idMedio=$idMedio and c.idAutor = a.idAutor order by a.nombreAutor desc");
 		$arr = array();
 		while ($row = mysqli_fetch_assoc($query)) 
 				$arr[] = $row;
@@ -101,7 +94,7 @@ switch ($instruccion){
 	case 4:
 		$nombre = $sentencia['nombre'];
 		$mysqli->query("insert into tipoNota values (null,'$nombre')");
-		$result = $mysqli->query("select * from tipoNota");
+		$result = $mysqli->query("select * from tipoNota order by nombreTipoNota desc");
 		$arr = array();
 		if ($result)
 		{
@@ -118,7 +111,7 @@ switch ($instruccion){
 	case 5:
 		$nombre = $sentencia['nombre'];
 		$mysqli->query("insert into seccion values (null,'$nombre')");
-		$result = $mysqli->query("select * from seccion");
+		$result = $mysqli->query("select * from seccion order by nombreSeccion desc");
 		$arr = array();
 		if ($result)
 		{
@@ -140,7 +133,7 @@ switch ($instruccion){
 	$mysqli->query("insert into Protagonista values(null,'$nombre','$gen')");
 	$id = mysqli_insert_id($mysqli);
 	$mysqli->query("insert into cargoProtagonista values(null,$cargo,$id)");
-	$result = $mysqli->query("select * from Protagonista");
+	$result = $mysqli->query("select * from Protagonista order by nombreProtagonista desc");
 	$arr = array();
 	if($result)
 	{
@@ -161,7 +154,7 @@ switch ($instruccion){
 		$mysqli->query("insert into Cargo values (null,'$nombre')");
 		$cargo = mysqli_insert_id($mysqli);
 		$mysqli->query("insert into cargoProtagonista values (null,$cargo,$prot)");
-		$result = $mysqli->query("select ca.*, cp.idCP from Cargo ca, cargoProtagonista cp where cp.idProtagonista=$prot and cp.idCargo = ca.idCargo");
+		$result = $mysqli->query("select ca.*, cp.idCP from Cargo ca, cargoProtagonista cp where cp.idProtagonista=$prot and cp.idCargo = ca.idCargo order by ca.nombreCargo desc");
 		$arr = array();
 		if($result)
 		{

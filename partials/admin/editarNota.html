@@ -9,7 +9,7 @@
             <label>Medio</label>
           </div>
           <div class="col-xs-7 col-lg-7">
-            <select id="input-medio" ng-model="nota.medio" ng-options="opMedios.nombreMedio for opMedios in opcionesMedios" ng-change="getAutor(nota.medio.idMedio)" class="form-control"><option value=" " disabled >Selecciona un medio</option></select>
+            <select id="input-medio" ng-model="nota.medio" ng-options="opMedios.nombreMedio for opMedios in opcionesMedios" ng-change="getAutor(nota.medio.idMedio)" class="form-control" required><option value=" " disabled >Selecciona un medio</option></select>
           </div>
           <div class="col-xs-3 col-lg-3">
           </div>
@@ -20,7 +20,7 @@
             <label>Autor</label>
           </div>
           <div class="col-xs-7 col-lg-7">
-            <select ng-disabled="!nota.medio" ng-model="nota.autor" ng-options="opAutores.nombreAutor for opAutores in opcionesAutores" class="form-control" placeholder="Autor"><option value=" " selected></option>
+            <select ng-disabled="!nota.medio" ng-model="nota.autor" ng-options="opAutores.nombreAutor for opAutores in opcionesAutores" class="form-control" placeholder="Autor" required><option value=" " selected></option>
             </select>
           </div>
           <div class="col-xs-3 col-lg-3">
@@ -63,7 +63,7 @@
           <div class="col-xs-2 col-lg-2 control-label"><label># Ejemplar</label>
           </div>
           <div class="col-xs-7 col-lg-7">
-            <input type="number" ng-model="nota.num" class="form-control" required/>
+            <input type="number" ng-model="nota.num" class="form-control"/>
           </div>
           <div class="col-xs-3 col-lg-3">
           </div>
@@ -276,7 +276,7 @@
           <div class="col-xs-1 col-lg-1 control-label"><label>URL</label>
           </div>
           <div class="col-xs-10 col-lg-">
-            <input type="text" ng-model="nota.url" class="form-control" placeholder="Link de la nota"/>
+            <input type="text" ng-model="nota.url" class="form-control" placeholder="Link de la nota" required/>
           </div>
         </div>
         <div  class="col-xs-12 col-sm-12 col-md-12 ">
@@ -299,7 +299,7 @@
           <div class="col-xs-1 col-lg-1 control-label"><label>Titulo</label>
           </div>
           <div class="col-xs-10 col-lg-10">
-            <input type="text" class="form-control" ng-model="nota.titulo" placeholder="Titulo" />
+            <input type="text" class="form-control" ng-model="nota.titulo" placeholder="Titulo" required />
           </div>
         </div>
 
@@ -320,8 +320,8 @@
         </div>
 
 <div class="btn-group btn-group-lg btn-group-justified" style="width:100%" role="group" aria-label="Button Group">
-  <button type="button" class="btn btn-primary" ng-disabled="formNotas.$invalid" ng-click="vistaPrevia(nota)">Vista Previa</button>
-  <button type="button" ng-disabled="!permitir" ng-click="updateNota(nota)" class="btn btn-danger">Guardar </button>
+  <button type="button" class="btn btn-primary"  ng-click="vistaPrevia(nota)">Vista Previa</button>
+  <button type="button" ng-disabled="formNotas.$invalid" ng-click="updateNota(nota)" class="btn btn-danger">Guardar </button>
 </div>
 
       </div>
