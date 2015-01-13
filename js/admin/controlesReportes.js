@@ -207,7 +207,7 @@
          		municipios.push($scope.reporte.municipio.idMunicipio);    		    		    		
          		if($scope.reporte.genero == 1)
          		{
-         			switch ($scope.reporte.generoTipo) 
+         			switch (parseInt($scope.reporte.generoTipo))
          			{
          				case 0:	genero.push(1);
          						break;	
@@ -221,7 +221,7 @@
          		{
          			if($scope.reporte.genero == 2)
          			{
-         				switch ($scope.reporte.generoTipo) 
+         				switch (parseInt($scope.reporte.generoTipo)) 
          				{
          					case 0:	genero.push(2);
          							break;	

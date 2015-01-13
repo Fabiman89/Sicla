@@ -284,12 +284,20 @@
 			if(0 < count($genero))
 			{
 				$tablaux = (strpos($tablaux, "notaProtagonista np") !== false) ? $tablaux : $tablaux.", notaProtagonista np";
-				$tablaux = (strpos($tablaux, "cargoProtagonista cp") !== false) ? $tablaux : $tablaux.", cargoProtagonista ce";
+				$tablaux = (strpos($tablaux, "cargoProtagonista cp") !== false) ? $tablaux : $tablaux.", cargoProtagonista cp";
 				$tablaux = (strpos($tablaux, "colabora_en ce") !== false) ? $tablaux : $tablaux.", colabora_en ce";
+				$whereaux .= "and ( ";
 				for($i=0; $i<count($genero[0]); $i++)
-					$whereaux .= "or ce.idAutor = ".$genero[0][$i]['idAutor']." ";
+					if($i == 0)
+						$whereaux .= "ce.idAutor = ".$genero[0][$i]['idAutor']." ";
+					else	
+						$whereaux .= "or ce.idAutor = ".$genero[0][$i]['idAutor']." ";
 				for($i=0; $i<count($genero[1]); $i++)
-					$whereaux .= "or cp.idProtagonista = ".$genero[1][$i]['idProtagonista']." ";
+					if($i==0 && count($genero[0])==0)
+						$whereaux .= "cp.idProtagonista = ".$genero[1][$i]['idProtagonista']." ";
+					else
+						$whereaux .= "or cp.idProtagonista = ".$genero[1][$i]['idProtagonista']." ";
+				$whereaux .= ") ";
 				$whereaux = (strpos($whereaux, "cp.idCP = np.idCP") !== false) ? $whereaux : $whereaux."and cp.idCP = np.idCP ";
 				$whereaux = (strpos($whereaux, "n.idNota = np.idNota") !== false) ? $whereaux : $whereaux."and n.idNota = np.idNota ";
 				$whereaux = (strpos($whereaux, "ce.idCE = n.idCE") !== false) ? $whereaux : $whereaux."and ce.idCE = n.idCE ";	
