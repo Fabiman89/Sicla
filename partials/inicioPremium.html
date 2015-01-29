@@ -1,0 +1,132 @@
+<section class="defaultIni">
+    <nav class="navbar navbar-static-top navbar-sicla upperMenu" ng-controller="homeCtrl2" role="navigation">
+        <div class="container" >
+            <div class="row">
+            <div class="col-md-6">
+                <ul class="nav navbar-nav navbar-left">
+                    <li >
+                        <a ng-href="#/home"><strong>Inicio</strong></a>
+                    </li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li >
+                        
+                    </li>
+                </ul>
+            </div>
+            <div class="col-lg-6">
+            <div class="collapse navbar-collapse navbar-ex1-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li >
+                        <a ng-click="open2('lg')" ng-href="" class="clickable"><strong>Sesion</strong></a>
+                    </li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li >
+                        <a ng-click="open1('lg')" ng-href="" class="clickable" ><strong>Registrarse</strong></a>
+                    </li>
+                </ul>
+            </div> 
+            </div>  
+        </div> 
+        </div>
+    </nav> 
+    <div class="cont">
+        
+    
+<div class="container">
+<div class="row">
+<div class=" " style="margin-top:10px;">
+<div class="col-md-2 col-sm-4 col-xs-4 "> 
+        <table class="table">
+            <tr>
+                <h3 class="text-center" ng-click="pre(' ')">VER TODAS</h3>
+            </tr>
+            <tr  ng-repeat="periodico in angMedios track by $index">
+                <td class="clickable" ng-click="pre(periodico.idPeriodico)"> 
+                <img src="{{periodico.imagen}}" class="img-responsive" style="width:100%">
+                
+                </td>
+            </tr>
+        </table>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-8 "  ng-repeat="columnas in angColumnas | filter:predicate" >
+<div class="post-container"  >
+        <div class="post-image">
+            <img ng-hide="!columnas.img8col" ng-src="{{columnas.img8col}}" style="height:338px;" ng-click="datosModal(columnas)" class="img-responsive center-block clickable">
+            <img ng-hide="columnas.img8col" ng-src="{{columnas.imagen}}"  ng-click="datosModal(columnas)" class=" img-responsive center-block clickable" style="height:53px;width:222px;">
+        </div> 
+         <div class="post-titulo" ng-hide="!columnas.img8col"> 
+            <p> {{columnas.fecha}} </p>
+        </div>  
+        <div class="post-titulo"> 
+            <p> {{columnas.tituloNota}} </p>
+        </div>  
+         <div class="post-titulo" ng-hide="columnas.img8col"> 
+            <p> {{columnas.fecha}} </p>
+        </div>  
+        <div class="post-desc clickable" ng-hide="columnas.img8col" ng-click="datosModal(columnas)"> 
+            <p>{{columnas.sintesis}} </p>
+        </div>  
+</div>  
+
+
+</div>
+</div>
+</div>
+
+
+</div>  
+</div>
+<!--
+
+<div class="col-lg-1 col-md-2 col-xs-4" style="margin-top:10px" >
+<br>
+<div>Periodicos de hoy:</div>
+<table class="table">
+    <tr  ng-repeat="periodico in angMedios track by $index">
+        <td class="clickable" ng-click="pre(periodico.imagen)"> <div>{{periodico.nombre}}</div></td>
+    </tr>
+</table>
+</div>
+<div class="col-lg-10">
+            <div class="col-lg-portadas media-Sicla" ng-repeat="columnas in angColumnas | filter:predicate">
+            
+                <img ng-src="{{columnas.img8col}}" ng-click="datosModal(columnas)" class="img-responsive2 clickable">
+
+        </div>
+    
+        <div class="col-lg-portadas col-xs-4 media-Sicla " ng-repeat="nota in angNotas | filter:predicate">
+            <div class=" media-nota clickable " ng-click="datosModal(nota)">
+                <div class="col-lg-12 text-center ">
+                    <img class="img-thumbnail img-medios img-responsive"  ng-src="{{nota.imagen}}" >
+                    <hr> 
+                    <div class="text-justify col-lg-12 media-body">
+                        <strong>{{nota.titulo}}</strong>
+                        <div class="">
+                            <h5> {{nota.sintesis}} </h5>
+                        </div>  
+                    </div>
+                                 
+                </div>
+                
+
+                  
+                
+            </div>
+        </div>
+
+</div>
+
+<div class="container-fluid">
+    <div class="col-lg-12" >
+
+    </div>
+</div>
+-->
+
+   </section>
+

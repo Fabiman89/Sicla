@@ -444,7 +444,84 @@ switch ($instruccion){
 			}
 			mysqli_close($mysqli);			
 			break;
+// Todos los Temas
+case 22:
+			$result=mysqli_query($mysqli,
+					"SELECT * 
+					 FROM tema
+					 order by nombreTema asc
+					 ");
+			$arr = array();
+			if($result) {
+				 while($row = $result->fetch_assoc()) {
+					 $arr[] = $row;
+				 }
+				 echo json_encode($arr);
+				 mysqli_free_result($result);
+			}else{
+				echo ("Error 322");
+			}
+			mysqli_close($mysqli);		
+	break;
+case 23:
+//Todos los Subtemas
+			$result=mysqli_query($mysqli,
+					"SELECT * 
+					 FROM subtema
+					 order by nombreSubtema asc
+					 ");
+			$arr = array();
+			if($result) {
+				 while($row = $result->fetch_assoc()) {
+					 $arr[] = $row;
+				 }
+				 echo json_encode($arr);
+				 mysqli_free_result($result);
+			}else{
+				echo ("Error 323");
+			}
+			mysqli_close($mysqli);		
+	break;
+//Todos los Estados
+		case 24:
+					$result=mysqli_query($mysqli,
+							"SELECT * 
+							 FROM estado
+							 order by nombreEstado asc
+							 ");
+					$arr = array();
+					if($result) {
+						 while($row = $result->fetch_assoc()) {
+							 $arr[] = $row;
+						 }
+						 echo json_encode($arr);
+						 mysqli_free_result($result);
+					}else{
+						echo ("Error 324");
+					}
+					mysqli_close($mysqli);	
 
+
+			break;
+// Todos los Municipios
+		case 25:
+					$result=mysqli_query($mysqli,
+							"SELECT * 
+							 FROM municipio
+							 order by nombreMunicipio asc
+							 ");
+					$arr = array();
+					if($result) {
+						 while($row = $result->fetch_assoc()) {
+							 $arr[] = $row;
+						 }
+						 echo json_encode($arr);
+						 mysqli_free_result($result);
+					}else{
+						echo ("Error 325");
+					}
+					mysqli_close($mysqli);	
+			break;
 //RESPUESTA DEFAULT
 	default:
 		echo json_encode("Error 300 Admin Querys");

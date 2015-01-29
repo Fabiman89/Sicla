@@ -9,6 +9,7 @@ app.config(['$routeProvider',function ($routeProvider){
 $routeProvider.when('/inicio',{templateUrl:'partials/inicio.html',controller:'homeCtrl'});
 $routeProvider.when('/home',{templateUrl:'partials/home.html',controller:'homeCtrl2'});
 $routeProvider.when('/usuario',{templateUrl:'partials/usuarios/inicio.html',controller:'homeUserCtrl'});
+$routeProvider.when('/premium/',{templateUrl:'partials/usuarios/inicioPremium.html',controller:'PremiumCtrl'});
 //$routeProvider.when('/nota/:idNoticia',{templateUrl:'partials/nota.html',controller:'notaCtrl'});
 //$routeProvider.when('/nota/8/:idNoticia',{templateUrl:'partials/nota8.html',controller:'notaCtrl'});
 $routeProvider.otherwise({redirectTo:'/home'});	

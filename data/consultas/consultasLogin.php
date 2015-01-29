@@ -20,7 +20,7 @@ switch ($instruccion){
 			$arr[] = $row;
 			echo json_encode($arr);
 		}else{
-			echo ("Error 201");
+			echo ("E201");
 		}
 		mysqli_close($mysqli);
 		break;
