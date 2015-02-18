@@ -1,51 +1,9 @@
 
-  siclaApp.controller('reportCtrl', ['$scope','$http','$modal','$filter',function($scope,$http,$modal,$filter) {
+  siclaApp.controller('reportCtrl', ['$scope','$http','$modal','$filter','PdfService' ,function($scope,$http,$modal,$filter,PdfService) {
 // PRIMERA PROPUESTA
     $scope.previewArray = [];
     $scope.previewSize = 0;
-
-    $scope.reporte = {};
-    $scope.sup = {}; //support
-    $scope.sup.fecha=0;
-    $scope.sup.medio = 0;
-    $scope.sup.autor=0;
-    $scope.sup.tipo=0;
-    $scope.sup.area=0;
-    $scope.sup.pais=0;
-    $scope.sup.clasificacion = 0;
-    $scope.sup.seccion = 0;
-    $scope.sup.protagonista = 0;
-    $scope.reporte.clasificacion = 0;
-    $scope.reporte.genero=0;
-    $scope.reporte.medio = {"nombreMedio":"Sin Considerar","idMedio":0};
-    $scope.reporte.autor = {'nombreAutor':'Sin Considerar','idAutor':0};
-    $scope.reporte.area = {"nombreArea":"Sin Considerar","idArea":0};
-    $scope.reporte.tema = {"nombreTema":"Sin Considerar","idTema":0};
-    $scope.reporte.subtema = {"nombreSubtema":"Sin Considerar","idSubtema":0};
-    $scope.reporte.pais= {"nombrePais":"Sin Considerar","idPais":0}; 
-    $scope.reporte.estado ={"nombreEstado":"Sin Considerar","idEstado":0};
-    $scope.reporte.municipio={"nombreMunicipio":"Sin Considerar","idMunicipio":0};
-    $scope.reporte.protagonista = {"nombreProtagonista":"Sin Considerar","idProtagonista":0};
-    $scope.reporte.tipoNota = {"nombreTipoNota":"Sin Considerar","idTipoNota":0};
-    $scope.reporte.seccion = {"nombreSeccion":"Sin Considerar","idSeccion":0};
-    $scope.reporte.fecha1 = $filter("date")(Date.now(), 'yyyy-MM-dd');
-    $scope.selec = "Seleccionar";    	    	
-
-        $scope.Sustituye = function(a,d){
-                a = angular.copy(d);
-                return a;
-        };
-
-
-        $scope.DropdownCtrl = function (){
-
-        };
-        $scope.toggleDropdown = function($event) {
-            $event.preventDefault();
-            $event.stopPropagation();
-            $scope.status.isopen = !$scope.status.isopen;
-          };
-
+    $scope.Areas = {};
 
         $scope.init = function(arr,obj){
             console.log(arr);
@@ -57,284 +15,173 @@
             return nar;
         };
 
-
-
-
     // Autor
         $scope.getAutorIf = function (){
-            if($scope.sup.medio==1 && ($scope.reporte.medio.idMedio != undefined || 0) ){
-                $http.post("data/consultas/consultasAdmin.php",{'sentencia':3,"id":$scope.reporte.medio.idMedio}).success(function(rOp){
+            if($scope.query[0]==1 && ($scope.query[1].medio.idMedio != undefined || 0) ){
+                $http.post("data/consultas/consultasAdmin.php",{'sentencia':3,"id":$scope.query[1].medio.idMedio}).success(function(rOp){
                     objt= {'nombreAutor':'Sin Considerar','idAutor':0}
                     $scope.Autores = $scope.init(rOp,objt);
-                    $scope.reporte.autor= $scope.Autores[0];
                  });   
             }else{
                 $http.post("data/consultas/consultasAdmin.php",{'sentencia':21}).success(function(rOp){
                     objt= {'nombreAutor':'Sin Considerar','idAutor':0}
                     $scope.Autores = $scope.init(rOp,objt);
-                    $scope.reporte.autor= $scope.Autores[0];
                  });   
             }        
         };
 
     // Medios
-
         $scope.getMedios= function (){
-            if($scope.sup.medio!=1){
+
                 $http.post("data/consultas/consultasAdmin.php",{'sentencia':2}).success(function(rOp){
                   objt = {"nombreMedio":"Sin Considerar","idMedio":0};
                   $scope.Medios = $scope.init(rOp,objt);
-                  $scope.reporte.medio= $scope.Medios[0];
                 });
-            }
+
         };
 
 
     // AREAS   
             $scope.getArea = function(){
-                if($scope.sup.area!=1 ){
-                        $http.post("data/consultas/consultasAdmin.php",{'sentencia':7}).success(function(rOp){
-                          objt = {"nombreArea":"Sin Considerar","idArea":0};
-                          $scope.Areas = $scope.init(rOp,objt);
-                          $scope.reporte.area = $scope.Areas[0];
-                          $scope.reporte.tema = {"nombreTema":"Sin Considerar","idTema":0};
-                          $scope.reporte.subtema = {"nombreSubtema":"Sin Considerar","idSubtema":0};
-                        });
-                        }     
-
-            };
-            $scope.getTema = function (id)
-            {
-                $http.post("data/consultas/consultasAdmin.php",{'sentencia':8,'area':id}).success(function(rOp){
-                  objt = {"nombreTema":"Sin Considerar","idTema":0};
-                  $scope.Temas = $scope.init(rOp,objt);
-                  $scope.reporte.tema= $scope.Temas[0];
+                $http.post("data/consultas/consultasAdmin.php",{'sentencia':7}).success(function(rOp){
+                  objt = {"nombreArea":"Sin Considerar","idArea":0};
+                  $scope.Areas = $scope.init(rOp,objt);
                 });
             };
-
-            $scope.getSubtema = function(id){
-                $http.post("data/consultas/consultasAdmin.php",{'sentencia':9,'tema':id}).success(function(rOp){
+    // TEMAS
+            $scope.getTema = function ()
+            {
+                $http.post("data/consultas/consultasAdmin.php",{'sentencia':22}).success(function(rOp){
+                  objt = {"nombreTema":"Sin Considerar","idTema":0};
+                  $scope.Temas = $scope.init(rOp,objt);
+                });
+            };
+    // SUBTEMAS
+            $scope.getSubtema = function(){
+                $http.post("data/consultas/consultasAdmin.php",{'sentencia':23}).success(function(rOp){
                   objt = {"nombreSubtema":"Sin Considerar","idSubtema":0};
                   $scope.Subtemas = $scope.init(rOp,objt);
-                  $scope.reporte.subtema = $scope.Subtemas[0];
-                  console.log($scope.Subtemas)
                 });
             };
             
 
 
     // PAIS
-            $scope.getPaises = function(){
-                if($scope.sup.pais!=1 ){
+            $scope.getPais = function(){
                         $http.post("data/consultas/consultasAdmin.php",{'sentencia':10}).success(function(rOp){
                            objt = {"nombrePais":"Sin Considerar","idPais":0}; 
                           $scope.Paises = $scope.init(rOp,objt);
-                          $scope.reporte.pais = $scope.Paises[0];
-                          $scope.reporte.estado = {"nombreEstado":"Sin Considerar","idEstado":0};
-                          $scope.reporte.municipio = {"nombreMunicipio":"Sin Considerar","idMunicipio":0}
                         });   
-                        }     
-
             };
+    // Estados
+            $scope.getEstado = function (){
 
-            $scope.getEstado = function (id){
-                console.log("trigered")
-                        $http.post("data/consultas/consultasAdmin.php",{'sentencia':11,'pais':id}).success(function(rOp){
+                        $http.post("data/consultas/consultasAdmin.php",{'sentencia':24}).success(function(rOp){
                             objt = {"nombreEstado":"Sin Considerar","idEstado":0};
                           $scope.Estados = $scope.init(rOp,objt);
-                          $scope.reporte.estado= $scope.Estados[0];
                         });
                     };
-            $scope.getMunicipio = function (id){
-                        $http.post("data/consultas/consultasAdmin.php",{'sentencia':12,'estado':id}).success(function(rOp){
+    // Municipios
+            $scope.getMunicipio = function (){
+                        $http.post("data/consultas/consultasAdmin.php",{'sentencia':25}).success(function(rOp){
                           objt = {"nombreMunicipio":"Sin Considerar","idMunicipio":0};
                           $scope.Municipios = $scope.init(rOp,objt);
-                          $scope.reporte.municipio= $scope.Municipios[0];
                         });
                     };
 
 
     // PORTAGONISTA
             $scope.getProtagonista = function (){
-                if($scope.sup.protagonista!=1 ){
+
                     $http.post("data/consultas/consultasAdmin.php",{'sentencia':5}).success(function(rOp){
                         objt = {"nombreProtagonista":"Sin Considerar","idProtagonista":0};
                       $scope.Protagonistas = $scope.init(rOp,objt);
-                      $scope.reporte.protagonista = $scope.Protagonistas[0];
                     });
-                }
+
             };
     // TIPO DE NOTA
             $scope.getTipo = function (){
-                if($scope.sup.tipoNota!=1){
                     $http.post("data/consultas/consultasAdmin.php",{'sentencia':1}).success(function(rOp){
                             objt = {"nombreTipoNota":"Sin Considerar","idTipoNota":0};
                           $scope.tipoNotas = $scope.init(rOp,objt);
-                          $scope.reporte.tipoNota = $scope.tipoNotas[0];
 
                         });                    
-                }
             };
     
     //Seccion
             $scope.getSeccion = function(){
-                if($scope.sup.seccion!=1){
                     $http.post("data/consultas/consultasAdmin.php",{'sentencia':4}).success(function(rOp){
                         objt = {"nombreSeccion":"Sin Considerar","idSeccion":0};
                       $scope.Seccion = $scope.init(rOp,objt);
-                      $scope.reporte.seccion = $scope.Seccion[0]; 
                     });
-                }
             };
 
-    //Reporte 
-         	$scope.getReporte = function() 
-         	{
-         		var areas=[], autores=[], medios=[], protagonistas=[], clasificacion=[], fecha=[], tipo = [], seccion = [], genero = [];
-         		var subtemas = [], paises = [], estados = [], municipios = [], temas = [], cargos = [];
-         		cargos.push(0);    		
-         		areas.push($scope.sup.area);
-         		autores.push($scope.sup.autor);
-         		medios.push($scope.sup.medio);
-         		protagonistas.push($scope.sup.protagonista);
-         		clasificacion.push($scope.sup.clasificacion);    		
-         		tipo.push($scope.sup.tipo);
-         		seccion.push($scope.sup.seccion);    		
-         		paises.push(parseInt($scope.sup.pais));
-         		subtemas.push($scope.reporte.subtema.idSubtema);
-         		temas.push($scope.reporte.tema.idTema);
-         		estados.push($scope.reporte.estado.idEstado);
-         		municipios.push($scope.reporte.municipio.idMunicipio);    		    		    		
-         		if($scope.reporte.genero == 1)
-         		{
-         			switch (parseInt($scope.reporte.generoTipo))
-         			{
-         				case 0:	genero.push(1);
-         						break;	
-         				case 1:	genero.push(4);
-         						break;
-         				case 2:	genero.push(3);
-         						break;;
-         			}
-         		}
-         		else 
-         		{
-         			if($scope.reporte.genero == 2)
-         			{
-         				switch (parseInt($scope.reporte.generoTipo)) 
-         				{
-         					case 0:	genero.push(2);
-         							break;	
-         					case 1:	genero.push(6);
-         							break;
-         					case 2:	genero.push(5);
-         							break;;
-         				}
-         			}
-         			else 
-         				genero.push(0);
-         		}
-         		if($scope.sup.fecha == 0)    	
-         			fecha.push(1,$scope.reporte.fecha1);
-         		else
-         			fecha.push(2,$scope.reporte.fecha1,$scope.reporte.fecha2);
-         		if(medios[0] == 1 )
-         			medios.push($scope.reporte.medio);
-         		if(protagonistas[0] == 1)
-         			protagonistas.push($scope.reporte.protagonista);
-         		if(autores[0] == 1)
-         			autores.push($scope.reporte.autor);
-         		if(areas[0] == 1)
-         			areas.push($scope.reporte.area);
-         		if(clasificacion[0] == 1 )
-         			clasificacion.push($scope.reporte.clasificacion);
-         		if(tipo[0] == 1)
-         			tipo.push($scope.reporte.tipoNota);
-         		if(seccion[0] == 1)
-         			seccion.push($scope.reporte.seccion);
-         		if(paises[0] == 1)
-         			paises.push($scope.reporte.pais);
-         		if(temas[0] != 0 )
-         		{
-         			temas[0] = 1;
-         			temas.push($scope.reporte.tema);
-         		}
-         		if(subtemas[0] != 0)
-         		{
-         			subtemas[0] = 1;
-         			subtemas.push($scope.reporte.subtema);
-         		}
-         		if(estados[0] != 0)
-         		{
-         			estados[0] = 1;
-         			estados.push($scope.reporte.estado);
-         		}
-         		if(municipios[0] != 0)
-         		{
-         			municipios[0] = 1;
-         			municipios.push($scope.reporte.municipio);
-         		}
-         		$http.post("data/consultas/consultaReportes.php",
-         		{'autor':autores, 'medio':medios, 'protagonista':protagonistas, 'tema':temas, 'clasificacion':clasificacion,'fecha':fecha, 'tipo':tipo, 'seccion':seccion,'genero':genero, 'cargo':cargos, 'area':areas, 'pais':paises, 'subtema':subtemas, 'estado':estados, 'municipio':municipios}).success(function(data) {
-         			$scope.prueba = data;
-         			console.log(data);
-         		});    	
-         	};  
 
 
     //Control de preview
-
-        $scope.appendVar = function(arr,objt,size){
-            array = [];
-            console.log(arr);
-            if(size>0){
-                for(i=0;i<size;i++){
-                    array.push(arr[i]);
-                    console.log("pushing");
-                }   
-            }
-            array.push(objt);
-           
-            return array;
+        $scope.createVar=function(x){
+            if(x==1)
+                $scope.tituloTemp = "";
+            if(x==2)
+                $scope.textoTemp = "";
         };
 
-        $scope.deleting = function(arr,este,size){
-            array = [];
-            if(size>0){
-                for(i=0;i<size;i++){
+$scope.appendTitle = function(data){
+    $scope.addToPreview(2,data);
+    delete($scope.tituloTemp);
+};
+$scope.appendText = function(data){
+    $scope.addToPreview(3,data);
+    delete($scope.textoTemp);
+};
+
+        $scope.appendVar = function(objt){
+            $scope.previewArray.push(objt)
+        };
+
+        $scope.deleting = function(este){
+            var array = [];
+            if($scope.previewArray.length>0){
+                for(i=0;i<$scope.previewArray.length;i++){
                     if(i==este){
                         console.log(i);
                     }else{
-                        array.push(arr[i]);
+                        array.push($scope.previewArray[i]);
+                        console.log($scope.previewArray[i]);
                     }
                 }
             }
-            $scope.previewSize = $scope.previewSize - 1;
-            return array;
-
+            $scope.previewArray = array;
         };
+
 
         $scope.deleteFromPreview = function (toDelete){
-            console.log(toDelete);
-            $scope.previewArray = $scope.deleting($scope.previewArray,toDelete,$scope.previewSize);
+            $scope.deleting(toDelete);
         };
 
-        $scope.addToPreview = function(obj){
-            switch(obj){
-                case 1:
-                    variableTemporal="\nGenerar grafica de PIE\n\n";
-                    $scope.previewArray = $scope.appendVar($scope.previewArray,variableTemporal,$scope.previewSize);
-                    $scope.previewSize = $scope.previewSize + 1 ;
-                    $scope.modalPie();
+        $scope.addToPreview = function(type,data){
+            var objeto = {};
+            switch(type){
+                case 1: //Anexa Tablas
+                    objeto.tipo = 1;
+                    objeto.titulo = data.titulo;
+                    objeto.data = data.data;
+                    $scope.appendVar(objeto);
                     break;
-                case 2:
-                
-                    $scope.modalTexto();
+                case 2:// Anexa Titulos
+                    objeto.tipo = 2;
+                    objeto.data = data;
+                    $scope.appendVar(objeto);
                     break;
-                case 3:
-                    variableTemporal="Generar grafica de Barras";
-                    $scope.previewArray =  $scope.appendVar($scope.previewArray,variableTemporal,$scope.previewSize);
-                    $scope.previewSize = $scope.previewSize + 1 ;
+                case 3: // Anexa Textos
+                    objeto.tipo=3;
+                    objeto.data = data;
+                    $scope.appendVar(objeto);
+                    break;
+                case 4:
+                    objeto.tipo=4;
+                    objeto.data =  data.data;
+                    $scope.appendVar(objeto);
                     break;
             }
             //console.log($scope.previewSize);
@@ -346,55 +193,108 @@
             $scope.pdf = $scope.previewArray;
         };
 
-
-
-
-
-
     // MODAL GRAFICA DE PIE
-        $scope.modalPie = function(){
+        $scope.modalPie = function(responce){
               var modalInstance = $modal.open({ 
-                templateUrl: 'partials/admin/modals/reportes/reportePie.html',
-                controller: pieCtrl,
+                templateUrl: 'partials/admin/modals/reportes/reporteQuery.html',
+                controller: statsCtrl,
                 size: 'lg',
                 resolve: {
-                notaOpc: function() {
+                data: function() {
                   //datos = [];
                   //datos.push(datos1,datos2);
-                  //return datos;
+                  return responce;
                 }
                 }
               });
               
               modalInstance.result.then(function(data) {
-                //
+                if(data!=undefined){
+                    //console.log(data.data[0]);
+                    if(data.data[0].Síntesis!=undefined){
+                        $scope.addToPreview(4,data);
+                    }else{
+                        $scope.addToPreview(1,data);
+                    }
+                }
               });
             };
 
-            var pieCtrl = function($filter,$scope,$modalInstance, notaOpc){
-                hoy = $filter("date")(Date.now(), 'yyyy-MM-dd');
-                $scope.permiso = false;
-                $scope.sup ={}
-                $scope.reporte = {};
-                
-                $scope.sup.fecha = 0;
-
-
-                $scope.op1 = false;
-                
-
-                $scope.borrar = function(obj){
-                    if($scope.reporte.obj){
-                        delete($scope.reporte.obj);
-                    };
+            var statsCtrl = function($filter,$scope,$modalInstance, data){
+                $scope.tabla = {};
+                $scope.title = "Tabla de Estadisticas";
+                $scope.borrar = function(toDelete){
+                    var array = [];
+                    if($scope.tablas.length>0){
+                        for(i=0;i<$scope.tablas.length;i++){
+                            if(i==toDelete){
+                            }else{
+                                array.push($scope.tablas[i]);
+                            }
+                        }
+                    }
+                    $scope.tablas = array;        
                 };
+        $scope.pushToTable = function(n){
+            $scope.tablas = [];
+            if(n==1)
+                var array = $scope.aceptados;
+            if(n==2)
+                var array = $scope.todas;
+            for(a=0;a<array.length;a++){
+                $scope.tablas.push(array[a]);
+            }
+            if(n==2)
+                $scope.rechasados = [];
 
-                $scope.cancel = function () {
-                  $modalInstance.close();
-                };      
+        };
+      $scope.processData = function (objt){
+        $scope.aceptados = [];
+        $scope.rechasados = [];
+        $scope.values = [];
+        var aux = objt;
+        for (i in objt){
+           if( objt[i].dato==true){ 
+            delete(aux[i].dato);
+            delete(aux[i].sql);
+            $scope.aceptados.push(aux[i]);
+            }else{
+            delete(aux[i].dato);
+            delete(aux[i].sql);
+            $scope.rechasados.push(aux[i]);
+            }
+
+        }
+            console.log($scope.rechasados);
+            console.log($scope.aceptados);
+      };
+    $scope.cancel = function () {
+      $modalInstance.close();
+    };      
+    $scope.setTitles = function(x){
+        $scope.title = x;
+    }
+
+    $scope.aceptar = function (){
+      var tables = {};
+      if($scope.title==undefined){
+        tables.data = $scope.tablas;
+
+      }else{
+        if($scope.title.length>0){
+            tables.titulo = $scope.title;
+            tables.data = $scope.tablas;
+        }else{
+            tables.data = $scope.tablas;
+        }
+      }
+        $modalInstance.close(tables);
+    };
 
 
-                }
+$scope.processData(data);
+$scope.pushToTable(1);
+                };
 ////  Modal Texto
          $scope.modalTexto = function(){
               var modalInstance = $modal.open({ 
@@ -432,12 +332,156 @@
                 };      
             };
 
- $scope.getMedios();
- $scope.getAutorIf();
- $scope.getSeccion();
- $scope.getArea();
- $scope.getPaises();
- $scope.getTipo();
- $scope.getProtagonista();
 
+
+
+//////// VERCION 3
+$scope.query= {};
+
+$scope.arrayCero = [{"nombre":"Sin considerar","value":0},{"nombre":"Particular","value":1},{"nombre":"Todos","value":2}];
+$scope.arrayCeroF = [{"nombre":"Sin considerar","value":0},{"nombre":"Especifica","value":1},{"nombre":"Periodo","value":2}];
+
+$scope.getResume = function (n,data){
+    var reporte = 1;
+    if(n==1){
+        reporte = 1;
+    }else{
+        reporte = 2;
+    }
+    $http.post("data/consultas/consultaReportes.php",
+                {'reporte':reporte,'autor':data.autores, 'medio':data.medios, 'protagonista':data.protagonistas, 'tema':data.temas, 'clasificacion':data.clasificacion,'fecha':data.fecha, 'tipo':data.tipo, 'seccion':data.seccion,'genero':data.genero, 'cargo':data.cargos, 'area':data.areas, 'pais':data.paises, 'subtema':data.subtemas, 'estado':data.estados, 'municipio':data.municipios}).success(function(r) {
+                    $scope.prueba = r;
+                   console.log(r);
+                    $scope.modalPie(r);
+                    $scope.resetQuery();
+                    //$scope.processData(r);
+                   //console.log(r);
+                });  
+};
+
+
+$scope.addOtro = function (arr){
+    arr.push(arr.length);
+    return arr;
+};
+
+
+    $scope.resetQuery = function() {
+        $scope.query = {
+            fecha:[0],
+            areas:[0,1],
+            autores:[0,1],
+            medios:[0,1],
+            protagonistas:[0,1],
+            clasificacion:[0],
+            tipo:[0,1],
+            seccion:[0,1],
+            temas:[0,1],
+            subtemas:[0,1],
+            genero:[0],
+            cargos:[0,1],
+            paises:[0,1],
+            estados:[0,1],
+            municipios:[0,1],
+        };
+$scope.aux1 = [];
+$scope.aux2 = []; 
+$scope.aux3 = [];
+$scope.aux4 = [];
+$scope.aux5 = [];   
+$scope.aux6 = [];   
+    };
+
+
+ 
+ 
+
+$scope.getter = function (i,val){
+    switch(i){
+        case 1:
+            if(val==1){
+                $scope.getMedios();
+            }
+        break;
+        case 2:
+            if(val==1){
+              $scope.getAutorIf();  
+            }
+        break;
+        case 3:
+            if(val==1){
+                $scope.getTipo();
+            }
+        break;
+        case 4:
+            if(val==1){
+                $scope.getSeccion();
+            }
+        break;
+
+        case 5:
+            if(val==1){
+                $scope.getTema();
+            }
+        break;
+        case 6:
+            if(val==1){
+                $scope.getSubtema();
+            }
+        break;
+        case 7:
+            if(val==1){
+                $scope.getPais();
+            }
+        break;
+        case 8:
+            if(val==1){
+                $scope.getEstado();
+            }
+        break;
+        case 9:
+            if(val==1){
+                $scope.getMunicipio();
+            }
+        break;
+        case 10:
+            if(val==1){
+                $scope.getProtagonista();
+            }
+        break;     
+        case 11:
+            if(val==1){
+                $scope.getArea();
+            }
+        break;   
+    }
+};
+
+$scope.repo = function(ary){
+    PdfService.test(ary);
+};
+
+  $scope.today = function() {
+    $scope.dt = new Date();
+  };
+  $scope.today();
+
+ $scope.open = function($event) {
+    $event.preventDefault();
+    $event.stopPropagation();
+        console.log($event);
+    $scope.opened = true;
+  };
+
+  $scope.disabled = function(date, mode) {
+    return ( mode === 'day' && ( date.getDay() === 0 || date.getDay() === 6 ) );
+  };
+
+
+  $scope.dateOptions = {
+    formatYear: 'yy',
+    startingDay: 1
+  };
+
+$scope.resetQuery();
 }]);

@@ -6,6 +6,13 @@
 
 }
 
+.btn-flat{
+	padding:10px 6px 10px;
+	border: 1px solid #000;
+	border-radius: 0px;
+	min-height: 35px;
+}
+
 .row-control{
 	padding-right: 15px;
 	padding-left: 15px;

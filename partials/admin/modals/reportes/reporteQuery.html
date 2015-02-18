@@ -1,0 +1,43 @@
+<button type="button" style="padding:10px;" ng-click="cancel()" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+<div class="modal-header">
+  <div class="modal-title"> 
+    Configuracion de Consulta
+  </div>
+</div>
+<div class="modal-body container-fluid">
+<form class="form-horizontal">
+  
+  <div class="form-group" ng-hide="rechasados.length == 0 || !rechasados">
+    <label class="col-md-8 control-label"><em> De esta consulta se excluyen {{rechasados.length}} tablas cuyos resultados son 0</em></label>
+    <div class="col-md-4"><button class="btn btn-sm btn-default" ng-click="pushToTable(2)">Click aqui para incluirlas</button></div>    
+  </div>
+
+  <div class="form-group">
+    <label class="col-md-4 control-label">Titulo de tabla:</label>
+    <div class="col-md-5"><input type="text" ng-model="x" class="form-control" /> </div>
+    <div class="col-md-3"><button class="btn btn-default btn-sm" ng-click="setTitles(x)">Agregar</button> </div>
+  </div>
+  <hr>
+    <div class="col-md-4 " ng-repeat="t in tablas">
+     <div class="reportContent">
+       <button type="button" ng-click="borrar($index)" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+         <table class="table">
+           <caption>{{title}}</caption>
+           <tr ng-hide="key == 'sql' || key=='dato' " ng-repeat="(key,data) in t|orderBy:data">
+             <td > {{key }}   </td>
+             <td> {{data| limitTo:10}} </td>
+           </tr>
+         </table>
+      </div>
+    </div>
+
+</form>
+</div>
+<div class="modal-footer">
+  <button class=" btn btn-primary btn-md " ng-click="aceptar()">Adjuntar a la vista previa</button>
+</div>
+
+
+ 
+
+

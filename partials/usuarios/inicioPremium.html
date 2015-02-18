@@ -1,0 +1,131 @@
+   <section class="defaultIni">
+           <nav class="navbar navbar-static-top navbar-sicla upperMenu"  role="navigation">
+        <div class="container" >
+            <div class="row">
+            <div class="col-md-6">
+                <ul class="nav navbar-nav navbar-left">
+                    <li >
+                        <a ng-href="#/home"><strong>Inicio</strong></a>
+                    </li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li >
+                        
+                    </li>
+                </ul>
+            </div>
+  <div class="col-lg-6">
+            <div class="">
+                <ul class="nav navbar-nav navbar-right">
+                    <li >
+                        <a class="" ng-href="#/home"><strong>Salir </strong>  </a>
+                    </li>
+                </ul>
+
+            </div> 
+            </div>  
+        </div> 
+        </div>
+    </nav> 
+
+
+    <div class="container">
+        <div class="row">
+        <div class="col-lg-12">
+            <div class=" titles container-fluid col-lg-10 col-lg-offset-1">
+              <div class=""> Búsqueda Avanzada</div>
+              <div class="">
+
+              <!--
+                <input class="form-control" style="border-radius:9px;" ng-model="search.autor" placeholder="Buscar por Periodico, Titulo, Fecha, Autor, Protagonista, Tema o palabras clave">
+              </div>
+              <input class="form-control" ng-model="search.nombreMedio">
+              -->
+            </div>    
+        </div>
+      </div>
+
+              <div class="col-lg-12 well well-sm">
+                  <form class="">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                               <input class="form-control" type="text" ng-model="search.tituloNota" placeholder="Comienza a escribir aquí" typeahead=" nota.tituloNota for nota in angColumnas |limitTo: 8 |filter:$viewValue"  >  
+                               <p class="help-block">Filtrar títulos</p >
+                            </div>
+                            <div class="form-group">
+                               <input class="form-control" type="text" ng-model="search.nombreMedio" placeholder="Comienza a escribir aquí" typeahead=" nota.nombreMedio for nota in angColumnas |limitTo: 8 |filter:$viewValue"  >  
+                               <p class="help-block">Filtrar medios</p >
+                            </div>
+                        
+                        </div>
+
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                               <input class="form-control" type="text" ng-model="search.autor" placeholder="Comienza a escribir aquí" typeahead=" nota.autor for nota in angColumnas |limitTo: 8 |filter:$viewValue"  >  
+                               <p class="help-block">Filtrar autor</p >
+                            </div>  
+                            <div class="form-group">
+                               <input class="form-control" type="text" ng-model="search.tipo" placeholder="Comienza a escribir aquí" typeahead=" nota.tipo for nota in angColumnas |limitTo: 8 |filter:$viewValue"  >  
+                               <p class="help-block">Filtrar por tipo de nota</p >
+                            </div>                        
+                        </div>
+                    </div>
+                  </form>
+              </div>
+    
+<div class="col-md-3 col-sm-6 col-xs-8 "  ng-repeat="columnas in angColumnas | filter:search" >
+<div class="post-container"  >
+        <div class="post-image">
+            <img ng-hide="!columnas.img8col" ng-src="{{columnas.img8col}}" style="height:338px;" ng-click="datosModal(columnas)" class="img-responsive center-block clickable">
+            <img ng-hide="columnas.img8col" ng-src="{{columnas.imagen}}"  ng-click="datosModal(columnas)" class=" img-responsive center-block clickable" style="height:53px;width:222px;">
+        </div> 
+         <div class="post-titulo" ng-hide="!columnas.img8col"> 
+            <p> {{columnas.fecha}} </p>
+        </div>  
+        <div class="post-titulo"> 
+            <p> {{columnas.tituloNota}} </p>
+        </div>  
+         <div class="post-titulo" ng-hide="columnas.img8col"> 
+            <p> {{columnas.fecha}} </p>
+        </div>  
+        <div class="post-desc clickable" ng-hide="columnas.img8col" ng-click="datosModal(columnas)"> 
+            <p>{{columnas.sintesis}} </p>
+        </div>  
+</div>  
+
+
+</div>
+</div>
+</div>
+
+
+</section>
+
+<!--
+
+<div class="col-md-10 col-md-offset-1">
+        <div class="col-lg-portadas media-Sicla " ng-repeat="columnas in angColumnas | filter:qry">
+                <img ng-src="{{columnas.img8col}}" ng-click="pre(columnas)" class="img-size clickable ">
+        </div>
+        <div class="col-lg-portadas media-Sicla" ng-repeat="nota in angNotas | filter:qry">
+            <div class=" media-nota clickable " ng-click="pre(nota)">
+                <div class="col-lg-12 text-center ">
+                    <img class="img-thumbnail img-medios img-responsive" ng-src="{{nota.imagen}}" >
+                    <hr> 
+                    <div class="text-justify">
+                        <strong>{{nota.titulo}}</strong>
+                        <div class="col-lg-12 media-body">
+                            <h5> {{nota.sintesis}} </h5>
+                        </div>  
+                    </div>           
+                </div> 
+            </div>
+        </div>
+        </div>
+-->
+
+

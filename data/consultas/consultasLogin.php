@@ -14,13 +14,15 @@ switch ($instruccion){
 			$row = mysqli_fetch_assoc($result);
 			$id = $row['idUsuario'];
 			$name = $row['nombreUsuario'];
+			$ip = $row['idTipoUsr'];
 			$_SESSION['uid'] = $id;
 			$_SESSION['unm'] = $name;
+			$_SESSION["utp"] = $ip;
 			mysqli_free_result($result);
 			$arr[] = $row;
 			echo json_encode($arr);
 		}else{
-			echo ("Error 201");
+			echo ("E201");
 		}
 		mysqli_close($mysqli);
 		break;

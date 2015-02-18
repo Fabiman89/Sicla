@@ -101,18 +101,31 @@ app.controller('homeCtrl2',['$location','$scope','$http','$modal','$log', functi
 
   $scope.logIn = function(usrData){
     $scope.master = {};
+    var route = [];
     console.log(usrData); 
     $http.post("data/consultas/consultasLogin.php",{'sentencia':1,"correo":usrData.correo,"password":usrData.password}).success(function(msg){ 
-			$scope.alerta.tipo = "alert alert-success";
-			$scope.alerta.mensaje =" Exito ";
-			console.log(msg[0].idTipoUsr); 
-			if(msg[0].idTipoUsr == 1){
-            	window.location.assign("admin.html");
-          	}
-          	if(msg[0].idTipoUsr == 4){
-            	$location.path("/usuario");
-            	$modalInstance.close();
-          	}
+      if(msg=="E201"){
+        $scope.alerta.tipo = "alert alert-danger";
+        $scope.alerta.mensaje =" Comprueba los datos de acceso ";        
+      }else{
+        $scope.alerta.tipo = "alert alert-success";
+        $scope.alerta.mensaje =" Exito ";        
+         route = msg[0].idTipoUsr;
+          console.log(route);
+
+          if(route==1){
+            window.location.assign("admin.html");
+            $modalInstance.close();
+          }
+          if(route==3){
+              $location.path("/premium/");
+              $modalInstance.close();
+          }
+          if(route==4){
+              $location.path("/usuario");
+          }
+        }
+
      });
   };
 
@@ -127,6 +140,35 @@ app.controller('homeCtrl2',['$location','$scope','$http','$modal','$log', functi
 }]);
 
 
+app.service('RegisterService',['$http', function($http){
+    var usr = 0;
+    var periodicos = [];
+    var medios = [];
+    this.getNotes = function (){
+          $http.post("data/consultas/consultas.php",{'sentencia':4 ,'tipo':4}).success(function(info){ 
+            periodicos = info;
+          });
+     };
+
+    this.getMedios = function (){
+        $http.post("data/consultas/consultas.php",{'sentencia':2}).success(function(Medios){ 
+          medios = Medios;
+        });
+        return medios;
+    };
+
+
+
+
+}]);
+
+
+
+
+
+
+
+
 
 
 app.controller('homeUserCtrl',['$scope','$http','$modal','$log', function($scope,$http,$modal,$log){
@@ -138,6 +180,64 @@ app.controller('homeUserCtrl',['$scope','$http','$modal','$log', function($scope
 
        });
       });
+
+         $scope.notaVista="";
+         $scope.datosModal= function(index){
+          $scope.notaVista=angular.copy(index);
+            var modalInstance = $modal.open({
+            templateUrl: 'partials/modalsNotas.html',
+            controller: notaUsrCtrl,
+            size: 'lg',
+            resolve: {
+              notaVista: function () {
+                   return $scope.notaVista;
+              }
+            }
+          });
+         }
+        var notaUsrCtrl = function($scope, $modalInstance, notaVista) {
+          $scope.dt = notaVista;
+
+          $scope.cancel = function () {
+            $modalInstance.close();
+          };
+
+          $scope.ok = function () {
+            $modalInstance.close();
+          };
+        };
+
+
+
+
+}]);
+
+
+
+app.service('PremiumService',['$http', function($http){
+      var periodicos = [];   
+    this.getData = function(){
+      return periodicos;
+      console.log(periodicos)
+    }
+
+    this.getNotes = function (){
+          $http.post("data/consultas/consultas.php",{'sentencia':4 ,'tipo':3}).success(function(info){ 
+            periodicos = info;
+          });
+          
+     }
+
+}]);
+
+
+app.controller('PremiumCtrl',['$scope','$http','$modal','PremiumService', function($scope,$http,$modal,PremiumService){
+          $http.post("data/consultas/consultas.php",{'sentencia':4 ,'tipo':3}).success(function(info){ 
+            $scope.angColumnas = info;
+          });
+
+        console.log($scope.angColumnas);
+
 
          $scope.notaVista="";
          $scope.datosModal= function(index){
