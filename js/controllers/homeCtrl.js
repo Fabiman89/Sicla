@@ -29,7 +29,7 @@ app.controller('homeCtrl',['$scope','$http','$modal', function($scope,$http,$mod
         var notaUsrCtrl = function($scope, $modalInstance, notaVista) {
           $scope.dt = notaVista;
           $scope.txt = $scope.dt.texto;
-            console.log($scope.txt);
+            console.log($scope.dt);
           $scope.cancel = function () {
             $modalInstance.close();
           };
@@ -231,13 +231,52 @@ app.service('PremiumService',['$http', function($http){
 }]);
 
 
-app.controller('PremiumCtrl',['$scope','$http','$modal','PremiumService', function($scope,$http,$modal,PremiumService){
+app.controller('PremiumCtrl',['$scope','$http','$modal','PremiumService','Request','$q', function($scope,$http,$modal,PremiumService,Request,$q){
+          var sync = $q.defer();
+          $scope.Medios = {};
+          $scope.Autores = {};
+          $scope.Tipos={};
+
           $http.post("data/consultas/consultas.php",{'sentencia':4 ,'tipo':3}).success(function(info){ 
             $scope.angColumnas = info;
           });
 
-        console.log($scope.angColumnas);
 
+
+//global medios
+        $scope.requestControl  = function (){
+          var tmpMedios = Request.checkMedios();
+          if(tmpMedios==1){
+            Request.getMedios().then(function(){
+              $scope.Medios = Request.checkMedios();
+              sync.resolve();
+              console.log($scope.Medios);
+            });            
+          }else{
+            console.log("allreadyCharged");
+          }
+          var tempAutores = Request.checkAutores();
+          if(tempAutores == 1 ){
+            Request.getAutores().then(function(){
+              $scope.Autores = Request.checkAutores();
+              sync.resolve();
+              console.log($scope.Autores);
+            });
+          }else{
+            console.log("Probemas");
+          }
+          var tempTipos = Request.checkTipos();
+          if(tempTipos == 1 ){
+            Request.getTipos().then(function(){
+              $scope.Tipos = Request.checkTipos();
+              sync.resolve();
+              console.log($scope.Tipos);
+            });
+          }
+
+        }
+
+        $scope.requestControl();
 
          $scope.notaVista="";
          $scope.datosModal= function(index){

@@ -24,8 +24,8 @@
          <table class="table">
            <caption>{{title}}</caption>
            <tr ng-hide="key == 'sql' || key=='dato' " ng-repeat="(key,data) in t|orderBy:data">
-             <td> {{key}}   </td>
-             <td> {{data}} </td>
+             <td > {{key }}   </td>
+             <td> {{data| limitTo:10}} </td>
            </tr>
          </table>
       </div>

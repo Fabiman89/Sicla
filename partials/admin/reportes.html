@@ -212,8 +212,11 @@
                       <div class="col-md-9"><input typeahead-on-select="query.municipios[$index] = aux6[$index]"  ng-model="aux6[$index]" type="text" placeholder="Comience a escribir" typeahead="municipio as municipio.nombreMunicipio for municipio in Municipios | filter:$viewValue | limitTo:13" class="form-control" /> </div> 
           </div>
       </div>
-      <div class="col-md-12"> 
-          <button class="btn btn-success center-block" ng-click="getResume(query)">Generar Consulta</button> 
+      <div class="col-md-6 "> 
+          <button class="btn btn-success pull-right" ng-click="getResume(1,query)">Generar Consulta</button> 
+      </div>
+      <div class="col-md-6">
+          <button class="btn btn-success pull-left" ng-click="getResume(2,query)">Obtener Notas</button> 
       </div>
       
 
@@ -277,16 +280,32 @@
                        <td> {{data}} </td>
                      </tr>
                    </table> 
-                   </div>                
+                   </div> 
+                   <br>               
                   </div>
-              </div>    
+              </div> 
+              <div class="col-md-12" ng-if="elemento.tipo==4"> <!-- Row para Sintesis --> 
+                  <div class="col-md-12 " ng-repeat="tabla in elemento.data">
+                    <div class="reportContent"> 
+                    <table class="table">
+                      <caption ng-show="tabla.titulo!=undefined">{{tabla.titulo}}</caption>
+                       <tr ng-hide="key == 'sql' || key=='dato' " ng-repeat="(key,data) in tabla">
+                       <td> {{key}}   </td>
+                       <td> {{data}} </td>
+                     </tr>
+                   </table> 
+                   </div> 
+                   <br>               
+                  </div>
+              </div> 
+
             </div>  
         </div>  
     </div>
 
     <div class="col-md-12" ng-show="previewArray.length>0" > 
       <hr>
-      <a class="btn btn-success" href="js/pdfService/pdfClass.php" target='_blank' ng-click="repo()">Guardar en pdf</a> 
+      <a class="btn btn-success" href="js/pdfService/pdfClass.php" target='_blank' ng-click="repo(previewArray)">Guardar en pdf</a> 
     </div>
 
       <!--<pre>{{reporte | json}}</pre>

@@ -178,6 +178,11 @@ $scope.appendText = function(data){
                     objeto.data = data;
                     $scope.appendVar(objeto);
                     break;
+                case 4:
+                    objeto.tipo=4;
+                    objeto.data =  data.data;
+                    $scope.appendVar(objeto);
+                    break;
             }
             //console.log($scope.previewSize);
             //$scope.previewArray = $scope.appendVar($scope.previewArray,obj,$scope.previewSize);
@@ -205,13 +210,19 @@ $scope.appendText = function(data){
               
               modalInstance.result.then(function(data) {
                 if(data!=undefined){
-                    $scope.addToPreview(1,data);
+                    //console.log(data.data[0]);
+                    if(data.data[0].sintesis!=undefined){
+                        $scope.addToPreview(4,data);
+                    }else{
+                        $scope.addToPreview(1,data);
+                    }
                 }
               });
             };
 
             var statsCtrl = function($filter,$scope,$modalInstance, data){
                 $scope.tabla = {};
+                $scope.title = "Tabla de Estadisticas";
                 $scope.borrar = function(toDelete){
                     var array = [];
                     if($scope.tablas.length>0){
@@ -241,14 +252,21 @@ $scope.appendText = function(data){
         $scope.aceptados = [];
         $scope.rechasados = [];
         $scope.values = [];
+        var aux = objt;
         for (i in objt){
            if( objt[i].dato==true){ 
-            $scope.aceptados.push(objt[i]);
+            delete(aux[i].dato);
+            delete(aux[i].sql);
+            $scope.aceptados.push(aux[i]);
             }else{
-            $scope.rechasados.push(objt[i]);
+            delete(aux[i].dato);
+            delete(aux[i].sql);
+            $scope.rechasados.push(aux[i]);
             }
-        }
 
+        }
+            console.log($scope.rechasados);
+            console.log($scope.aceptados);
       };
     $scope.cancel = function () {
       $modalInstance.close();
@@ -261,6 +279,7 @@ $scope.appendText = function(data){
       var tables = {};
       if($scope.title==undefined){
         tables.data = $scope.tablas;
+
       }else{
         if($scope.title.length>0){
             tables.titulo = $scope.title;
@@ -322,10 +341,17 @@ $scope.query= {};
 $scope.arrayCero = [{"nombre":"Sin considerar","value":0},{"nombre":"Particular","value":1},{"nombre":"Todos","value":2}];
 $scope.arrayCeroF = [{"nombre":"Sin considerar","value":0},{"nombre":"Especifica","value":1},{"nombre":"Periodo","value":2}];
 
-$scope.getResume = function (data){
+$scope.getResume = function (n,data){
+    var reporte = 1;
+    if(n==1){
+        reporte = 1;
+    }else{
+        reporte = 2;
+    }
     $http.post("data/consultas/consultaReportes.php",
-                {'autor':data.autores, 'medio':data.medios, 'protagonista':data.protagonistas, 'tema':data.temas, 'clasificacion':data.clasificacion,'fecha':data.fecha, 'tipo':data.tipo, 'seccion':data.seccion,'genero':data.genero, 'cargo':data.cargos, 'area':data.areas, 'pais':data.paises, 'subtema':data.subtemas, 'estado':data.estados, 'municipio':data.municipios}).success(function(r) {
+                {'reporte':reporte,'autor':data.autores, 'medio':data.medios, 'protagonista':data.protagonistas, 'tema':data.temas, 'clasificacion':data.clasificacion,'fecha':data.fecha, 'tipo':data.tipo, 'seccion':data.seccion,'genero':data.genero, 'cargo':data.cargos, 'area':data.areas, 'pais':data.paises, 'subtema':data.subtemas, 'estado':data.estados, 'municipio':data.municipios}).success(function(r) {
                     $scope.prueba = r;
+                   console.log(r);
                     $scope.modalPie(r);
                     $scope.resetQuery();
                     //$scope.processData(r);
@@ -431,9 +457,8 @@ $scope.getter = function (i,val){
     }
 };
 
-$scope.repo = function(){
-
-    PdfService.test();
+$scope.repo = function(ary){
+    PdfService.test(ary);
 };
 
   $scope.today = function() {

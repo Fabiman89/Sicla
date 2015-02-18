@@ -6,7 +6,7 @@ switch ($instruccion){
 // USUARIO NORMAL - INICIO   ///  checar order by   /// ERROR 1
 	case 1:
 		$result=mysqli_query($mysqli,
-		"SELECT n.idNota, n.fecha, n.imagenNota as img8col, n.sintesis, n.texto, t.idTipoNota as tipo,  n.tituloNota, m.urlMedio as idPeriodico, a.nombreAutor as autor, 
+		"SELECT n.idNota, n.fecha, n.imagenNota as img8col,n.urlNota, n.sintesis, n.texto, t.idTipoNota as tipo,  n.tituloNota, m.urlMedio as idPeriodico, a.nombreAutor as autor, 
 				m.nombreMedio, m.imagenMedio as imagen
 		from Nota n,colabora_en ce, Medio m, Autor a ,tipoNota t
 		where ce.idCE = n.idCE 
@@ -38,7 +38,7 @@ switch ($instruccion){
 			limit  50) AS n, colabora_en ce 
 		where ce.idCE = n.idCE 
 		and ce.idMedio = m.idMedio  
-		ORDER BY m.nombreMedio");
+		ORDER BY m.nombreMedio asc");
 		$arr = array();
 		if($result==true) {
 		 while($row = $result->fetch_assoc()) {

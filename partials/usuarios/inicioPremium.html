@@ -57,7 +57,7 @@
                                <p class="help-block">Filtrar títulos</p >
                             </div>
                             <div class="form-group">
-                               <input class="form-control" type="text" ng-model="search.nombreMedio" placeholder="Comienza a escribir aquí" typeahead=" nota.nombreMedio for nota in angColumnas |limitTo: 8 |filter:$viewValue"  >  
+                               <input class="form-control" type="text" ng-model="search.nombreMedio" placeholder="Comienza a escribir aquí" typeahead=" m.nombreMedio for m in Medios |limitTo: 8 |filter:$viewValue"  >  
                                <p class="help-block">Filtrar medios</p >
                             </div>
                         
@@ -65,11 +65,11 @@
 
                         <div class="col-lg-6">
                             <div class="form-group">
-                               <input class="form-control" type="text" ng-model="search.autor" placeholder="Comienza a escribir aquí" typeahead=" nota.autor for nota in angColumnas |limitTo: 8 |filter:$viewValue"  >  
+                               <input class="form-control" type="text" ng-model="search.autor" placeholder="Comienza a escribir aquí" typeahead=" nota.nombreAutor for nota in Autores |limitTo: 8 |filter:$viewValue"  >  
                                <p class="help-block">Filtrar Autor</p >
                             </div>  
                             <div class="form-group">
-                               <input class="form-control" type="text" ng-model="search.tipo" placeholder="Comienza a escribir aquí" typeahead=" nota.tipo for nota in angColumnas |limitTo: 8 |filter:$viewValue"  >  
+                               <input class="form-control" type="text" ng-model="search.tipo" placeholder="Comienza a escribir aquí" typeahead=" nota.nombreTipoNota for nota in Tipos |limitTo: 8 |filter:$viewValue"  >  
                                <p class="help-block">Filtrar por tipo de nota</p >
                             </div>                        
                         </div>
