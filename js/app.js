@@ -10,6 +10,8 @@ $routeProvider.when('/inicio',{templateUrl:'partials/inicio.html',controller:'ho
 $routeProvider.when('/home',{templateUrl:'partials/home.html',controller:'homeCtrl2'});
 $routeProvider.when('/usuario',{templateUrl:'partials/usuarios/inicio.html',controller:'homeUserCtrl'});
 $routeProvider.when('/premium/',{templateUrl:'partials/usuarios/inicioPremium.html',controller:'PremiumCtrl'});
+$routeProvider.when('/premium/reportes',{templateUrl:'partials/usuarios/reportes.html',controller:'reportCtrl'});
+
 //$routeProvider.when('/nota/:idNoticia',{templateUrl:'partials/nota.html',controller:'notaCtrl'});
 //$routeProvider.when('/nota/8/:idNoticia',{templateUrl:'partials/nota8.html',controller:'notaCtrl'});
 $routeProvider.otherwise({redirectTo:'/home'});	
