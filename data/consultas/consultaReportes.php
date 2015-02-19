@@ -9,22 +9,22 @@
 	switch ($ipUsr) 
 	{		
 		case 3: $hoy->sub(new DateInterval("P15D"));
-				$restriccion = "and n.Fecha > ".$hoy->format("Y-m-d");
+				$restriccion = "and n.Fecha > '".$hoy->format("Y-m-d")."'";
 				break;	
 		case 4: $hoy->sub(new DateInterval("P1D"));
-				$restriccion = "and n.Fecha > ".$hoy->format("Y-m-d");
+				$restriccion = "and n.Fecha > '".$hoy->format("Y-m-d")."'";
 				break;	
 		case 5: $hoy->sub(new DateInterval("P3M"));
-				$restriccion = "and n.Fecha > ".$hoy->format("Y-m-d");
+				$restriccion = "and n.Fecha > '".$hoy->format("Y-m-d")."'";
 				break;	
 		case 6: $hoy->sub(new DateInterval("P1Y"));
-				$restriccion = "and n.Fecha > ".$hoy->format("Y-m-d");
+				$restriccion = "and n.Fecha > '".$hoy->format("Y-m-d")."'";
 				break;	
 		case 7: $hoy->sub(new DateInterval("P3Y"));
-				$restriccion = "and n.Fecha > ".$hoy->format("Y-m-d");
+				$restriccion = "and n.Fecha > '".$hoy->format("Y-m-d")."'";
 				break;	
 		case 8: $hoy->sub(new DateInterval("P6Y"));
-				$restriccion = "and n.Fecha > ".$hoy->format("Y-m-d");
+				$restriccion = "and n.Fecha > '".$hoy->format("Y-m-d")."'";
 				break;	
 	}
 	if($datos['medio'][0]==1 || $datos['autor'][0]==1 || $datos['protagonista'][0]==1 || $datos['tema'][0]==1 || $datos['medio'][0]==2 || $datos['autor'][0]==2 || $datos['protagonista'][0]==2 || $datos['tema'][0]==2 || $datos['clasificacion'][0]==1 || $datos['clasificacion'][0]==2 || $datos['fecha'][0]==1 || $datos['fecha'][0]==2 || $datos['tipo'][0]==1 || $datos['tipo'][0]==2 || $datos['seccion'][0]==1 || $datos['seccion'][0]==2 || ($datos['genero'][0]>=1 && $datos['genero'][0]<=6) || $datos['pais'][0]==1 || $datos['pais'][0]==2 || $datos['estado'][0]==1 || $datos['estado'][0]==2 || $datos['subtema'][0]==1 || $datos['subtema'][0]==2 || $datos['area'][0]==1 || $datos['area'][0]==2 || $datos['cargo'][0]==1 || $datos['cargo'][0]==2 || $datos['municipio'][0]==1 || $datos['municipio'][0]==2)

@@ -211,7 +211,7 @@ $scope.appendText = function(data){
               modalInstance.result.then(function(data) {
                 if(data!=undefined){
                     //console.log(data.data[0]);
-                    if(data.data[0].síntesis!=undefined){
+                    if(data.data[0].Síntesis!=undefined){
                         $scope.addToPreview(4,data);
                     }else{
                         $scope.addToPreview(1,data);
