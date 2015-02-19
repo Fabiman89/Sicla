@@ -5,9 +5,9 @@
 	session_start();
 	$ipUsr = $_SESSION["utp"];
 	$restriccion = "";
+	$hoy = new DateTime(date("Y-m-d"));	
 	switch ($ipUsr) 
-	{
-		$hoy = new DateTime(date("Y-m-d"));	
+	{		
 		case 3: $hoy->sub(new DateInterval("P15D"));
 				$restriccion = "and n.Fecha > ".$hoy->format("Y-m-d");
 				break;	
