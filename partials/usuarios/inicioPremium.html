@@ -5,7 +5,7 @@
             <div class="col-md-6">
                 <ul class="nav navbar-nav navbar-left">
                     <li >
-                        <a ng-href="#/home"><strong>Inicio</strong></a>
+                        <a ng-href="#/premium"><strong>Inicio</strong></a>
                     </li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
@@ -20,6 +20,9 @@
   <div class="col-lg-6">
             <div class="">
                 <ul class="nav navbar-nav navbar-right">
+                    <li >
+                        <a class="" ng-href="#/premium/reportes"><strong>Reportes </strong>  </a>
+                    </li>
                     <li >
                         <a class="" ng-href="#/home"><strong>Salir </strong>  </a>
                     </li>
@@ -36,7 +39,7 @@
         <div class="row">
         <div class="col-lg-12">
             <div class=" titles container-fluid col-lg-10 col-lg-offset-1">
-              <div class=""> Búsqueda Avanzada</div>
+              <div class=""> Busqueda Avanzada</div>
               <div class="">
 
               <!--
@@ -57,7 +60,7 @@
                                <p class="help-block">Filtrar títulos</p >
                             </div>
                             <div class="form-group">
-                               <input class="form-control" type="text" ng-model="search.nombreMedio" placeholder="Comienza a escribir aquí" typeahead=" nota.nombreMedio for nota in angColumnas |limitTo: 8 |filter:$viewValue"  >  
+                               <input class="form-control" type="text" ng-model="search.nombreMedio" placeholder="Comienza a escribir aquí" typeahead=" m.nombreMedio for m in Medios |limitTo: 8 |filter:$viewValue"  >  
                                <p class="help-block">Filtrar medios</p >
                             </div>
                         
@@ -65,11 +68,11 @@
 
                         <div class="col-lg-6">
                             <div class="form-group">
-                               <input class="form-control" type="text" ng-model="search.autor" placeholder="Comienza a escribir aquí" typeahead=" nota.autor for nota in angColumnas |limitTo: 8 |filter:$viewValue"  >  
-                               <p class="help-block">Filtrar autor</p >
+                               <input class="form-control" type="text" ng-model="search.autor" placeholder="Comienza a escribir aquí" typeahead=" nota.nombreAutor for nota in Autores |limitTo: 8 |filter:$viewValue"  >  
+                               <p class="help-block">Filtrar Autor</p >
                             </div>  
                             <div class="form-group">
-                               <input class="form-control" type="text" ng-model="search.tipo" placeholder="Comienza a escribir aquí" typeahead=" nota.tipo for nota in angColumnas |limitTo: 8 |filter:$viewValue"  >  
+                               <input class="form-control" type="text" ng-model="search.tipo" placeholder="Comienza a escribir aquí" typeahead=" nota.nombreTipoNota for nota in Tipos |limitTo: 8 |filter:$viewValue"  >  
                                <p class="help-block">Filtrar por tipo de nota</p >
                             </div>                        
                         </div>
