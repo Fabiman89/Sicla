@@ -80,6 +80,28 @@ switch ($instruccion){
 		$tipo = $sentencia["tipo"];
 		switch ($tipo){
 			case 3:
+				session_start();
+				$ipUsr = $_SESSION["utp"];
+				$hoy = new DateTime(date("Y-m-d"));
+				$restriccion = "";
+				switch ($ipUsr) 
+				{		
+					case 3: $hoy->sub(new DateInterval("P15D"));
+							$restriccion = "and n.Fecha > '".$hoy->format("Y-m-d")."'";
+							break;		
+					case 5: $hoy->sub(new DateInterval("P3M"));
+							$restriccion = "and n.Fecha > '".$hoy->format("Y-m-d")."'";
+							break;	
+					case 6: $hoy->sub(new DateInterval("P1Y"));
+							$restriccion = "and n.Fecha > '".$hoy->format("Y-m-d")."'";
+							break;	
+					case 7: $hoy->sub(new DateInterval("P3Y"));
+							$restriccion = "and n.Fecha > '".$hoy->format("Y-m-d")."'";
+							break;	
+					case 8: $hoy->sub(new DateInterval("P6Y"));
+							$restriccion = "and n.Fecha > '".$hoy->format("Y-m-d")."'";
+							break;	
+				}
 				$result = mysqli_query($mysqli,"SELECT n.idNota, n.fecha, n.imagenNota as img8col, n.sintesis, n.texto, t.nombreTipoNota as tipo,  n.tituloNota, m.urlMedio as idPeriodico, a.nombreAutor as autor, 
 						m.nombreMedio, m.imagenMedio as imagen
 				from Nota n,colabora_en ce, Medio m, Autor a ,tipoNota t
@@ -88,6 +110,7 @@ switch ($instruccion){
 				and m.idMedio = ce.idMedio 
 				and a.idAutor = ce.idAutor 
 				and t.idtiponota = n.idTipoNota
+				$restriccion
 				ORDER BY n.idNota DESC ");
 			break;
 			case 4:

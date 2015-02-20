@@ -1,5 +1,4 @@
 'use strinct';
-'use strinct';
 app.factory('PdfService', ['$http',function($http){
 	var servicio = {};
 	var array = [];
