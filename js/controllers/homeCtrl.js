@@ -102,7 +102,6 @@ app.controller('homeCtrl2',['$location','$scope','$http','$modal','$log', functi
   $scope.logIn = function(usrData){
     $scope.master = {};
     var route = [];
-    console.log(usrData); 
     $http.post("data/consultas/consultasLogin.php",{'sentencia':1,"correo":usrData.correo,"password":usrData.password}).success(function(msg){ 
       if(msg=="E201"){
         $scope.alerta.tipo = "alert alert-danger";
@@ -117,7 +116,7 @@ app.controller('homeCtrl2',['$location','$scope','$http','$modal','$log', functi
             window.location.assign("admin.html");
             $modalInstance.close();
           }
-          if(route==3){
+          if(route==3 || route>4 && route<=9){
               $location.path("/premium/");
               $modalInstance.close();
           }
