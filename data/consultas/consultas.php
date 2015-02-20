@@ -55,7 +55,7 @@ switch ($instruccion){
 	case 3:
 		$email = $sentencia["correo"];
 		$password = $sentencia["password"];
-		$result=mysqli_query($mysqli,"SELECT * FROM user WHERE correo = '$email' and password = '$password' ");
+		$result=mysqli_query($mysqli,"SELECT idUsuario, nombreUsuario, idTipoUsr FROM user WHERE correo = '$email' and password = '$password' ");
 		$arr = array();
 		if($result->num_rows > 0) {
 			$row = mysqli_fetch_assoc($result);

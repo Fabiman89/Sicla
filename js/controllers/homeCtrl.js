@@ -103,10 +103,8 @@ app.controller('homeCtrl2',['$location','$scope','$http','$modal','$log', functi
     $scope.master = {};
     var route = [];
     $http.post("data/consultas/consultasLogin.php",{'sentencia':1,"correo":usrData.correo,"password":usrData.password}).success(function(msg){ 
-      if(msg=="E201"){
-        $scope.alerta.tipo = "alert alert-danger";
-        $scope.alerta.mensaje =" Comprueba los datos de acceso ";        
-      }else{
+      if(msg["mensaje"]=="A201")
+      {              
         $scope.alerta.tipo = "alert alert-success";
         $scope.alerta.mensaje =" Exito ";        
          route = msg[0].idTipoUsr;
@@ -122,8 +120,12 @@ app.controller('homeCtrl2',['$location','$scope','$http','$modal','$log', functi
           }
           if(route==4){
               $location.path("/usuario");
+              $modalInstance.close();
           }
-        }
+       }else {
+       		$scope.alerta.tipo = "alert alert-danger";
+       		$scope.alerta.mensaje =" Comprueba los datos de acceso "; 
+       }
 
      });
   };
@@ -214,7 +216,7 @@ app.controller('homeUserCtrl',['$scope','$http','$modal','$log', function($scope
 
 
 app.service('PremiumService',['$http', function($http){
-      var periodicos = [];   
+      var periodicos = {};   
     this.getData = function(){
       return periodicos;
       console.log(periodicos)
@@ -230,13 +232,52 @@ app.service('PremiumService',['$http', function($http){
 }]);
 
 
-app.controller('PremiumCtrl',['$scope','$http','$modal','PremiumService', function($scope,$http,$modal,PremiumService){
+app.controller('PremiumCtrl',['$scope','$http','$modal','PremiumService','Request','$q', function($scope,$http,$modal,PremiumService,Request,$q){
+          var sync = $q.defer();
+          $scope.Medios = {};
+          $scope.Autores = {};
+          $scope.Tipos={};
+
           $http.post("data/consultas/consultas.php",{'sentencia':4 ,'tipo':3}).success(function(info){ 
             $scope.angColumnas = info;
           });
 
-        console.log($scope.angColumnas);
 
+
+//global medios
+        $scope.requestControl  = function (){
+          var tmpMedios = Request.checkMedios();
+          if(tmpMedios==1){
+            Request.getMedios().then(function(){
+              $scope.Medios = Request.checkMedios();
+              sync.resolve();
+              console.log($scope.Medios);
+            });            
+          }else{
+            console.log("allreadyCharged");
+          }
+          var tempAutores = Request.checkAutores();
+          if(tempAutores == 1 ){
+            Request.getAutores().then(function(){
+              $scope.Autores = Request.checkAutores();
+              sync.resolve();
+              console.log($scope.Autores);
+            });
+          }else{
+            console.log("Probemas");
+          }
+          var tempTipos = Request.checkTipos();
+          if(tempTipos == 1 ){
+            Request.getTipos().then(function(){
+              $scope.Tipos = Request.checkTipos();
+              sync.resolve();
+              console.log($scope.Tipos);
+            });
+          }
+
+        }
+
+        $scope.requestControl();
 
          $scope.notaVista="";
          $scope.datosModal= function(index){

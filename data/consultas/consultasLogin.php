@@ -20,10 +20,11 @@ switch ($instruccion){
 			$_SESSION["utp"] = $ip;
 			mysqli_free_result($result);
 			$arr[] = $row;
-			echo json_encode($arr);
+			$arr["mensaje"] = "A201";			
 		}else{
-			echo ("E201");
+			$arr["mensaje"] = "E201";
 		}
+		echo json_encode($arr);
 		mysqli_close($mysqli);
 		break;
 //Chequeo de sesion
