@@ -102,13 +102,20 @@ switch ($instruccion){
 							$restriccion = "and n.Fecha > '".$hoy->format("Y-m-d")."'";
 							break;	
 				}
-				$result = mysqli_query($mysqli,"SELECT n.idNota, n.fecha, n.imagenNota as img8col, n.sintesis, n.texto, t.nombreTipoNota as tipo,  n.tituloNota, m.urlMedio as idPeriodico, a.nombreAutor as autor, 
+				$result = mysqli_query($mysqli,"SELECT n.idNota, n.fecha, n.imagenNota as img8col, n.sintesis, n.texto, p.nombreProtagonista, t.nombreTipoNota as tipo, te.nombreTema, su.nombreSubtema, n.tituloNota, m.urlMedio as idPeriodico, a.nombreAutor as autor, 
 						m.nombreMedio, m.imagenMedio as imagen
-				from Nota n,colabora_en ce, Medio m, Autor a ,tipoNota t
+				from Nota n,colabora_en ce, Medio m, Autor a ,tipoNota t, tema te, subtema su, Protagonista p,  trata_de td , notaprotagonista np,cargoprotagonista cp
 				where ce.idCE = n.idCE 
 				and ce.idMedio = m.idMedio 
 				and m.idMedio = ce.idMedio 
 				and a.idAutor = ce.idAutor 
+                and n.idNota = td.idNota_
+				and su.idSubtema = td.idSubtema
+				and te.idTema = su.idSubtema
+				and np.idNota = n.idNota
+				and np.idCP = cp.idCP 
+                and np.tipoProtagonista = 1
+				and cp.idProtagonista = p.idProtagonista
 				and t.idtiponota = n.idTipoNota
 				$restriccion
 				ORDER BY n.idNota DESC ");
@@ -117,11 +124,18 @@ switch ($instruccion){
 				$result=mysqli_query($mysqli,
 				"SELECT n.idNota, n.fecha, n.imagenNota as img8col, n.sintesis, n.texto, t.idTipoNota as tipo,  n.tituloNota, m.urlMedio as idPeriodico, a.nombreAutor as autor, 
 						m.nombreMedio, m.imagenMedio as imagen
-				from Nota n,colabora_en ce, Medio m, Autor a ,tipoNota t
+				from Nota n,colabora_en ce, Medio m, Autor a ,tipoNota t, tema te, subtema su, Protagonista p,  trata_de td , notaprotagonista np,cargoprotagonista cp
 				where ce.idCE = n.idCE 
 				and ce.idMedio = m.idMedio 
 				and m.idMedio = ce.idMedio 
 				and a.idAutor = ce.idAutor 
+				and n.idNota = td.idNota_
+				and su.idSubtema = td.idSubtema
+				and te.idTema = su.idSubtema
+				and np.idNota = n.idNota
+				and np.idCP = cp.idCP 
+                and np.tipoProtagonista = 1
+				and cp.idProtagonista = p.idProtagonista
 				and t.idtiponota = n.idTipoNota
 				ORDER BY n.idNota DESC limit 50");
 			break;

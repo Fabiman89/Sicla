@@ -2,8 +2,9 @@
 app.factory("Request",['$http','$q',function($http,$q){
 	var servicio = {};
 	var opcionesMedios = 1;
-	var opcionesAutores = 1;
-	var opcionesTipos = 1;
+	var opcionesProtagonista = 1;
+	var opcionesTemas = 1;
+	var opcionesSubtemas = 1;
 	 
 
 	servicio.getMedios = function(){
@@ -18,30 +19,43 @@ app.factory("Request",['$http','$q',function($http,$q){
 		return opcionesMedios;
 	}
 
-	servicio.getTipos = function(){
+	servicio.getSubtemas = function(){
 		var sync = $q.defer();
-          $http.post("data/consultas/consultasAdmin.php",{'sentencia':1}).success(function(dataTipos){
-            opcionesTipos = dataTipos;
+          $http.post("data/consultas/consultasAdmin.php",{'sentencia':23}).success(function(dataSub){
+            opcionesSubtemas = dataSub;
             sync.resolve();
           });	
           return sync.promise;   
 	}
-	servicio.checkTipos = function(){
-		return opcionesTipos;
+	servicio.checkSubtemas = function(){
+		return opcionesSubtemas;
 	}
 
-		servicio.getAutores = function(){
+		servicio.getTemas = function(){
 			var sync = $q.defer();
-          $http.post("data/consultas/consultasAdmin.php",{'sentencia':21}).success(function(dataAutores){
-            opcionesAutores = dataAutores;
+          $http.post("data/consultas/consultasAdmin.php",{'sentencia':22}).success(function(dataTemas){
+            opcionesTemas = dataTemas;
             sync.resolve();
           });	
           return sync.promise;   
 	}
-	servicio.checkAutores = function(){
-		return opcionesAutores;
+
+	servicio.checkTemas = function(){
+		return opcionesTemas;
 	}
 
+		servicio.getProtagonista = function(){
+			var sync = $q.defer();
+          $http.post("data/consultas/consultasAdmin.php",{'sentencia':5}).success(function(dataProtagonista){
+            opcionesProtagonista = dataProtagonista;
+            sync.resolve();
+          });	
+          return sync.promise;   
+	}
+
+	servicio.checkProtagonista = function(){
+		return opcionesProtagonista;
+	}
 
 	return servicio;
 

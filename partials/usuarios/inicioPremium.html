@@ -53,34 +53,47 @@
 
               <div class="col-lg-12 well well-sm">
                   <form class="">
-                    <div class="row">
-                        <div class="col-lg-6">
-                            <div class="form-group">
-                               <input class="form-control" type="text" ng-model="search.tituloNota" placeholder="Comienza a escribir aquí" typeahead=" nota.tituloNota for nota in angColumnas |limitTo: 8 |filter:$viewValue"  >  
-                               <p class="help-block">Filtrar títulos</p >
-                            </div>
-                            <div class="form-group">
-                               <input class="form-control" type="text" ng-model="search.nombreMedio" placeholder="Comienza a escribir aquí" typeahead=" m.nombreMedio for m in Medios |limitTo: 8 |filter:$viewValue"  >  
-                               <p class="help-block">Filtrar medios</p >
-                            </div>
-                        
-                        </div>
+                    <div class="row"> 
+                    <div class="col-md-6 col-sm-6">
+                      <div class="form-group">
+                         <p class="help-block">Palabra Clave</p >
+                         <input class="form-control input-sm" type="text" ng-model="search2" placeholder="Comienza a escribir aquí" >  
+                      </div>
+                    </div>
+                    <div class="col-md-6 col-sm-6">
+                      <div class="form-group">
+                        <p class="help-block">Fecha</p >
+                        <input class="form-control input-sm" type="date" ng-model="search.fecha" >  
+                      </div>
+                    </div>
+                    <div class="col-md-6 col-sm-6" >
+                      
+                      <div class="form-group">
+                        <p class="help-block">Protagonista</p >
+                        <input class="form-control input-sm" type="text" ng-model="search.nombreProtagonista" typeahead=" p.nombreProtagonista for p in Protagonista |limitTo: 8 |filter:$viewValue"  >  
+                      </div>
 
-                        <div class="col-lg-6">
+                      <div class="form-group">
+                      <p class="help-block">Filtrar Medios</p >
+                         <input class="form-control input-sm" type="text" ng-model="search.nombreMedio" placeholder="Comienza a escribir aquí" typeahead=" m.nombreMedio for m in Medios |limitTo: 8 |filter:$viewValue"  >  
+                         
+                      </div>                      
+                    </div>  
+                        <div class="col-md-6 col-sm-6">
                             <div class="form-group">
-                               <input class="form-control" type="text" ng-model="search.autor" placeholder="Comienza a escribir aquí" typeahead=" nota.nombreAutor for nota in Autores |limitTo: 8 |filter:$viewValue"  >  
-                               <p class="help-block">Filtrar Autor</p >
+                               <p class="help-block">Filtrar por Tema</p >
+                               <input class="form-control input-sm" type="text" ng-model="search.nombreTema" placeholder="Comienza a escribir aquí" typeahead=" nota.nombreTema for nota in Temas |limitTo: 8 |filter:$viewValue"  >  
                             </div>  
                             <div class="form-group">
-                               <input class="form-control" type="text" ng-model="search.tipo" placeholder="Comienza a escribir aquí" typeahead=" nota.nombreTipoNota for nota in Tipos |limitTo: 8 |filter:$viewValue"  >  
-                               <p class="help-block">Filtrar por tipo de nota</p >
+                               <p class="help-block">Filtrar por Subtema</p >
+                               <input class="form-control input-sm" type="text" ng-model="search.nombreSubtema" placeholder="Comienza a escribir aquí" typeahead=" nota.nombreSubtema for nota in Subtemas |limitTo: 8 |filter:$viewValue"  >  
                             </div>                        
                         </div>
                     </div>
                   </form>
               </div>
     
-<div class="col-md-3 col-sm-6 col-xs-8 "  ng-repeat="columnas in angColumnas | filter:search" >
+<div class="col-md-3 col-sm-6 col-xs-8 "  ng-repeat="columnas in angColumnas | filter:search |filter:search2" >
 <div class="post-container"  >
         <div class="post-image">
             <img ng-hide="!columnas.img8col" ng-src="{{columnas.img8col}}" style="height:338px;" ng-click="datosModal(columnas)" class="img-responsive center-block clickable">

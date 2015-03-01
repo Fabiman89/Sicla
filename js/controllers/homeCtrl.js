@@ -240,6 +240,7 @@ app.controller('PremiumCtrl',['$scope','$http','$modal','PremiumService','Reques
 
           $http.post("data/consultas/consultas.php",{'sentencia':4 ,'tipo':3}).success(function(info){ 
             $scope.angColumnas = info;
+            console.log($scope.angColumnas);
           });
 
 
@@ -251,30 +252,40 @@ app.controller('PremiumCtrl',['$scope','$http','$modal','PremiumService','Reques
             Request.getMedios().then(function(){
               $scope.Medios = Request.checkMedios();
               sync.resolve();
-              console.log($scope.Medios);
             });            
           }else{
             console.log("allreadyCharged");
           }
-          var tempAutores = Request.checkAutores();
-          if(tempAutores == 1 ){
-            Request.getAutores().then(function(){
-              $scope.Autores = Request.checkAutores();
+          var tempProtagonista = Request.checkProtagonista();
+          if(tempProtagonista == 1 ){
+            Request.getProtagonista().then(function(){
+              $scope.Protagonista = Request.checkProtagonista();
               sync.resolve();
-              console.log($scope.Autores);
+              console.log($scope.Protagonista);
             });
           }else{
             console.log("Probemas");
           }
-          var tempTipos = Request.checkTipos();
-          if(tempTipos == 1 ){
-            Request.getTipos().then(function(){
-              $scope.Tipos = Request.checkTipos();
+          var tempTemas = Request.checkTemas();
+          if(tempTemas == 1 ){
+            Request.getTemas().then(function(){
+              $scope.Temas = Request.checkTemas();
               sync.resolve();
-              console.log($scope.Tipos);
+              console.log($scope.Temas);
             });
+          }else{
+            console.log("Error en temas");
           }
-
+          var tempSubtemas = Request.checkSubtemas();
+          if(tempSubtemas == 1 ){
+            Request.getSubtemas().then(function(){
+              $scope.Subtemas = Request.checkSubtemas();
+              sync.resolve();
+              console.log($scope.Subtemas);
+            });
+          }else{
+            console.log("Error en temas");
+          }
         }
 
         $scope.requestControl();
