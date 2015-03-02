@@ -193,7 +193,6 @@ $scope.appendText = function(data){
             $scope.pdf = $scope.previewArray;
         };
 
-    // MODAL GRAFICA DE PIE
         $scope.modalPie = function(responce){
               var modalInstance = $modal.open({ 
                 templateUrl: 'partials/admin/modals/reportes/reporteQuery.html',
@@ -265,8 +264,7 @@ $scope.appendText = function(data){
             }
 
         }
-            console.log($scope.rechasados);
-            console.log($scope.aceptados);
+            
       };
     $scope.cancel = function () {
       $modalInstance.close();
@@ -295,6 +293,61 @@ $scope.appendText = function(data){
 $scope.processData(data);
 $scope.pushToTable(1);
                 };
+
+        //Modal Pie
+        $scope.genPie = function(datos){
+            var modalInstance = $modal.open({ 
+                templateUrl: 'partials/admin/modals/reportes/reportePie.html',
+                controller: pieCtrl,
+                size: 'lg',
+                resolve: {
+                data: function() { return datos;}
+                }
+             });
+        };
+
+        var pieCtrl = function($scope, $modalInstance, data){
+            var helper = [], i, j, posibles = [], aux, aux1;
+            $scope.opCP = [];
+            console.log(data);
+            $scope.genObj = function(dato){
+                var auxo = {};
+                $scope.opCP = [];
+                console.log(helper);
+                for(i=0;i<helper.length;i++)
+                {
+                    auxo.total = helper[i]['total'];
+                    auxo[dato] = helper[i][dato];
+                    console.log(auxo);
+                }
+            };
+
+            for(i=0; i<data.length; i++)
+                if(data[i].tipo == 1)
+                {            
+                    for(j=0;j<data[i]['data'].length;j++)
+                    {
+                        delete data[i].data[j]['$$hashKey'];
+                        helper.push(data[i]['data'][j]);
+                    }
+                }
+            if(helper.length > 0)
+            {
+                for(i=0; i<helper.length; i++)
+                {
+                    aux = Object.keys(helper[i]);
+                    aux1 = aux.indexOf('total');
+                    aux.splice(aux1,1);
+                    for (j=0;j<aux.length;j++)
+                        if(posibles.indexOf(aux[j]) < 0)
+                            posibles.push(aux[j]);
+                }
+                if (posibles.length > 1)
+                    $scope.opCP = posibles;
+                else
+                    $scope.genObj(posibles[0]);
+            }            
+        };
 ////  Modal Texto
          $scope.modalTexto = function(){
               var modalInstance = $modal.open({ 
@@ -350,8 +403,7 @@ $scope.getResume = function (n,data){
     }
     $http.post("data/consultas/consultaReportes.php",
                 {'reporte':reporte,'autor':data.autores, 'medio':data.medios, 'protagonista':data.protagonistas, 'tema':data.temas, 'clasificacion':data.clasificacion,'fecha':data.fecha, 'tipo':data.tipo, 'seccion':data.seccion,'genero':data.genero, 'cargo':data.cargos, 'area':data.areas, 'pais':data.paises, 'subtema':data.subtemas, 'estado':data.estados, 'municipio':data.municipios}).success(function(r) {
-                    $scope.prueba = r;
-                   console.log(r);
+                    $scope.prueba = r;                   
                     $scope.modalPie(r);
                     $scope.resetQuery();
                     //$scope.processData(r);
