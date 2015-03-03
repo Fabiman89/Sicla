@@ -4,8 +4,8 @@
 </div>
 <div class="modal-body container-fluid">
   <div ng-show="opCP.length>1" class="form-group">
-    <label class="col-md-8 control-label text-center"><em>Selecciona el elemento a graficar</em></label><br>
-    <select class="col-md-8" ng-model="seleccion" ng-options="op as op for op in opCP"></select>
+    <label class="control-label"><em>Selecciona el elemento a graficar</em></label><br>
+    <select style="display: block;" ng-model="seleccion" ng-options="op as op for op in opCP"></select>
   </div>
   <div ng-show="err">
     <label class="col-md-8 control-label text-center"><em>No hay elementos a graficar</em></label><br>
