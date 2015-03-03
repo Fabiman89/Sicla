@@ -309,16 +309,16 @@ $scope.pushToTable(1);
         var pieCtrl = function($scope, $modalInstance, data){
             var helper = [], i, j, posibles = [], aux, aux1;
             $scope.opCP = [];
-            console.log(data);
+            
             $scope.genObj = function(dato){
-                var auxo = {};
-                $scope.opCP = [];
-                console.log(helper);
+                var auxo = {}, datos = [];
+                $scope.opCP = [];  
+                $scope.graf = 1;              
                 for(i=0;i<helper.length;i++)
                 {
                     auxo.total = helper[i]['total'];
                     auxo[dato] = helper[i][dato];
-                    console.log(auxo);
+                    datos.push(auxo);
                 }
             };
 
@@ -346,7 +346,12 @@ $scope.pushToTable(1);
                     $scope.opCP = posibles;
                 else
                     $scope.genObj(posibles[0]);
-            }            
+            }else
+                $scope.err = 1;
+
+            $scope.cancel = function(){
+                $modalInstance.close();
+            };           
         };
 ////  Modal Texto
          $scope.modalTexto = function(){

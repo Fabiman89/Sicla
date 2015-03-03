@@ -7,11 +7,18 @@
     <label class="col-md-8 control-label text-center"><em>Selecciona el elemento a graficar</em></label><br>
     <select class="col-md-8" ng-model="seleccion" ng-options="op as op for op in opCP"></select>
   </div>
+  <div ng-show="err">
+    <label class="col-md-8 control-label text-center"><em>No hay elementos a graficar</em></label><br>
+  </div>
+  <div id="chartdiv" style="width: 640px; height: 400px;" ng-show="graf">
+      Si hay datos
+  </div>
 </div>
 <div class="modal-footer">
   {{report}}
-  <button ng-show="opCP.length<1" class=" btn btn-primary btn-md btn-block" ng-click=""  >Guardar</button>
+  <button ng-show="opCP.length<1 && !err" class=" btn btn-primary btn-md btn-block" ng-click=""  >Guardar</button>
   <button ng-show="opCP.length>1" class=" btn btn-primary btn-md btn-block"  ng-click="genObj(seleccion)"  >Generar Gráfica</button>
+  <button ng-show="err" class=" btn btn-primary btn-md btn-block"  ng-click="cancel()"  >Regresar</button>
 </div>
 
 
