@@ -522,6 +522,20 @@ case 23:
 					}
 					mysqli_close($mysqli);	
 			break;
+// Todos los usuarios
+		case 26:
+			$result = mysqli_query($mysqli, "Select u.idUsuario, u.nombreUsuario, u.apellidoUsuario, u.correo, t.nombreTipoUsuario from user u, TipoUsr t where u.idTipoUsr = t.idTipoUsr and u.idUsuario > 1 order by u.nombreUsuario asc, u.apellidoUsuario asc");
+			$arr = array();
+			if($result)
+			{
+				while ($row = mysqli_fetch_assoc($result)) 
+					$arr[] = $row;
+				echo json_encode($arr);
+				mysqli_free_result($result);
+			}else
+				echo("Error 326");
+			mysqli_close($mysqli);
+			break;
 //RESPUESTA DEFAULT
 	default:
 		echo json_encode("Error 300 Admin Querys");

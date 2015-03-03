@@ -1,0 +1,58 @@
+<br />
+
+<div class="container-fluid">
+<div class="col-md-6 col-sm-6 col-xs-12">
+<h3 class="text-center"> Lista de Usuarios</h3>
+    <div class="input-group">
+        <input type="text" class="form-control" placeholder="Buscar en usuarios" ng-model="search">
+        <span class="input-group-btn">
+            <button class="btn btn-default" type="button"><i class="fa fa-search"></i>
+            </button>
+        </span>
+    </div>
+    <table class="table table-hover">
+    <thead>
+    <tr><th>Nombre</th></tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="u in users |filter:search" ng-click="getData(u, $index)">
+      <td>{{u.nombreUsuario}} {{u.apellidoUsuario}}</td>
+      <td>
+        <div class="btn-group pull-right">
+          <button type="button" class="btn btn-danger" ng-click="modalEliminar(u,$index)" title="Borrar Usuario"><i class="fa fa-trash"></i></button>
+        </div>    
+      </td>
+    </tr>
+    </tbody>
+    </table> 
+
+</div>
+<div class="col-md-6 col-sm-6 col-xs-12" ng-hide="!user">
+<h3 style="margin-top:55px" class="text-center"> Datos del Usuario</h3>
+    <table class="table table-hover">
+    <tr>
+    	<th>Nombre Usuario</th> <th>Apellido(s) Usuario</th>
+    </tr>
+    <tr>
+    	<td><input type="text" ng-model="user.nombreUsuario" /></td> <td><input type="text" ng-model="user.apellidoUsuario" /></td>
+    </tr>
+    <tr>
+    	<th colspan="2">Correo Usuario</th> 
+    </tr>
+    <tr>
+    	<td colspan="2"><input type="text" ng-model="user.correo" size="35"/></td> 
+    </tr>
+    <tr>
+    	<th colspan="2">Tipo Usuario</th>
+    </tr>
+    <tr>
+    	<td><select ng-model="user.tipo" ng-options="opTipo.nombreTipoUsuario for opTipo in opcionesTipo"></select></td>
+    </tr>
+    <tr>
+    	<td><button class="btn btn-success" ng-click="modalActualizar(user)">Actualizar Usuario</button></td><td></td>
+    </tr>
+    </table> 
+
+</div>
+
+</div>

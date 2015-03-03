@@ -232,7 +232,7 @@
 					$nombre = $datos['tema']['nombre'];
 					if($mysqli->query("UPDATE tema 
 											set nombreTema = '$nombre' 
-											where idTema = $id")===true){
+											where idTema = $id")){
 						echo 1;
 					}
 					else
@@ -251,7 +251,7 @@
 					$nombre = $datos['subtema']['nombre'];
 					if($mysqli->query("UPDATE subtema 
 						set nombreSubtema = '$nombre' 
-						where idSubtema = $id")===true){
+						where idSubtema = $id")){
 						echo 1;
 					}
 					else
@@ -328,6 +328,38 @@
 				echo "Error 516-1";
 			}
 			mysqli_close($mysqli);
+			break;
+		// Actualizar información de usuario
+		case 17:
+			if (isset($datos["usuario"])) 
+			{
+				$id = $datos["usuario"]["idUsuario"];
+				$nombre = $datos["usuario"]["nombreUsuario"];
+				$apellido = $datos["usuario"]["apellidoUsuario"];
+				$correo = $datos["usuario"]["correo"];
+				$tipo = $datos["usuario"]["tipo"]["idTipoUsr"];
+				$result = mysqli_query($mysqli, "update user set nombreUsuario = '$nombre', apellidoUsuario = '$apellido', correo = '$correo', idTipoUsr = $tipo where idUsuario = $id");
+				if($result)			
+					echo 1;	
+				else
+					echo "Error 517-2 updating user ". $mysqli->error;					
+			}
+			else
+				echo "Error 517";
+			break;
+		//Eliminar usuario
+		case 18:
+			if (isset($datos["usuario"])) 
+			{
+				$id = $datos["usuario"]["idUsuario"];
+				$result = mysqli_query($mysqli, "delete from user where idUsuario = $id");
+				if($result)
+					echo(1);
+				else
+					echo "Error 517-2 deleting user ". $mysqli->error;					
+			}
+			else
+				echo("Error 518");
 			break;
 	}
 ?>

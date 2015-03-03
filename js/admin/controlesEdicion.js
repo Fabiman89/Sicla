@@ -1,3 +1,108 @@
+	siclaApp.controller('edtiUsrCtrl', ['$scope', '$http', '$modal', function($scope, $http, $modal) {					
+		var abrir = true;
+		$http.post('data/consultas/consultasAdmin.php',{'sentencia':26}).success(function(usr) {
+			$scope.users = usr;
+		});
+		
+		$http.post('data/consultas/consultasAdmin.php',{'sentencia':19}).success(function(tp) {
+			$scope.opcionesTipo = tp;
+		});
+		
+		$scope.getData = function(usr, index) {
+			if(abrir)
+			{			
+				$scope.user = angular.copy(usr);
+				$scope.user.index = index;
+				for (var i=0; i<$scope.opcionesTipo.length; i++)
+					if(usr.nombreTipoUsuario == $scope.opcionesTipo[i].nombreTipoUsuario)
+						$scope.user.tipo = $scope.opcionesTipo[i];
+			}
+		};
+		
+		$scope.modalActualizar = function(data, index) {
+			var modalInstance = $modal.open({
+				templateUrl : "partials/admin/modals/modalActualizar.html",
+				controller : ModalCtrl,
+				size : "md",
+				resolve : {
+					val : function() { 
+						var arr = [];
+						arr.push(data,data.index);
+						return arr;
+					}
+				}
+			});
+			
+			modalInstance.result.then(function(arr) {				
+				if (arr != undefined)
+				{			
+	
+					var i = arr[1];	
+					delete arr[0].index;				
+					$scope.users[i] = angular.copy(arr[0]);					
+				}
+				$scope.user = undefined;
+			});
+		};
+		
+		$scope.modalEliminar = function(data, index) {	
+			abrir = false;		
+			var modalInstance = $modal.open({
+				templateUrl : "partials/admin/modals/modalEliminar.html",
+				controller : ModalCtrl,
+				size : "md",
+				resolve : {
+					val : function() { 
+						var arr = [];
+						arr.push(data,index);
+						return arr;
+					}
+				}
+			});
+			
+			modalInstance.result.then(function(arr) {
+				abrir = true;
+				if (arr != undefined)
+				{
+					var i = arr[1];
+					$scope.users.splice(i, 1);					
+				}								
+			});
+		};
+		
+		var ModalCtrl = function($scope, $http, $modalInstance, val) {
+			$scope.usr = val[0];
+			$scope.guardarUsuario = function() {
+				$http.post('data/actualizar/actualizacionAdmin.php',{'sentencia':17, 'usuario': val[0]}).success(function(data) {
+					if(data == 1)
+						$modalInstance.close(val);	
+					else
+					{
+						$scope.alerta.mensaje = "Error al actualizar";
+						$scope.alerta.tipo = "alert alert-danger";
+					}
+				});								
+			};
+					
+			$scope.eliminarUsuario = function() {
+				$http.post('data/actualizar/actualizacionAdmin.php',{'sentencia':18, 'usuario': val[0]}).success(function(data) {
+					if(data == 1)
+						$modalInstance.close(val);	
+					else
+					{
+						$scope.alerta.mensaje = "Error al eliminar";
+						$scope.alerta.tipo = "alert alert-danger";
+					}
+				});
+			};
+			
+			$scope.cancel = function() {
+				$modalInstance.close();				
+			};
+		};
+		
+	}]);
+
   siclaApp.controller('editMedioCtrl', ['$scope','$http','$modal',function($scope,$http,$modal) {
     $scope.editAviable = true;
     $scope.medio = {};

@@ -808,7 +808,7 @@
 			for($i = 0; $i < count($notas); $i++)
 			{				
 				$nota = $notas[$i]["idNota"];
-				$sql = "SELECT n.tituloNota as 'Título', n.fecha as Fecha, n.sintesis as 'Síntesis', n.urlNota as URL, tp.nombreTipoNota as 'Tipo de nota', p.nombreProtagonista as Protagonista, m.nombreMedio as Medio, a.nombreArea as 'Área', au.nombreAutor as Autor
+				$sql = "SELECT n.tituloNota as 'Título', n.fecha as Fecha, n.sintesis as 'Síntesis', n.urlNota as URL, tp.nombreTipoNota as 'Tipo de nota', p.nombreProtagonista as Protagonista, m.nombreMedio as Medio, a.nombreArea as 'Área', au.nombreAutor as Autor, t.nombreTema as Tema, sb.nombreSubtema as Subtema, n.Clasificacion as Clasificacion
 										from Nota n, tipoNota tp, trata_de td, subtema sb, tema t, Area a, colabora_en ce, Medio m, notaProtagonista np, cargoProtagonista cp, Protagonista p, Autor au
 										where n.idTipoNota = tp.idTipoNota and n.idCE = ce.idCE and ce.idMedio = m.idMedio and np.idNota = n.idNota and np.tipoProtagonista = 1 and np.idCP = cp.idCP and cp.idProtagonista = p.idProtagonista and ce.idAutor = au.idAutor
 										and td.idNota_ = n.idNota and td.idSubtema = sb.idSubtema and sb.idTema = t.idTema and t.idArea = a.idArea and n.idNota = $nota";

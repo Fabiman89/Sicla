@@ -1,0 +1,19 @@
+<form ng-submit="eliminar()">
+<div class="modal-header">
+   <h3 class="text-center">Confirmación</h3>
+</div>
+<div class="modal-body">
+    <div class="form-group">
+		¿Seguro que desea actualizar al siguiente usuario?
+		<br />
+		<label style="display: block;text-align: center;">{{usr.nombreUsuario}} {{usr.apellidoUsuario}}</label>
+    </div>     
+     
+</div>
+<div class="modal-footer">
+	<button type="submit" class=" btn btn-primary btn-md btn-block" ng-click="guardarUsuario()">Actualizar</button>
+	<button class=" btn btn-primary btn-md btn-block" ng-click="cancel()">Cancelar</button>
+	<div class="{{alerta.tipo}}" id="mensajes" ng-show="alerta">
+	  {{alerta.mensaje}}
+	</div>
+</div>

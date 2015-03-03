@@ -41,9 +41,17 @@
             <li ng-class='{"active" : tog==8}' ng-click="tog=8">
             	<a href="#/altas/recientes"><i class="fa fa-eye"></i> Notas Recientes</a>
             </li>
-            <li ng-class='{"active":tog==9}' ng-click="tog=9">
-                <a href="#/altas/administradores"><i class="fa fa-user"></i> Nuevo Administrador</a>
-            </li>  
+            <li>
+	            <a href="javascript:;" data-toggle="collapse" data-target="#demo1"><i class="fa fa-user"></i> Usuarios <i class="fa fa-fw fa-caret-down"></i></a>
+		            <ul id="demo1" class="collapse">
+			            <li ng-class='{"active":tog==9}' ng-click="tog=9">
+			                <a href="#/altas/administradores"><i class="fa fa-user"></i> Nuevo Usuario</a>
+			            </li>
+			            <li ng-class='{"active":tog==16}' ng-click="tog=16">
+			                <a href="#/editar/usuarios"><i class="fa fa-user"></i> Administrar Usuarios</a>
+			            </li>
+		            </ul> 
+			</li> 
             <li>
                 <a href="javascript:;" data-toggle="collapse" data-target="#demo"><i class="fa fa-pencil-square-o"></i> Editar Registros <i class="fa fa-fw fa-caret-down"></i></a>
                 <ul id="demo" class="collapse">

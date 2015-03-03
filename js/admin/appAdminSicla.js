@@ -50,6 +50,9 @@ siclaApp.config(['$routeProvider',
     }).when('/editar/otros', {
         templateUrl: 'partials/admin/editar/editarSeccion.html',
         controller: 'editSeccionCtrl'
+    }).when('/editar/usuarios', {
+        templateUrl: 'partials/admin/editar/editarUsuario.html',
+        controller: 'edtiUsrCtrl'
     }).otherwise({
         redirectTo: '/altas/nota'
       });
