@@ -297,29 +297,121 @@ $scope.pushToTable(1);
         //Modal Pie
         $scope.genPie = function(datos){
             var modalInstance = $modal.open({ 
-                templateUrl: 'partials/admin/modals/reportes/reportePie.html',
-                controller: pieCtrl,
+                templateUrl: 'partials/admin/modals/reportes/reporteGrafica.html',
+                controller: grafCtrl,
                 size: 'lg',
                 resolve: {
-                data: function() { return datos;}
+                data: function() { 
+                		var arr = [];
+                		arr.push(datos,1);
+                		return arr;
+                	}
+                }
+             });
+        };
+        
+        $scope.genBar = function(datos){
+            var modalInstance = $modal.open({ 
+                templateUrl: 'partials/admin/modals/reportes/reporteGrafica.html',
+                controller: grafCtrl,
+                size: 'lg',
+                resolve: {
+                data: function() { 
+                		var arr = [];
+                		arr.push(datos,2);
+                		return arr;
+                	}
                 }
              });
         };
 
-        var pieCtrl = function($scope, $modalInstance, data){
+        var grafCtrl = function($scope, $modalInstance, data){
             var helper = [], i, j, posibles = [], aux, aux1;
+            var op = angular.copy(data[1]);
+            data = data[0];
             $scope.opCP = [];
             
+            if(op==1)
+            	$scope.texto = "Grafica de Pie";
+            else 
+            	$scope.texto = "Grafica de Barras";
+            
             $scope.genObj = function(dato){
-                var auxo = {}, datos = [];
-                $scope.opCP = [];  
-                $scope.graf = 1;              
+                var auxo = {}, datos = [], ver = false;
+                $scope.graf = 1;  
+                if ($scope.opCP.length > 0)				
+                	$scope.opCP = [];
+                else 
+					ver = true;                	                                                                        
                 for(i=0;i<helper.length;i++)
                 {
                     auxo.total = helper[i]['total'];
                     auxo[dato] = helper[i][dato];
-                    datos.push(auxo);
+                    datos.push(angular.copy(auxo));
                 }
+                if (op == 2)
+                {	
+                	if(ver)
+                		setTimeout(function() {
+                			AmCharts.makeChart("chartdiv", {
+                			   type: "serial",
+                			   dataProvider: datos,
+                			   categoryField: dato,
+                			
+                			   graphs: [{
+                				   type: "column",
+                				   title: "Notas",
+                				   valueField: "total",
+                				   lineAlpha: 0,
+                				   fillColors: "#ADD981",
+                				   fillAlphas: 0.8,
+                				   balloonText: "[[title]] in [[category]]:<b>[[value]]</b>"
+                			   }]
+                			});
+                		}, 1000);	  
+                	else                	
+		                AmCharts.makeChart("chartdiv", {
+		                   type: "serial",
+		                   dataProvider: datos,
+		                   categoryField: dato,
+		                
+		                   graphs: [{
+		                	   type: "column",
+		                	   title: "Notas",
+		                	   valueField: "total",
+		                	   lineAlpha: 0,
+		                	   fillColors: "#ADD981",
+		                	   fillAlphas: 0.8,
+		                	   balloonText: "[[title]] in [[category]]:<b>[[value]]</b>"
+		                   }]
+		                }); 
+	                /*"exportConfig":{	
+	                  menuItems: [{
+	                  icon: '/lib/3/images/export.png',
+	                  format: 'png'	  
+	                  }]  
+	                }*/
+                }else
+                {                   
+	            	if(ver)
+	            		setTimeout(function() {
+	            			AmCharts.makeChart("chartdiv", {
+	            			    "type": "pie",
+	            				"theme": "none",
+	            			    "dataProvider": datos,
+	            			    "valueField": "total",
+	            			    "titleField": dato                	
+	            			});
+	            		}, 1000);
+	            	else
+	            		AmCharts.makeChart("chartdiv", {
+	            		    "type": "pie",
+	            			"theme": "none",
+	            		    "dataProvider": datos,
+	            		    "valueField": "total",
+	            		    "titleField": dato                	
+	            		});
+                }                        
             };
 
             for(i=0; i<data.length; i++)
@@ -341,7 +433,7 @@ $scope.pushToTable(1);
                     for (j=0;j<aux.length;j++)
                         if(posibles.indexOf(aux[j]) < 0)
                             posibles.push(aux[j]);
-                }
+                }				
                 if (posibles.length > 1)
                     $scope.opCP = posibles;
                 else
