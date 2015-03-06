@@ -298,7 +298,10 @@
                    <br>               
                   </div>
               </div> 
-
+			  <div class="col-md-12" ng-if="elemento.tipo==5"> <!-- Row para Imagen --> 
+			      <div class="col-md-12 "><img ng-src="{{elemento.data}}" >			                  
+			      </div>
+			  </div> 
             </div>  
         </div>  
     </div>
@@ -309,10 +312,11 @@
       <button class="btn btn-success" ng-click="genPie(previewArray)" ><span class="fa fa-pie-chart"></span>   Grafica de Pie  </button>
       <button class="btn btn-success" ng-click="genBar(previewArray)" ><span class="fa fa-bar-chart"></span>  Grafica de Barras </button>
     </div>
+    <div id="prueba"></div>
       <!--<pre>{{reporte | json}}</pre>
       <pre>{{sup | json}}</pre>-->
     </div>
-
+	</div>
     <!--<button class="btn btn-success" ng-click="saveToPDF()">Guardar en pdf</button>-->
   </div>
 

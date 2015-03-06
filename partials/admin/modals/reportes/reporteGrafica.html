@@ -10,12 +10,12 @@
   <div ng-show="err">
     <label class="col-md-8 control-label text-center"><em>No hay elementos a graficar</em></label><br>
   </div>
-  <div id="chartdiv" style="width: 640px; height: 400px; overflow: auto;" ng-show="graf">
+  <div id="chartdiv" style="width: 100%; height: 400px; overflow: auto;" ng-show="graf">
   </div>
 </div>
 <div class="modal-footer">
   {{report}}
-  <button ng-show="opCP.length<1 && !err" class=" btn btn-primary btn-md btn-block" ng-click=""  >Guardar</button>
+  <button ng-show="opCP.length<1 && !err" class=" btn btn-primary btn-md btn-block" ng-click="guardar()"  >Guardar</button>
   <button ng-show="opCP.length>1" class=" btn btn-primary btn-md btn-block"  ng-click="genObj(seleccion)"  >Generar Gráfica</button>
   <button ng-show="err" class=" btn btn-primary btn-md btn-block"  ng-click="cancel()"  >Regresar</button>
 </div>
