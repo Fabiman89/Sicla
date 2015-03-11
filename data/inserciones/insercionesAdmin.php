@@ -88,7 +88,7 @@ switch ($instruccion){
 			echo ("ERROR 403");
 		}
 		$mysqli->query("insert into colabora_en values (null,$idAutor, $idMedio)");
-		$query = $mysqli->query("SELECT a.idAutor, a.nombreAutor, c.idCE FROM Autor a, colabora_en c WHERE c.idMedio=$idMedio and c.idAutor = a.idAutor order by a.nombreAutor desc");
+		$query = $mysqli->query("SELECT a.idAutor, a.nombreAutor, c.idCE FROM Autor a, colabora_en c WHERE c.idMedio=$idMedio and c.idAutor = a.idAutor order by a.nombreAutor asc");
 		$arr = array();
 		while ($row = mysqli_fetch_assoc($query)) 
 				$arr[] = $row;
@@ -100,7 +100,7 @@ switch ($instruccion){
 	case 4:
 		$nombre = $sentencia['nombre'];
 		$mysqli->query("insert into tipoNota values (null,'$nombre')");
-		$result = $mysqli->query("select * from tipoNota order by nombreTipoNota desc");
+		$result = $mysqli->query("select * from tipoNota order by nombreTipoNota asc");
 		$arr = array();
 		if ($result)
 		{
@@ -117,7 +117,7 @@ switch ($instruccion){
 	case 5:
 		$nombre = $sentencia['nombre'];
 		$mysqli->query("insert into seccion values (null,'$nombre')");
-		$result = $mysqli->query("select * from seccion order by nombreSeccion desc");
+		$result = $mysqli->query("select * from seccion order by nombreSeccion asc");
 		$arr = array();
 		if ($result)
 		{
@@ -139,7 +139,7 @@ switch ($instruccion){
 	$mysqli->query("insert into Protagonista values(null,'$nombre','$gen')");
 	$id = mysqli_insert_id($mysqli);
 	$mysqli->query("insert into cargoProtagonista values(null,$cargo,$id)");
-	$result = $mysqli->query("select * from Protagonista order by nombreProtagonista desc");
+	$result = $mysqli->query("select * from Protagonista order by nombreProtagonista asc");
 	$arr = array();
 	if($result)
 	{
@@ -160,7 +160,7 @@ switch ($instruccion){
 		$mysqli->query("insert into Cargo values (null,'$nombre')");
 		$cargo = mysqli_insert_id($mysqli);
 		$mysqli->query("insert into cargoProtagonista values (null,$cargo,$prot)");
-		$result = $mysqli->query("select ca.*, cp.idCP from Cargo ca, cargoProtagonista cp where cp.idProtagonista=$prot and cp.idCargo = ca.idCargo order by ca.nombreCargo desc");
+		$result = $mysqli->query("select ca.*, cp.idCP from Cargo ca, cargoProtagonista cp where cp.idProtagonista=$prot and cp.idCargo = ca.idCargo order by ca.nombreCargo asc");
 		$arr = array();
 		if($result)
 		{
@@ -228,7 +228,7 @@ switch ($instruccion){
 		mysqli_close($mysqli);
 		break;	
 
-//  (ERROR 411)
+//  Subtema (ERROR 411)
 	case 11:
 		$datos = $sentencia['subtema'];
 		$tema = $datos['tema']['idTema'];

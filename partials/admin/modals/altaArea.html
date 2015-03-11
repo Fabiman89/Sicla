@@ -1,0 +1,19 @@
+<br>
+<div class="modal-heading">
+  <h3 class="text-center">AREAS</h3>
+</div>
+<div class="modal-body">
+  <form name="formArea"class="" role="form">
+  <hr>
+    <div class="form-group">
+      <label>Nueva Area</label>
+       <input ng-model="area.nombre" type="text" class="form-control" placeholder="Nueva Area" required>
+    </div>
+    <br>      
+  </form>
+</div>
+<div class="modal-footer">
+  <button class=" btn btn-primary btn-md btn-block" ng-disabled="formArea.$invalid" ng-click="updateArea(area)">Guardar</button>
+</div>
+
+

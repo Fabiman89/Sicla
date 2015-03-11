@@ -384,9 +384,15 @@ $scope.pushToTable(1);
             		setTimeout(function() {
             			chart = AmCharts.makeChart("chartdiv", {
             			   type: "serial",
+                           amExport : {
+                                top     : 0,
+                                right       : 0,
+                                exportJPG   : true,
+                                exportPNG   : true,
+                                exportSVG   : true
+                            },
             			   dataProvider: datos,
             			   categoryField: dato,
-            			
             			   graphs: [{
             				   type: "column",
             				   title: "Notas",
@@ -402,11 +408,18 @@ $scope.pushToTable(1);
                 {                   
             		setTimeout(function() {
             			chart = AmCharts.makeChart("chartdiv", {
-            			    "type": "pie",
-            				"theme": "none",
-            			    "dataProvider": datos,
-            			    "valueField": "total",
-            			    "titleField": dato	            			                  	
+            			    type: "pie",
+            				theme: "none",
+            			    dataProvider: datos,
+            			    valueField: "total",
+                            amExport : {
+                                top     : 0,
+                                right       : 0,
+                                exportJPG   : true,
+                                exportPNG   : true,
+                                exportSVG   : true
+                            },
+            			    titleField: dato	            			                  	
             			});
             		}, 1000);	            	
                 }                        
