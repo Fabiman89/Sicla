@@ -82,6 +82,11 @@ function celdaNotas($txt1,$txt2){
 	$this->SetFont('Arial','',12);
 	
 }
+
+function SetImages($data)
+{
+	$this->Image('../../'.$data["data"], null, null, 0, 0);	
+}
 		function SetNotes($array){
 				
 				$tbls = $array['data'];
@@ -165,6 +170,9 @@ for($i = 0;$i<count($bigArray);$i++){
 		$pdf->SetTxt($bigArray[$i]);
 	}if($bigArray[$i]['tipo']==4){
 		$pdf->SetNotes($bigArray[$i]);
+		$pdf->Ln();
+	}if($bigArray[$i]['tipo']==5){
+		$pdf->SetImages($bigArray[$i]);
 		$pdf->Ln();
 	}
 }
