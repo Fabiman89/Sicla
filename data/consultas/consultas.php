@@ -104,7 +104,7 @@ switch ($instruccion){
 				}
 				$result = mysqli_query($mysqli,"SELECT n.idNota, n.fecha, n.imagenNota as img8col, n.sintesis, n.texto, p.nombreProtagonista, t.nombreTipoNota as tipo, te.nombreTema, su.nombreSubtema, n.tituloNota, m.urlMedio as idPeriodico, a.nombreAutor as autor, 
 						m.nombreMedio, m.imagenMedio as imagen
-				from Nota n,colabora_en ce, Medio m, Autor a ,tipoNota t, tema te, subtema su, Protagonista p,  trata_de td , notaprotagonista np,cargoprotagonista cp
+				from Nota n,colabora_en ce, Medio m, Autor a ,tipoNota t, tema te, subtema su, Protagonista p,  trata_de td , notaProtagonista np,cargoProtagonista cp
 				where ce.idCE = n.idCE 
 				and ce.idMedio = m.idMedio 
 				and m.idMedio = ce.idMedio 
@@ -124,7 +124,7 @@ switch ($instruccion){
 				$result=mysqli_query($mysqli,
 				"SELECT n.idNota, n.fecha, n.imagenNota as img8col, n.sintesis, n.texto, t.idTipoNota as tipo,  n.tituloNota, m.urlMedio as idPeriodico, a.nombreAutor as autor, 
 						m.nombreMedio, m.imagenMedio as imagen
-				from Nota n,colabora_en ce, Medio m, Autor a ,tipoNota t, tema te, subtema su, Protagonista p,  trata_de td , notaprotagonista np,cargoprotagonista cp
+				from Nota n,colabora_en ce, Medio m, Autor a ,tipoNota t, tema te, subtema su, Protagonista p,  trata_de td , notaProtagonista np,cargoProtagonista cp
 				where ce.idCE = n.idCE 
 				and ce.idMedio = m.idMedio 
 				and m.idMedio = ce.idMedio 

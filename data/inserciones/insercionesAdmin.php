@@ -44,8 +44,7 @@ switch ($instruccion){
 		echo $nota;	
 	}
 	else {
-		#echo "insert into Nota values(null,'$titulo','$fecha',$pagina,$tipo,'$pos','$sintesis','$texto',$per,'$url',null,$municipio,$usr,$autor,$seccion)";
-		echo $mysqli->error;
+		echo "error de insercion: ".$mysqli->error;
 	}
 	mysqli_close($mysqli);
 	break; 
@@ -86,9 +85,13 @@ switch ($instruccion){
 			$idAutor = $dato['autor']['idAutor'];
 		}else{
 			echo ("ERROR 403");
+			break;
 		}
 		$mysqli->query("insert into colabora_en values (null,$idAutor, $idMedio)");
-		$query = $mysqli->query("SELECT a.idAutor, a.nombreAutor, c.idCE FROM Autor a, colabora_en c WHERE c.idMedio=$idMedio and c.idAutor = a.idAutor order by a.nombreAutor desc");
+		$query = $mysqli->query("SELECT a.idAutor, a.nombreAutor,a.generoAutor,c.idMedio, c.idCE 
+			FROM Autor a, colabora_en c 
+			WHERE c.idAutor = a.idAutor 
+			order by nombreAutor asc");
 		$arr = array();
 		while ($row = mysqli_fetch_assoc($query)) 
 				$arr[] = $row;

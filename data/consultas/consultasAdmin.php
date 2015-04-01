@@ -39,11 +39,9 @@ switch ($instruccion){
 		break;
 // AUTORES (ERROR 303)
 	case 3:
-		$idMedio = $sentencia['id'];
 		$result=mysqli_query($mysqli,"SELECT a.idAutor, a.nombreAutor,a.generoAutor,c.idMedio, c.idCE 
 			FROM Autor a, colabora_en c 
-			WHERE c.idMedio= $idMedio 
-			and c.idAutor = a.idAutor 
+			WHERE c.idAutor = a.idAutor 
 			order by nombreAutor asc");
 		$arr = array();
 		if($result) {
@@ -93,12 +91,10 @@ switch ($instruccion){
 		break;
 // CARGO PROTAGONISTA (ERROR 306)
 	case 6:
-		$pro = $sentencia['protagonista'];
 		$result=mysqli_query($mysqli,
 		"SELECT ca.*, pr.idCP, pr.idProtagonista 
 		 FROM cargoProtagonista pr, Cargo ca 
-		 WHERE pr.idProtagonista=$pro 
-		 and pr.idCargo = ca.idCargo
+		 WHERE pr.idCargo = ca.idCargo
 		 order by nombreCargo asc");
 		$arr = array();
 		if($result) {
@@ -131,11 +127,10 @@ switch ($instruccion){
 		break;
 // TEMAS (ERROR 308)
 	case 8:
-		$area = $sentencia['area'];
 		$result=mysqli_query($mysqli,
 		"SELECT * 
 		 FROM tema 
-		 WHERE idArea = $area order by nombreTema asc");
+		 order by nombreTema asc");
 		$arr = array();
 		if($result) {
 			 while($row = $result->fetch_assoc()) {
@@ -150,11 +145,10 @@ switch ($instruccion){
 		break;
 // SUBTEMAS (ERROR 309)
 	case 9:
-		$tema = $sentencia['tema'];
-		$result=mysqli_query($mysqli,
-		"SELECT * 
-		 FROM subtema 
-		 WHERE idTema = $tema order by nombreSubtema asc");
+		 $result=mysqli_query($mysqli,
+		 "SELECT * 
+		  FROM subtema 
+		  order by nombreSubtema asc");
 		$arr = array();
 		if($result) {
 			 while($row = $result->fetch_assoc()) {
@@ -186,11 +180,10 @@ switch ($instruccion){
 		break;	
 // ESTADOS (ERROR 311)
 	case 11:
-		$pais = $sentencia['pais'];
 		$result=mysqli_query($mysqli,
 		"SELECT * 
 		 FROM estado 
-		 WHERE idPais = $pais order by nombreEstado asc");
+		 order by nombreEstado asc");
 		$arr = array();
 		if($result) {
 			 while($row = $result->fetch_assoc()) {
@@ -205,11 +198,10 @@ switch ($instruccion){
 		break;
 // MUNICIPIOS (ERROR 312)
 	case 12:
-		$estado = $sentencia['estado'];
 		$result=mysqli_query($mysqli,
 		"SELECT * 
 		 FROM municipio 
-		 WHERE idEstado = $estado order by nombreMunicipio asc");
+		 order by nombreMunicipio asc");
 		$arr = array();
 		if($result) {
 			 while($row = $result->fetch_assoc()) {
@@ -368,9 +360,12 @@ switch ($instruccion){
 
 //  ENCONTRAR NOTAS  (ERROR 318)
 			case 18:
-				$result = $mysqli->query("SELECT n.idNota, n.tituloNota as titulo, n.fecha, m.nombreMedio, t.nombreTipoNota as tipo, u.nombreUsuario as usuario 
-							from Nota n, Medio m, user u, tipoNota t, colabora_en ce 
-							where n.idCE = ce.idCE and ce.idMedio = m.idMedio and n.idAdmin = u.idUsuario and n.idTipoNota = t.idTipoNota 
+				$result = $mysqli->query("SELECT n.idNota, n.tituloNota as titulo, n.fecha, t.nombreTipoNota as tipo, u.nombreUsuario as usuario, m.nombreMedio
+							from Nota n 
+							Left Join user u on n.idAdmin = u.idUsuario
+							Left Join tipoNota t on n.idTipoNota = t.idTipoNota
+							Join colabora_en ce on n.idCE = ce.idCE
+							Join Medio m on ce.idMedio = m.idMedio
 							order by n.idNota desc");
 				$arr = array();
 				if($result)
