@@ -1,5 +1,5 @@
 'use strinct';
-siclaApp.factory("Request",['$http','$q',function($http,$q){
+app.factory("Request",['$http','$q',function($http,$q){
 	var servicio = {};
 	var opcionesMedios = 1;
 	var opcionesProtagonista = 1;

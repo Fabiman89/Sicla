@@ -82,6 +82,11 @@ function celdaNotas($txt1,$txt2){
 	$this->SetFont('Arial','',12);
 	
 }
+
+function SetImages($data)
+{
+	$this->Image('../../'.$data["data"], null, null, 0, 0);	
+}
 		function SetNotes($array){
 				
 				$tbls = $array['data'];
@@ -99,8 +104,14 @@ function celdaNotas($txt1,$txt2){
 						$this->Ln();
 						$this->celdaNotas("Protagonista   ",$tbl['Protagonista']);
 						$this->Ln();
-						$this->celdaNotas("Area   ",$tbl['Área']);
+						$this->celdaNotas("Clasificación   ",$tbl['Clasificación']);
 						$this->Ln();
+						$this->celdaNotas("Área   ",$tbl['Área']);
+						$this->Ln();
+						$this->celdaNotas("Tema   ",$tbl['Tema']);
+						$this->Ln();						
+						$this->celdaNotas("Subtema   ",$tbl['Subtema']);
+						$this->Ln();						
 						$this->SetFillColor(224,235,255);
 						$this->Cell(200,7,"Sintesis:",'TLRB',0,'C',true);
 						$this->Ln();
@@ -159,6 +170,9 @@ for($i = 0;$i<count($bigArray);$i++){
 		$pdf->SetTxt($bigArray[$i]);
 	}if($bigArray[$i]['tipo']==4){
 		$pdf->SetNotes($bigArray[$i]);
+		$pdf->Ln();
+	}if($bigArray[$i]['tipo']==5){
+		$pdf->SetImages($bigArray[$i]);
 		$pdf->Ln();
 	}
 }

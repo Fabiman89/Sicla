@@ -386,7 +386,6 @@ $scope.pushToTable(1);
             			   type: "serial",
             			   dataProvider: datos,
             			   categoryField: dato,
-            			
             			   graphs: [{
             				   type: "column",
             				   title: "Notas",
@@ -402,11 +401,11 @@ $scope.pushToTable(1);
                 {                   
             		setTimeout(function() {
             			chart = AmCharts.makeChart("chartdiv", {
-            			    "type": "pie",
-            				"theme": "none",
-            			    "dataProvider": datos,
-            			    "valueField": "total",
-            			    "titleField": dato	            			                  	
+            			    type: "pie",
+            				theme: "none",
+            			    dataProvider: datos,
+            			    valueField: "total",
+            			    titleField: dato	            			                  	
             			});
             		}, 1000);	            	
                 }                        
