@@ -25,7 +25,6 @@
         $scope.nota={};  
         $scope.keep = {};
         $scope.notaCopy={};   
-        //$scope.nota.fecha = date();
         $scope.auxiliarST = [0];
         $scope.auxiliarPT = [0];
         $scope.nota.pagina = 1;
@@ -38,8 +37,6 @@
         $scope.opcionesSubtema = {};
         $scope.opcionesMedios = {};
         $scope.cargoValido = false;
-        //$scope.opcionesCargo ={};
-        //$scope.keep.medio = false;
         $scope.medioRecuerdo=1;
         $scope.opcionesSeccion = {};
         $scope.opcionesArea = {};
@@ -52,38 +49,38 @@
         $scope.permitir = false;
         $scope.master = angular.copy($scope.nota);         
 
-$scope.validarCargo = function(id){
-  $scope.getCargo(id);
-  $scope.cargoValido = true;
-};
+		$scope.validarCargo = function(id){
+		  $scope.getCargo(id);
+		  $scope.cargoValido = true;
+		};
+		
+		$scope.invalidaCargo = function(){
+		  $scope.cargoValido = false;
+		};
 
-$scope.invalidaCargo = function(){
-  $scope.cargoValido = false;
-};
 
-
- $scope.changeType = function(s){
-  if(s==1)
-    {$scope.cls = "fa fa-square-o";}
-  else
-    {$scope.cls = "fa fa-check-square-o";}
- }
+		$scope.changeType = function(s){
+		  if(s==1)
+		    $scope.cls = "fa fa-square-o";
+		  else
+		    $scope.cls = "fa fa-check-square-o";
+		}
  	//Opciones para Tipos de Nota
-		 	localData.getTipoNota().then(function(data){
-		 	  $scope.opcionesNota = data;
-		 	});
+	 	localData.getTipoNota().then(function(data){
+	 	  $scope.opcionesNota = data;
+	 	});
 
     // OPCIONES PARA MEDIOS
-          localData.getMedio().then(function(dataMedios){
-            $scope.opcionesMedios = dataMedios;
-          });
+		localData.getMedio().then(function(dataMedios){
+			$scope.opcionesMedios = dataMedios;
+		});
 
     // OPCIONES PARA AUTOR
-            $scope.getAutor=function(medio){
-              localData.getAutor(medio).then(function(dataAutores){
-                  $scope.opcionesAutores = dataAutores;
-              });
-            }
+        $scope.getAutor=function(medio){
+          localData.getAutor(medio).then(function(dataAutores){
+              $scope.opcionesAutores = dataAutores;
+          });
+        }
 
     // SECCIONES 
 			  localData.getSeccion().then(function(dataSecciones){
@@ -355,20 +352,29 @@ $scope.invalidaCargo = function(){
           
           modalInstance.result.then(function(data) {
               if (data != undefined)
-                $scope.opcionesNota = data;
+              {
+              	var aux = data[1], i;
+                $scope.opcionesNota = data[1];
+                for (i=0; i<aux.length; i++)
+                	if(aux[i].nombreTipoNota == data[0].nombre)	
+                	{
+                		$scope.nota.tipo = aux[i];
+                		break;
+                	}
+              }
           });
         };
 
         var tipoModalCtrl = function($scope,$modalInstance){
-          $http.post("data/consultas/consultasAdmin.php",{'sentencia':1}).success(function(data){
+          localData.getTipoNota().then(function(data){
             $scope.opcionesNotas = data;
-            console.log($scope.opcionesNotas);
           }); 
             
             $scope.updatetipo = function(tp){
-              $http.post("data/inserciones/insercionesAdmin.php",{'sentencia':4,'nombre':tp.nombre}).success(function(data){
-                console.log(data);
-                $modalInstance.close(data);        
+              localData.insertTipoNota(tp).then(function(data)
+              {
+              	var aux = [tp, data];	
+                $modalInstance.close(aux);        
               });
             };
             
@@ -397,7 +403,6 @@ $scope.invalidaCargo = function(){
 
         var modalVistaCtrl = function($scope,$modalInstance, notaView){
           $scope.notaView = notaView;
-          console.log($scope.notaView);
             $scope.cancel = function () {
               $modalInstance.close();
             };
@@ -499,19 +504,27 @@ $scope.invalidaCargo = function(){
           
           modalInstance.result.then(function(data) {
               if(data != undefined)
-                $scope.opcionesSeccion = data;        
+              {
+              	var aux = data[1], i;              	
+                $scope.opcionesSeccion = data[1];
+                for(i=0; i<aux.length; i++)
+                	if(aux[i].nombreSeccion == data[0].nombre)
+                	{
+                		$scope.nota.seccion = aux[i];
+                		break;
+                	}        
+              }
           });
         }
         var seccionModalCtrl = function($scope,$modalInstance){
-          $http.post("data/consultas/consultasAdmin.php",{'sentencia':4}).success(function(data){
+          localData.getSeccion().then(function(data){
             $scope.opcionesSeccion = data;
-            console.log(data);
           }); 
           
             $scope.updateSeccion = function(sec) {
-              $http.post('data/inserciones/insercionesAdmin.php',{'sentencia':5,'nombre':sec.nombre}).success(function(data) {
-                console.log(data);
-                $modalInstance.close(data);
+              localData.insertSeccion(sec).then(function(data) {
+              	var aux = [sec, data];
+                $modalInstance.close(aux);
               });
             };
 
@@ -543,34 +556,31 @@ $scope.invalidaCargo = function(){
 						$scope.nota.protagonista = data[j];        
 				for (i = 0; i< $scope.nota.otrosPT.length; i++)
 					if (i != index)
-						for (j=0; j<data.length; j++)
+						for (j=0; j<data.length; j++)	
 							if (data[j].idProtagonista == auxi[i].idProtagonista)           								
 								$scope.nota.otrosPT[i] = data[j];
           	}else 
-            if (data != undefined && index == undefined)
+            if (data != undefined)
               $scope.opcionesProtagonsita = data;            
           });
         };
                   
         var protModalCtrl = function ($scope,$modalInstance){
-            $http.post("data/consultas/consultasAdmin.php",{'sentencia':13}).success(function(data){
-              console.log(data);
-              $scope.cargos = data;  
-             });
-                $scope.master = {};
-          $scope.protagonista = {};
-              $scope.updateProtagonista=function(protagonista){
-          $http.post("data/inserciones/insercionesAdmin.php",{'sentencia':6,'protagonista':protagonista}).success(function(data){
-            	console.log(data);   
-            	$modalInstance.close(data);                           
-          });
-        };
-        
-        $scope.cancel = function () {
-            $modalInstance.close();
-          };
-                      
-          
+			localData.getAllCargos().then(function(data){
+				$scope.cargos = data;  
+			});
+			$scope.master = {};
+			$scope.protagonista = {};
+			
+			$scope.updateProtagonista=function(protagonista){
+				localData.insertProtagonista(protagonista).then(function(data){
+					$modalInstance.close(data);                           
+				});
+			};
+			
+			$scope.cancel = function () {
+				$modalInstance.close();
+			};                                
         };         
 
     /*----------------------------------------------Modal Cargo------------------------------------------------*/
@@ -599,49 +609,48 @@ $scope.invalidaCargo = function(){
                 });
               };
               var cargoModalCtrl = function ($scope,$modalInstance, notaProt){
-                 $scope.alerta = {"tipo":"","mensaje":""};
-                 var regreso = [];
-                 $scope.cargo = {};
-                 $http.post("data/consultas/consultasAdmin.php",{'sentencia':13}).success(function(data){
-                  console.log(data);
-                  $scope.cargos = data;  
-                 });
-              $http.post("data/consultas/consultasAdmin.php",{'sentencia':5}).success(function(data1){
-                  var aux;
-                  console.log(data1);
-                   $scope.protagonistas = data1;
-                   for (var i = 0; i<data1.length; i++)
-                      if (data1[i]['idProtagonista'] == notaProt['idProtagonista'])
-                        aux = i;
-                    $scope.prot = data1[aux];
-                    $scope.cargo.prot = notaProt;
-                    $http.post("data/consultas/consultasAdmin.php",{'sentencia':14, 'protagonista':notaProt}).success(function(data) {
-                    	$scope.crg = data;
-                    });              
-                 });
-                  $scope.updateCargo = function(cargo){
-                    $http.post("data/inserciones/insercionesAdmin.php",{'sentencia':7,'cargo':cargo}).success(function(data){
-                      console.log(data); 
-                      $modalInstance.close(data);
-                    });
-                  };
-
-                  $scope.getCargo = function(protagonista){
-                    $http.post("data/consultas/consultasAdmin.php",{'sentencia':14,'protagonista':protagonista}).success(function(ev){
-                      console.log(ev);
-                      $scope.crg = ev;  
-                    });
-                  };
-                  $scope.updateProt = function(prot,carg){
-                    $http.post("data/inserciones/insercionesAdmin.php",{'sentencia':8,prot:prot,car:carg}).success(function(data){
-                      console.log(data);   
-                      $modalInstance.close(data);
-                    });
-                  };
-
-                  $scope.cancel = function () {
-                    $modalInstance.close();
-                  }
+					$scope.alerta = {"tipo":"","mensaje":""};
+					var regreso = [];
+					$scope.cargo = {};
+					
+					localData.getAllCargos().then(function(data){
+						$scope.cargos = data;  
+					});
+					
+					localData.getProtagonista().then(function(data1){
+						var aux;
+						$scope.protagonistas = data1;
+						for (var i = 0; i<data1.length; i++)
+						  if (data1[i]['idProtagonista'] == notaProt['idProtagonista'])
+						    aux = i;
+						$scope.prot = data1[aux];
+						$scope.cargo.prot = notaProt;
+						$http.post("data/consultas/consultasAdmin.php",{'sentencia':14, 'protagonista':notaProt}).success(function(data) {
+							$scope.crg = data;
+						});              
+					});
+					
+					$scope.updateCargo = function(cargo){
+						localData.insertCargo(cargo).then(function(data){
+							$modalInstance.close(data);
+						});
+					};
+					
+					$scope.getCargo = function(protagonista){
+						$http.post("data/consultas/consultasAdmin.php",{'sentencia':14,'protagonista':protagonista}).success(function(ev){
+							$scope.crg = ev;  
+						});
+					};
+					
+					$scope.updateProt = function(prot,carg){
+						localData.addCargo2Prot(prot,carg).then(function(data){
+							$modalInstance.close(data);
+						});
+					};
+					
+					$scope.cancel = function () {
+						$modalInstance.close();
+					}
               };
 
     /*----------------------------------------------Modal Area------------------------------------------------*/
@@ -676,10 +685,9 @@ $scope.invalidaCargo = function(){
         };
         var areaModalCtrl = function ($scope,$modalInstance){      
           $scope.master = {};
-          $scope.updateArea=function(area){
-            console.log(area);      
-            $http.post('data/inserciones/insercionesAdmin.php',{'sentencia':9,'nombre':area.nombre}).success(function(data) {
-              console.log(data);
+          
+          $scope.updateArea=function(area){      
+            localData.insertArea(area).then(function(data) {
               $modalInstance.close(data);        
             });         
           };
@@ -714,7 +722,7 @@ $scope.invalidaCargo = function(){
         };
         var temaModalCtrl = function($scope,$modalInstance, notaArea){
         	$scope.tema = {};
-            $http.post("data/consultas/consultasAdmin.php",{'sentencia':7}).success(function(data){
+            localData.getArea().then(function(data){
                 var i, aux;
                 $scope.opcionesArea = data;
                 for (i=0; i<data.length; i++)
@@ -722,13 +730,11 @@ $scope.invalidaCargo = function(){
                     aux = i;
                 $scope.tema.area = data[aux];
             });        
-        $scope.updateTema=function(tema){      
-         console.log(tema);
-          $http.post('data/inserciones/insercionesAdmin.php',{'sentencia':10,'datos':tema}).success(function(data) {
-            console.log(data);
-            $modalInstance.close(data);       
-          });
-          };       
+	        $scope.updateTema=function(tema){      
+	          localData.insertTema(tema).then(function(data) {
+	            $modalInstance.close(data);       
+	          });
+	        };       
             
             $scope.cancel = function () {
               $modalInstance.close();
@@ -738,16 +744,14 @@ $scope.invalidaCargo = function(){
 
       /*----------------------------------------------Modal Subtema------------------------------------------------*/
 
-        $scope.modalSubtema = function(datos1,datos2,index){
+        $scope.modalSubtema = function(datos1,index){
           var modalInstance = $modal.open({ 
             templateUrl: 'partials/admin/modals/altaSubtema.html',
             controller: subtemaModalCtrl,
             size: 'md',
             resolve: {
-            notaOpc: function() {
-              datos = [];
-              datos.push(datos1,datos2);
-              return datos;
+            notaOpc: function() {              
+              return datos1;
             }
             }
           });
@@ -763,13 +767,12 @@ $scope.invalidaCargo = function(){
           });
         };
         var subtemaModalCtrl = function($scope,$modalInstance, notaOpc){
-          console.log(notaOpc);
           $scope.subtema = {};
-            $http.post("data/consultas/consultasAdmin.php",{'sentencia':8,'area':notaOpc[0]}).success(function(data1){
+            localData.getTema(notaOpc.idArea).then(function(data1){
             	var j, auxi;
             	$scope.opcionesTema = data1;
             	for (j=0; j<data1.length; j++)
-              		if (data1[j]['idTema'] == notaOpc[1]['idTema'])
+              		if (data1[j]['idTema'] == notaOpc.idTema)
                 		auxi = j;
             	$scope.subtema.tema = data1[auxi];
           });
@@ -777,9 +780,7 @@ $scope.invalidaCargo = function(){
         
           
         $scope.updateSubtema=function(subtema){
-              console.log(subtema);
-              $http.post('data/inserciones/insercionesAdmin.php',{'sentencia':11,'subtema':subtema}).success(function(data) {
-                console.log(data);
+              localData.insertSubtema(subtema).then(function(data) {
                 $modalInstance.close(data);            
               });
             };
@@ -799,14 +800,23 @@ $scope.invalidaCargo = function(){
           
           modalInstance.result.then(function(data) {
             if(data != undefined)
-              $scope.opcionesPais = data;
+            {
+            	var i, aux = data[1];
+              	$scope.opcionesPais = data[1];
+              	for(i=0; aux.length; i++)
+              		if(aux[i].nombrePais == data[0]['nombre'])
+              		{
+              			$scope.nota.pais = aux[i];
+              			break;
+              		}
+            }
           });
         };
         var paisModalCtrl = function($scope,$modalInstance){
             $scope.updatePais = function(pais) {
-              $http.post("data/inserciones/insercionesAdmin.php",{'sentencia':12,'nombre':pais.nombre}).success(function(data) {
-                console.log(data);
-                $modalInstance.close(data);
+              localData.insertPais(pais).then(function(data) {
+              	var aux = [pais, data];
+                $modalInstance.close(aux);
               });
             }; 
           
@@ -830,13 +840,21 @@ $scope.invalidaCargo = function(){
           
           modalInstance.result.then(function(data) {
               if(data != undefined)
-                $scope.opcionesEstado = data;
+              {
+              	var i, aux = data[1];
+                	$scope.opcionesEstado = data[1];
+                	for(i=0; aux.length; i++)
+                		if(aux[i].nombreEstado == data[0]['nombre'])
+                		{
+                			$scope.nota.estado = aux[i];
+                			break;
+                		}
+              }
           });
         };
         var estadoModalCtrl = function($scope,$modalInstance,notaPais){
         	$scope.estado = {};
-            $http.post("data/consultas/consultasAdmin.php",{'sentencia':10}).success(function(data){ 
-                console.log(data);       
+            localData.getPais().then(function(data){     
                 var i, aux;
                 $scope.opcionesPais = data;
                 for (i=0; i<data.length; i++)
@@ -846,10 +864,9 @@ $scope.invalidaCargo = function(){
             });
           
         $scope.updateEstado = function(estado) {
-            console.log(estado);
-            $http.post("data/inserciones/insercionesAdmin.php",{'sentencia':13 ,'estado':estado}).success(function(data) {
-              console.log(data);
-              $modalInstance.close(data);
+            localData.insertEstado(estado).then(function(data) {
+            	var aux = [estado, data];
+              	$modalInstance.close(aux);
             });     
         };
         $scope.cancel = function () {
@@ -860,40 +877,45 @@ $scope.invalidaCargo = function(){
 
     /*----------------------------------------------Modal Municipio------------------------------------------------*/
 
-        $scope.modalMunicipio = function(dato1,dato2){
+        $scope.modalMunicipio = function(dato1){
           var modalInstance = $modal.open({ 
             templateUrl: 'partials/admin/modals/altaMunicipio.html',
             controller: municipioModalCtrl,
             size: 'md',
             resolve: {
           notaOpc : function() {
-              var datos = [];
-              datos.push(dato1,dato2);
-              return datos;  
+              return dato1;  
           }
             }
           });
           
           modalInstance.result.then(function(data) {
           		if(data != undefined)
-          			$scope.opcionesMunicipios = data;
+          		{
+          			var i, aux = data[1];
+          		  	$scope.opcionesMunicipio = data[1];
+          		  	for(i=0; aux.length; i++)
+          		  		if(aux[i].nombreMunicipio == data[0]['nombre'])
+          		  		{
+          		  			$scope.nota.municipio = aux[i];
+          		  			break;
+          		  		}
+          		}
           });
         };
         var municipioModalCtrl = function($scope,$modalInstance,notaOpc){
-          console.log(notaOpc);
-          $scope.municipio = {};
-        $http.post("data/consultas/consultasAdmin.php",{'sentencia':11,'pais': notaOpc[0]}).success(function(data){
-              var i, aux;
-              $scope.opcionesEstados = data;          
-              for (i=0; i<data.length; i++)
-                if (data[i]['idEstado'] == notaOpc[1]['idEstado'])
-                  aux = i;
-              $scope.municipio.estado = data[aux];
-        });
+          	$scope.municipio = {};
+        	localData.getEstado(notaOpc.idPais).then(function(data){
+		          var i, aux;
+		          $scope.opcionesEstados = data;          
+		          for (i=0; i<data.length; i++)
+		            if (data[i]['idEstado'] == notaOpc['idEstado'])
+		              aux = i;
+		          $scope.municipio.estado = data[aux];
+        	});
        
         $scope.updateMunicipio = function(municipio){
-            $http.post("data/inserciones/insercionesAdmin.php",{'sentencia':14,'municipio':municipio}).success(function(data) {
-              console.log(data);
+            localData.insertMunicipio(municipio).then(function(data) {
               $modalInstance.close(data);
             });
         };
@@ -928,7 +950,6 @@ $scope.invalidaCargo = function(){
     	$scope.notas={};
     	$http.post('data/consultas/consultasAdmin.php',{'sentencia':17}).success(function(data) {
     		$scope.notas = data;
-    		console.log(data);
     	});
     	
     	$scope.modalEliminar = function(data) {
@@ -956,7 +977,6 @@ $scope.invalidaCargo = function(){
     			$http.post('data/actualizar/eliminarNota.php',notaEliminar).success(function(data) {
     				$modalInstance.close(data);		
     			});
-    			//$modalInstance.close([]);		
     		};
     		
     		$scope.cancel = function () {
@@ -976,7 +996,6 @@ $scope.invalidaCargo = function(){
     $scope.notasArray = {};
     $http.post("data/consultas/consultasAdmin.php",{'sentencia':18}).success(function(respuesta){
       $scope.notasArray = respuesta;
-      console.log($scope.notasArray);
       $scope.modalEliminar = function(data) {
         var modalInstance = $modal.open({
           templateUrl: 'partials/admin/modals/eliminarNota.html',
@@ -1001,8 +1020,7 @@ $scope.invalidaCargo = function(){
         $scope.eliminar = function () {
           $http.post('data/actualizar/eliminarNota.php',notaEliminar).success(function(data) {
             $modalInstance.close(data);   
-          });
-          //$modalInstance.close([]);   
+          });   
         };
         
         $scope.cancel = function () {
@@ -1026,21 +1044,14 @@ $scope.invalidaCargo = function(){
         $scope.master = {};
         $http.post("data/consultas/consultasAdmin.php",{'sentencia':19}).success(function(data){
           $scope.opcionesTipo=data;
-          console.log(data);
         });
         $scope.insertAdmin=function(newAdmn){
           usuario = angular.copy(newAdmn);
-
-            console.log(usuario);   
+ 
         $http.post("data/inserciones/insercionesAdmin.php",{'sentencia':15,'newAdmn':usuario}).success(function(msg){
-          console.log(msg);  
               $scope.usuario = angular.copy($scope.master);
               $scope.alerta.tipo = "alert alert-success";
               $scope.alerta.mensaje =" Dato almacenado en base de datos";
          });
-       };
-         // $http.get("data/bdNotasSimple2.php").success(function(data4){
-         // $scope.notasDefault = data4;
-         // console.log(data4);
-    
-      }]);
+       };    
+    }]);

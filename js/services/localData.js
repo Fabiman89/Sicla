@@ -14,35 +14,168 @@ siclaApp.factory('localData', ['$http', '$q', function($http, $q)
 		autor = [],
 		prota = [],
 		cargo = [],
+		cargos = [],
 		tpNota = [];
 		
-	servicio.insertAutor = function(aun) 
+	servicio.insertMunicipio = function(municipio) 
+	{
+		var sync = $q.defer(),
+			i, auxMn = [];
+		$http.post("data/inserciones/insercionesAdmin.php",{'sentencia':14,'municipio':municipio}).success(function(data) 
+		{
+			muni = data;
+			for(i=0; i< muni.length; i++)
+				if(muni[i].idEstado == municipio.estado.idEstado)
+					auxMn.push(muni[i]);
+			sync.resolve(auxMn);
+		});
+		return sync.promise;
+	};
+		
+	servicio.insertEstado = function(estado) 
+	{
+		var sync = $q.defer(),
+			i, auxEs = [];
+		$http.post("data/inserciones/insercionesAdmin.php",{'sentencia':13 ,'estado':estado}).success(function(data) 
+		{
+			esta = data;
+			for(i=0; i<esta.length; i++)
+				if(esta[i].idPais == estado.pais.idPais)
+			 		auxEs.push(esta[i]);
+			 sync.resolve(auxEs);			
+		});
+		return sync.promise;
+	};
+		
+	servicio.insertPais = function(np) 
 	{
 		var sync = $q.defer();
-		$http.post("data/inserciones/insercionesAdmin.php",{'sentencia':3,'autor':aun}).success(function(data) 
+		$http.post("data/inserciones/insercionesAdmin.php",{'sentencia':12,'nombre':np.nombre}).success(function(data) 
+		{	
+			pais = data;
+			sync.resolve(pais);
+		});
+		return sync.promise;
+	};
+		
+	servicio.insertSubtema = function(sb) 
+	{
+		var sync = $q.defer();
+		$http.post('data/inserciones/insercionesAdmin.php',{'sentencia':11,'subtema':sb}).success(function(data) 
 		{
-			autor = data;		
-			servicio.getAutor(aun.medio.idMedio).then(function(data1) 
-			{
-				sync.resolve(data1);
-			});
+			var i, auxSb = [];
+			sbma = data;
+			for (i=0; i<sbma.length; i++)
+				if (sb.tema.idTema == sbma[i].idTema)
+					auxSb.push(sbma[i]);
+			sync.resolve(auxSb);
+		});
+		return sync.promise;
+	};	
+		
+	servicio.insertTema = function(temn) 
+	{
+		var sync = $q.defer(),
+			auxTm = [],i;
+		$http.post('data/inserciones/insercionesAdmin.php',{'sentencia':10,'datos':temn}).success(function(data) 
+		{
+			tema = data;
+			for(i=0; i<tema.length; i++)
+				if(tema[i].idArea == temn.area.idArea)
+					auxTm.push(tema[i]);
+			sync.resolve(auxTm);
+		});
+		return sync.promise;
+	};
+		
+	servicio.insertArea = function(arn) 
+	{
+		var sync = $q.defer();
+		$http.post('data/inserciones/insercionesAdmin.php',{'sentencia':9,'nombre':arn.nombre}).success(function(data) 
+		{
+			area = data;
+			sync.resolve(area);
 		});
 		return sync.promise;
 	};
 	
-	servicio.addAutor2Medio = function(aun) 
+	servicio.addCargo2Prot = function(prot, car) 
 	{
 		var sync = $q.defer();
-		$http.post("data/inserciones/insercionesAdmin.php",{'sentencia':3,'autor2':aun}).success(function(data) 
+		$http.post("data/inserciones/insercionesAdmin.php",{'sentencia':8,prot:prot,car:car}).success(function(data)
 		{
-			autor = data;
-			servicio.getAutor(aun.medio.idMedio).then(function(data1) 
-			{
-				sync.resolve(data1);
-			});
+			var i, auxCg = [],
+				id = prot.idProtagonista;
+			cargo = data;
+			for(i=0; i<cargo.length; i++)
+				if(cargo[i].idProtagonista == id)
+					auxCg.push(cargo[i]);
+			sync.resolve(auxCg);
 		});
 		return sync.promise;
 	};
+		
+	servicio.insertCargo = function(carn) 
+	{
+		var sync = $q.defer();
+		$http.post("data/inserciones/insercionesAdmin.php",{'sentencia':7,'cargo':carn}).success(function(data)
+		{
+			var i, auxCg = [],
+				id = carn.prot.idProtagonista;
+			cargo = data;
+			for(i=0; i<cargo.length; i++)
+				if(cargo[i].idProtagonista == id)
+					auxCg.push(cargo[i]);
+			sync.resolve(auxCg);
+		});
+		return sync.promise;
+	};
+		
+	servicio.refreshCargo = function() 
+	{
+		var sync = $q.defer();
+		$http.post("data/consultas/consultasAdmin.php",{'sentencia':6}).success(function(dataCargo)
+		{
+			cargo = dataCargo;						
+			sync.resolve(cargo);
+		});
+		return sync.promise;
+	};		
+		
+	servicio.insertProtagonista = function(protagonista) 
+	{
+		var sync = $q.defer();
+		$http.post("data/inserciones/insercionesAdmin.php",{'sentencia':6,'protagonista':protagonista}).success(function(data)
+		{
+			prota = data;
+			servicio.refreshCargo().then(function() {
+				sync.resolve(prota);
+			});				
+		});
+		return sync.promise;
+	};		
+		
+	servicio.insertSeccion = function(secn) 
+	{
+		var sync = $q.defer();
+		$http.post('data/inserciones/insercionesAdmin.php',{'sentencia':5,'nombre':secn.nombre}).success(function(data) 
+		{
+			sec = data;
+			sync.resolve(sec);
+		});
+		return sync.promise;
+	};
+	
+	servicio.insertTipoNota = function(tpn) 
+	{
+		var sync = $q.defer();
+		$http.post("data/inserciones/insercionesAdmin.php",{'sentencia':4,'nombre':tpn.nombre}).success(function(data)
+		{
+			tpNota = data;
+			sync.resolve(tpNota);
+		});
+		return sync.promise;
+	};					
 		
 	servicio.insertMedio = function(med) 
 	{
@@ -171,11 +304,11 @@ siclaApp.factory('localData', ['$http', '$q', function($http, $q)
 			$http.post("data/consultas/consultasAdmin.php",{'sentencia':5}).success(function(dataProtagonista)
 			{
 				prota = dataProtagonista;
-				sync.resolve(dataProtagonista);
+				sync.resolve(prota);
 			});
 		}
 		else
-			sync.resolve(dataProtagonista);
+			sync.resolve(prota);
 		return sync.promise;
 	};
 	
@@ -201,6 +334,22 @@ siclaApp.factory('localData', ['$http', '$q', function($http, $q)
 					auxCg.push(cargo[i]);
 			sync.resolve(auxCg);
 		}
+		return sync.promise;
+	};
+	
+	servicio.getAllCargos = function() 
+	{
+		var sync = $q.defer();
+		if(cargos.length == 0)
+		{
+			$http.post("data/consultas/consultasAdmin.php",{'sentencia':13}).success(function(data)
+			{				
+				cargos = data;
+				sync.resolve(cargos);
+			});
+		}
+		else 
+			sync.resolve(cargos);		
 		return sync.promise;
 	};
 		
@@ -242,6 +391,34 @@ siclaApp.factory('localData', ['$http', '$q', function($http, $q)
 					auxAu.push(autor[i]);
 			sync.resolve(auxAu);
 		}
+		return sync.promise;
+	};
+	
+	servicio.insertAutor = function(aun) 
+	{
+		var sync = $q.defer();
+		$http.post("data/inserciones/insercionesAdmin.php",{'sentencia':3,'autor':aun}).success(function(data) 
+		{
+			autor = data;		
+			servicio.getAutor(aun.medio.idMedio).then(function(data1) 
+			{
+				sync.resolve(data1);
+			});
+		});
+		return sync.promise;
+	};
+	
+	servicio.addAutor2Medio = function(aun) 
+	{
+		var sync = $q.defer();
+		$http.post("data/inserciones/insercionesAdmin.php",{'sentencia':3,'autor2':aun}).success(function(data) 
+		{
+			autor = data;
+			servicio.getAutor(aun.medio.idMedio).then(function(data1) 
+			{
+				sync.resolve(data1);
+			});
+		});
 		return sync.promise;
 	};
 	

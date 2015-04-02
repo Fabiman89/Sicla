@@ -163,7 +163,7 @@ switch ($instruccion){
 		$mysqli->query("insert into Cargo values (null,'$nombre')");
 		$cargo = mysqli_insert_id($mysqli);
 		$mysqli->query("insert into cargoProtagonista values (null,$cargo,$prot)");
-		$result = $mysqli->query("select ca.*, cp.idCP from Cargo ca, cargoProtagonista cp where cp.idProtagonista=$prot and cp.idCargo = ca.idCargo order by ca.nombreCargo asc");
+		$result = $mysqli->query("select ca.*, cp.idCP, cp.idProtagonista from Cargo ca, cargoProtagonista cp where cp.idCargo = ca.idCargo order by ca.nombreCargo asc");
 		$arr = array();
 		if($result)
 		{
@@ -181,7 +181,7 @@ switch ($instruccion){
 		$Prot = $sentencia["prot"]["idProtagonista"];
 		$Carg = $sentencia["car"]["idCargo"];
 		$mysqli->query("insert into cargoProtagonista values (null, $Carg, $Prot)");
-		$result = $mysqli->query("select * from Cargo where idCargo in(select idCargo from cargoProtagonista where idProtagonista=$Prot) order by nombreCargo");
+		$result = $mysqli->query("select ca.*, cp.idCP, cp.idProtagonista from Cargo ca, cargoProtagonista cp where cp.idCargo = ca.idCargo order by ca.nombreCargo asc");
 		$arr = array();
 		if ($result)
 		{
@@ -198,7 +198,7 @@ switch ($instruccion){
 	case 9:
 		$nom = $sentencia['nombre'];
 		$mysqli->query("insert into Area values (null,'$nom')");
-		$result = $mysqli->query("select * from  Area order by nombreArea");
+		$result = $mysqli->query("select * from  Area order by nombreArea asc");
 		$arr = array();
 		if ($result){
 			while ($row = mysqli_fetch_assoc($result))
@@ -216,7 +216,7 @@ switch ($instruccion){
 		$area = $dato['area']['idArea'];
 		$nom = $dato['nombre'];
 		$mysqli->query("insert into tema values (null, $area, '$nom')");
-		$result = $mysqli->query("select * from tema where idArea = $area order by nombreTema");
+		$result = $mysqli->query("select * from tema order by nombreTema");
 		$arr = array();
 		if($result){
 			while ($row = mysqli_fetch_assoc($result)) 
@@ -238,7 +238,7 @@ switch ($instruccion){
 		$nombre = $datos['nombre'];
 		$mysqli->query("insert into subtema values(null,'$tema','$nombre')");
 		$arr = array();
-		$result = $mysqli->query("select * from subtema where idTema = $tema order by nombreSubtema");
+		$result = $mysqli->query("select * from subtema order by nombreSubtema");
 		if($result)
 		{
 			while($row = mysqli_fetch_assoc($result))
@@ -276,7 +276,7 @@ switch ($instruccion){
 		$nombre = $datos['nombre'];
 		$mysqli->query("insert into estado values(null,'$nombre','$pais')");
 		$arr = array();
-		$result = $mysqli->query("select * from estado where idPais = $pais order by nombreEstado");
+		$result = $mysqli->query("select * from estado order by nombreEstado");
 		if($result)
 		{
 			while($row = mysqli_fetch_assoc($result))
@@ -297,7 +297,7 @@ switch ($instruccion){
 		$id = $datos['estado']['idEstado'];
 		$mysqli->query("insert into municipio values(null,'$nombre',$id)");
 		$arr = array();
-		$result = $mysqli->query("select * from municipio where idEstado = $id order by nombreMunicipio");
+		$result = $mysqli->query("select * from municipio order by nombreMunicipio");
 		if ($result)
 		{
 			while($row = mysqli_fetch_assoc($result))

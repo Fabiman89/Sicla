@@ -7,7 +7,7 @@ switch ($instruccion){
 	case 1:
 		$result=mysqli_query($mysqli,
 		"SELECT * 
-		 FROM tipoNota");
+		 FROM tipoNota order by nombreTipoNota asc");
 		$arr = array();
 		if($result) {
 			 while($row = $result->fetch_assoc()) {
