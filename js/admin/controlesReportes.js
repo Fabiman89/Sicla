@@ -1,5 +1,5 @@
 
-  siclaApp.controller('reportCtrl', ['$scope','$http','$modal','$filter','PdfService' ,function($scope,$http,$modal,$filter,PdfService) {
+  siclaApp.controller('reportCtrl', ['$scope','$http','$modal','$filter','PdfService', 'localData', function($scope,$http,$modal,$filter,PdfService, localData) {
 // PRIMERA PROPUESTA
     $scope.previewArray = [];
     $scope.previewSize = 0;
@@ -19,12 +19,12 @@
     // Autor
         $scope.getAutorIf = function (){
             if($scope.query[0]==1 && ($scope.query[1].medio.idMedio != undefined || 0) ){
-                $http.post("data/consultas/consultasAdmin.php",{'sentencia':3,"id":$scope.query[1].medio.idMedio}).success(function(rOp){
+                localData.getAutor($scope.query[1].medio.idMedio).then(function(rOp){
                     objt= {'nombreAutor':'Sin Considerar','idAutor':0}
                     $scope.Autores = $scope.init(rOp,objt);
                  });   
             }else{
-                $http.post("data/consultas/consultasAdmin.php",{'sentencia':21}).success(function(rOp){
+                localData.getAllAutores().then(function(rOp){
                     objt= {'nombreAutor':'Sin Considerar','idAutor':0}
                     $scope.Autores = $scope.init(rOp,objt);
                  });   
@@ -34,7 +34,7 @@
     // Medios
         $scope.getMedios= function (){
 
-                $http.post("data/consultas/consultasAdmin.php",{'sentencia':2}).success(function(rOp){
+                localData.getMedio().then(function(rOp){
                   objt = {"nombreMedio":"Sin Considerar","idMedio":0};
                   $scope.Medios = $scope.init(rOp,objt);
                 });
@@ -44,7 +44,7 @@
 
     // AREAS   
             $scope.getArea = function(){
-                $http.post("data/consultas/consultasAdmin.php",{'sentencia':7}).success(function(rOp){
+                localData.getArea().then(function(rOp){
                   objt = {"nombreArea":"Sin Considerar","idArea":0};
                   $scope.Areas = $scope.init(rOp,objt);
                 });
@@ -52,14 +52,14 @@
     // TEMAS
             $scope.getTema = function ()
             {
-                $http.post("data/consultas/consultasAdmin.php",{'sentencia':22}).success(function(rOp){
+                localData.getAllTemas().then(function(rOp){
                   objt = {"nombreTema":"Sin Considerar","idTema":0};
                   $scope.Temas = $scope.init(rOp,objt);
                 });
             };
     // SUBTEMAS
             $scope.getSubtema = function(){
-                $http.post("data/consultas/consultasAdmin.php",{'sentencia':23}).success(function(rOp){
+                localData.getAllSubtemas().then(function(rOp){
                   objt = {"nombreSubtema":"Sin Considerar","idSubtema":0};
                   $scope.Subtemas = $scope.init(rOp,objt);
                 });
@@ -69,7 +69,7 @@
 
     // PAIS
             $scope.getPais = function(){
-                        $http.post("data/consultas/consultasAdmin.php",{'sentencia':10}).success(function(rOp){
+                        localData.getPais().then(function(rOp){
                            objt = {"nombrePais":"Sin Considerar","idPais":0}; 
                           $scope.Paises = $scope.init(rOp,objt);
                         });   
@@ -77,14 +77,14 @@
     // Estados
             $scope.getEstado = function (){
 
-                        $http.post("data/consultas/consultasAdmin.php",{'sentencia':24}).success(function(rOp){
+                        localData.getAllEstados().then(function(rOp){
                             objt = {"nombreEstado":"Sin Considerar","idEstado":0};
                           $scope.Estados = $scope.init(rOp,objt);
                         });
                     };
     // Municipios
             $scope.getMunicipio = function (){
-                        $http.post("data/consultas/consultasAdmin.php",{'sentencia':25}).success(function(rOp){
+                        localData.getAllMunicipios().then(function(rOp){
                           objt = {"nombreMunicipio":"Sin Considerar","idMunicipio":0};
                           $scope.Municipios = $scope.init(rOp,objt);
                         });
@@ -94,7 +94,7 @@
     // PORTAGONISTA
             $scope.getProtagonista = function (){
 
-                    $http.post("data/consultas/consultasAdmin.php",{'sentencia':5}).success(function(rOp){
+                    localData.getProtagonista().then(function(rOp){
                         objt = {"nombreProtagonista":"Sin Considerar","idProtagonista":0};
                       $scope.Protagonistas = $scope.init(rOp,objt);
                     });
@@ -102,16 +102,15 @@
             };
     // TIPO DE NOTA
             $scope.getTipo = function (){
-                    $http.post("data/consultas/consultasAdmin.php",{'sentencia':1}).success(function(rOp){
+                    localData.getTipoNota().then(function(rOp){
                             objt = {"nombreTipoNota":"Sin Considerar","idTipoNota":0};
                           $scope.tipoNotas = $scope.init(rOp,objt);
-
-                        });                    
+                    });                    
             };
     
     //Seccion
             $scope.getSeccion = function(){
-                    $http.post("data/consultas/consultasAdmin.php",{'sentencia':4}).success(function(rOp){
+                    localData.getSeccion().then(function(rOp){
                         objt = {"nombreSeccion":"Sin Considerar","idSeccion":0};
                       $scope.Seccion = $scope.init(rOp,objt);
                     });

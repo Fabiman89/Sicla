@@ -83,61 +83,59 @@ switch ($instruccion){
 				session_start();
 				$ipUsr = $_SESSION["utp"];
 				$hoy = new DateTime(date("Y-m-d"));
-				$restriccion = "";
+				$restriccion = "n.idNota = n.idNota";
 				switch ($ipUsr) 
 				{		
 					case 3: $hoy->sub(new DateInterval("P15D"));
-							$restriccion = "and n.Fecha > '".$hoy->format("Y-m-d")."'";
+							$restriccion = "n.Fecha > '".$hoy->format("Y-m-d")."'";
 							break;		
 					case 5: $hoy->sub(new DateInterval("P3M"));
-							$restriccion = "and n.Fecha > '".$hoy->format("Y-m-d")."'";
+							$restriccion = "n.Fecha > '".$hoy->format("Y-m-d")."'";
 							break;	
 					case 6: $hoy->sub(new DateInterval("P1Y"));
-							$restriccion = "and n.Fecha > '".$hoy->format("Y-m-d")."'";
+							$restriccion = "n.Fecha > '".$hoy->format("Y-m-d")."'";
 							break;	
 					case 7: $hoy->sub(new DateInterval("P3Y"));
-							$restriccion = "and n.Fecha > '".$hoy->format("Y-m-d")."'";
+							$restriccion = "n.Fecha > '".$hoy->format("Y-m-d")."'";
 							break;	
 					case 8: $hoy->sub(new DateInterval("P6Y"));
-							$restriccion = "and n.Fecha > '".$hoy->format("Y-m-d")."'";
+							$restriccion = "n.Fecha > '".$hoy->format("Y-m-d")."'";
 							break;	
 				}
-				$result = mysqli_query($mysqli,"SELECT n.idNota, n.fecha, n.imagenNota as img8col, n.sintesis, n.texto, p.nombreProtagonista, t.nombreTipoNota as tipo, te.nombreTema, su.nombreSubtema, n.tituloNota, m.urlMedio as idPeriodico, a.nombreAutor as autor, 
+				$result = mysqli_query($mysqli,"SELECT min(n.idNota), n.fecha, n.imagenNota as img8col, n.sintesis, n.texto, p.nombreProtagonista, t.nombreTipoNota as tipo, te.nombreTema, su.nombreSubtema, n.tituloNota, m.urlMedio as idPeriodico, a.nombreAutor as autor, 
 						m.nombreMedio, m.imagenMedio as imagen
-				from Nota n,colabora_en ce, Medio m, Autor a ,tipoNota t, tema te, subtema su, Protagonista p,  trata_de td , notaProtagonista np,cargoProtagonista cp
-				where ce.idCE = n.idCE 
-				and ce.idMedio = m.idMedio 
-				and m.idMedio = ce.idMedio 
-				and a.idAutor = ce.idAutor 
-                and n.idNota = td.idNota_
-				and su.idSubtema = td.idSubtema
-				and te.idTema = su.idSubtema
-				and np.idNota = n.idNota
-				and np.idCP = cp.idCP 
-                and np.tipoProtagonista = 1
-				and cp.idProtagonista = p.idProtagonista
-				and t.idtiponota = n.idTipoNota
-				$restriccion
-				ORDER BY n.idNota DESC ");
+				from Nota n
+					 inner Join colabora_en ce on ce.idCE = n.idCE  
+					 inner Join Medio m on ce.idMedio = m.idMedio 
+					 inner Join Autor a on a.idAutor = ce.idAutor 
+					 Left Join tipoNota t on n.idTipoNota = t.idTipoNota
+					 Left Join trata_de td on n.idNota = td.idNota_
+					 Left Join subtema su on su.idSubtema = td.idSubtema				   					
+					 Left Join tema te on te.idTema = su.idSubtema					  
+					 Left Join notaProtagonista np on (np.idNota = n.idNota and np.tipoProtagonista = 1)
+					 Left Join cargoProtagonista cp on np.idCP = cp.idCP
+					 Left Join Protagonista p on cp.idProtagonista = p.idProtagonista
+				where $restriccion	
+				Group by n.idNota						 					
+				ORDER BY n.idNota DESC limit 5000 ");
 			break;
 			case 4:
 				$result=mysqli_query($mysqli,
-				"SELECT n.idNota, n.fecha, n.imagenNota as img8col, n.sintesis, n.texto, t.idTipoNota as tipo,  n.tituloNota, m.urlMedio as idPeriodico, a.nombreAutor as autor, 
+				"SELECT min(n.idNota), n.fecha, n.imagenNota as img8col, n.sintesis, n.texto, p.nombreProtagonista, t.nombreTipoNota as tipo, te.nombreTema, su.nombreSubtema, n.tituloNota, m.urlMedio as idPeriodico, a.nombreAutor as autor, 
 						m.nombreMedio, m.imagenMedio as imagen
-				from Nota n,colabora_en ce, Medio m, Autor a ,tipoNota t, tema te, subtema su, Protagonista p,  trata_de td , notaProtagonista np,cargoProtagonista cp
-				where ce.idCE = n.idCE 
-				and ce.idMedio = m.idMedio 
-				and m.idMedio = ce.idMedio 
-				and a.idAutor = ce.idAutor 
-				and n.idNota = td.idNota_
-				and su.idSubtema = td.idSubtema
-				and te.idTema = su.idSubtema
-				and np.idNota = n.idNota
-				and np.idCP = cp.idCP 
-                and np.tipoProtagonista = 1
-				and cp.idProtagonista = p.idProtagonista
-				and t.idtiponota = n.idTipoNota
-				ORDER BY n.idNota DESC limit 50");
+				from Nota n
+					 inner Join colabora_en ce on ce.idCE = n.idCE  
+					 inner Join Medio m on ce.idMedio = m.idMedio 
+					 inner Join Autor a on a.idAutor = ce.idAutor 
+					 Left Join tipoNota t on n.idTipoNota = t.idTipoNota
+					 Left Join trata_de td on n.idNota = td.idNota_
+					 Left Join subtema su on su.idSubtema = td.idSubtema				   					
+					 Left Join tema te on te.idTema = su.idSubtema					  
+					 Left Join notaProtagonista np on (np.idNota = n.idNota and np.tipoProtagonista = 1)
+					 Left Join cargoProtagonista cp on np.idCP = cp.idCP
+					 Left Join Protagonista p on cp.idProtagonista = p.idProtagonista
+				Group by n.idNota						 					
+				ORDER BY n.idNota DESC limit 50");				
 			break;
 		}
 		$arr = array();

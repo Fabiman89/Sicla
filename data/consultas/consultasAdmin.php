@@ -7,7 +7,7 @@ switch ($instruccion){
 	case 1:
 		$result=mysqli_query($mysqli,
 		"SELECT * 
-		 FROM tipoNota order by nombreTipoNota asc");
+		 FROM tipoNota");
 		$arr = array();
 		if($result) {
 			 while($row = $result->fetch_assoc()) {
@@ -39,9 +39,11 @@ switch ($instruccion){
 		break;
 // AUTORES (ERROR 303)
 	case 3:
+		$idMedio = $sentencia['id'];
 		$result=mysqli_query($mysqli,"SELECT a.idAutor, a.nombreAutor,a.generoAutor,c.idMedio, c.idCE 
 			FROM Autor a, colabora_en c 
-			WHERE c.idAutor = a.idAutor 
+			WHERE c.idMedio= $idMedio 
+			and c.idAutor = a.idAutor 
 			order by nombreAutor asc");
 		$arr = array();
 		if($result) {
@@ -91,10 +93,12 @@ switch ($instruccion){
 		break;
 // CARGO PROTAGONISTA (ERROR 306)
 	case 6:
+		$pro = $sentencia['protagonista'];
 		$result=mysqli_query($mysqli,
 		"SELECT ca.*, pr.idCP, pr.idProtagonista 
 		 FROM cargoProtagonista pr, Cargo ca 
-		 WHERE pr.idCargo = ca.idCargo
+		 WHERE pr.idProtagonista=$pro 
+		 and pr.idCargo = ca.idCargo
 		 order by nombreCargo asc");
 		$arr = array();
 		if($result) {
@@ -127,10 +131,11 @@ switch ($instruccion){
 		break;
 // TEMAS (ERROR 308)
 	case 8:
+		$area = $sentencia['area'];
 		$result=mysqli_query($mysqli,
 		"SELECT * 
 		 FROM tema 
-		 order by nombreTema asc");
+		 WHERE idArea = $area order by nombreTema asc");
 		$arr = array();
 		if($result) {
 			 while($row = $result->fetch_assoc()) {
@@ -145,10 +150,11 @@ switch ($instruccion){
 		break;
 // SUBTEMAS (ERROR 309)
 	case 9:
-		 $result=mysqli_query($mysqli,
-		 "SELECT * 
-		  FROM subtema 
-		  order by nombreSubtema asc");
+		$tema = $sentencia['tema'];
+		$result=mysqli_query($mysqli,
+		"SELECT * 
+		 FROM subtema 
+		 WHERE idTema = $tema order by nombreSubtema asc");
 		$arr = array();
 		if($result) {
 			 while($row = $result->fetch_assoc()) {
@@ -180,10 +186,11 @@ switch ($instruccion){
 		break;	
 // ESTADOS (ERROR 311)
 	case 11:
+		$pais = $sentencia['pais'];
 		$result=mysqli_query($mysqli,
 		"SELECT * 
 		 FROM estado 
-		 order by nombreEstado asc");
+		 WHERE idPais = $pais order by nombreEstado asc");
 		$arr = array();
 		if($result) {
 			 while($row = $result->fetch_assoc()) {
@@ -198,10 +205,11 @@ switch ($instruccion){
 		break;
 // MUNICIPIOS (ERROR 312)
 	case 12:
+		$estado = $sentencia['estado'];
 		$result=mysqli_query($mysqli,
 		"SELECT * 
 		 FROM municipio 
-		 order by nombreMunicipio asc");
+		 WHERE idEstado = $estado order by nombreMunicipio asc");
 		$arr = array();
 		if($result) {
 			 while($row = $result->fetch_assoc()) {
@@ -423,9 +431,10 @@ switch ($instruccion){
 // Toos autores
 		case 21:
 			$result=mysqli_query($mysqli,
-					"SELECT * 
-					 FROM Autor
-					 order by nombreAutor asc
+					"SELECT a.idAutor, a.nombreAutor,a.generoAutor,c.idMedio, c.idCE 
+					FROM Autor a, colabora_en c 
+					WHERE c.idAutor = a.idAutor 
+					order by nombreAutor asc
 					 ");
 			$arr = array();
 			if($result) {

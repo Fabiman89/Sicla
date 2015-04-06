@@ -220,7 +220,7 @@ siclaApp.factory('localData', ['$http', '$q', function($http, $q)
 			auxEst = [], i;
 		if(esta.length == 0)
 		{
-			$http.post("data/consultas/consultasAdmin.php",{'sentencia':11}).success(function(dataEstados)
+			$http.post("data/consultas/consultasAdmin.php",{'sentencia':24}).success(function(dataEstados)
 			{
 				esta = dataEstados;
 				for(i=0; i<esta.length; i++)
@@ -238,6 +238,22 @@ siclaApp.factory('localData', ['$http', '$q', function($http, $q)
 		}
 		return sync.promise;
 	};
+
+	servicio.getAllEstados = function()
+	{
+		var sync = $q.defer();
+		if(esta.length == 0)
+		{
+			$http.post("data/consultas/consultasAdmin.php",{'sentencia':24}).success(function(dataEstados)
+			{
+				esta = dataEstados;				
+				sync.resolve(esta);
+			});
+		}
+		else
+			sync.resolve(esta);
+		return sync.promise;
+	};
 	
 	servicio.getMunicipio = function(id) 
 	{
@@ -245,7 +261,7 @@ siclaApp.factory('localData', ['$http', '$q', function($http, $q)
 			auxMun = [], i;
 		if (muni.length == 0)
 		{
-			$http.post("data/consultas/consultasAdmin.php",{'sentencia':12}).success(function(dataMunicipio)
+			$http.post("data/consultas/consultasAdmin.php",{'sentencia':25}).success(function(dataMunicipio)
 			{
 				muni = dataMunicipio;
 				for(i=0; i<muni.length; i++)
@@ -261,6 +277,22 @@ siclaApp.factory('localData', ['$http', '$q', function($http, $q)
 					auxMun.push(muni[i]);
 			sync.resolve(auxMun);
 		}
+		return sync.promise;
+	};
+
+	servicio.getAllMunicipios = function()
+	{
+		var sync = $q.defer();
+		if(muni.length == 0)
+		{
+			$http.post("data/consultas/consultasAdmin.php",{'sentencia':25}).success(function(dataMunicipio)
+			{
+				muni = dataMunicipio;				
+				sync.resolve(muni);
+			});
+		}
+		else
+			sync.resolve(muni);
 		return sync.promise;
 	};
 		
@@ -375,7 +407,7 @@ siclaApp.factory('localData', ['$http', '$q', function($http, $q)
 			auxAu = [], i;
 		if(autor.length == 0)
 		{
-			$http.post("data/consultas/consultasAdmin.php",{'sentencia':3}).success(function(dataAutores)
+			$http.post("data/consultas/consultasAdmin.php",{'sentencia':21}).success(function(dataAutores)
 			{
 				autor = dataAutores;
 				for(i=0; i<autor.length; i++)
@@ -391,6 +423,22 @@ siclaApp.factory('localData', ['$http', '$q', function($http, $q)
 					auxAu.push(autor[i]);
 			sync.resolve(auxAu);
 		}
+		return sync.promise;
+	};
+
+	servicio.getAllAutores = function()
+	{
+		var sync = $q.defer();
+		if(autor.length == 0)
+		{
+			$http.post("data/consultas/consultasAdmin.php",{'sentencia':21}).success(function(dataAutores)
+			{
+				autor = dataAutores;				
+				sync.resolve(autor);
+			});
+		}
+		else
+			sync.resolve(autor);
 		return sync.promise;
 	};
 	
@@ -444,7 +492,7 @@ siclaApp.factory('localData', ['$http', '$q', function($http, $q)
 			auxTema = [], i;
 		if (tema.length == 0)
 		{
-			$http.post("data/consultas/consultasAdmin.php",{'sentencia':8}).success(function(dataTema)
+			$http.post("data/consultas/consultasAdmin.php",{'sentencia':22}).success(function(dataTema)
 			{
 				tema = dataTema;
 				for(i = 0; i<tema.length; i++)
@@ -462,6 +510,22 @@ siclaApp.factory('localData', ['$http', '$q', function($http, $q)
 		}
 		return sync.promise;
 	};
+
+	servicio.getAllTemas = function()
+	{
+		var sync = $q.defer();
+		if(tema.length == 0)
+		{
+			$http.post("data/consultas/consultasAdmin.php",{'sentencia':22}).success(function(dataTema)
+			{
+				tema = dataTema;				
+				sync.resolve(tema);
+			});	
+		}
+		else
+			sync.resolve(tema);
+		return sync.promise;
+	};
 	
 	servicio.getSubtema = function(id) 
 	{
@@ -469,7 +533,7 @@ siclaApp.factory('localData', ['$http', '$q', function($http, $q)
 			auxsbTema = [], i;
 		if(sbma.length == 0)
 		{
-			$http.post("data/consultas/consultasAdmin.php",{'sentencia':9}).success(function(dataSubtema)
+			$http.post("data/consultas/consultasAdmin.php",{'sentencia':23}).success(function(dataSubtema)
 			{
 				sbma = dataSubtema;
 				for(i = 0; i<sbma.length; i++)
@@ -485,6 +549,22 @@ siclaApp.factory('localData', ['$http', '$q', function($http, $q)
 					auxsbTema.push(sbma[i]);
 			sync.resolve(auxsbTema);	
 		}
+		return sync.promise;
+	};
+
+	servicio.getAllSubtemas = function()
+	{
+		var sync = $q.defer();
+		if(sbma.length == 0)
+		{
+			$http.post("data/consultas/consultasAdmin.php",{'sentencia':23}).success(function(dataSubtema)
+			{
+				sbma = dataSubtema;				
+				sync.resolve(sbma);	
+			});
+		}
+		else
+			sync.resolve(sbma);
 		return sync.promise;
 	};
 	
