@@ -7,7 +7,6 @@
     var imgGBL;
 
         $scope.init = function(arr,obj){
-            console.log(arr);
             nar = [];
             nar.push(obj);
             for (i=0;i<arr.length;i++){
@@ -392,6 +391,7 @@ $scope.pushToTable(1);
             				   lineAlpha: 0,
             				   fillColors: "#ADD981",
             				   fillAlphas: 0.8,
+            				   labelText: "[[value]]",
             				   balloonText: "[[title]] in [[category]]:<b>[[value]]</b>"
             			   }]
             			});

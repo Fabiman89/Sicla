@@ -1,12 +1,12 @@
 
-app.controller('reportCtrl', ['$scope','$http','$modal','$filter','PdfService' ,function($scope,$http,$modal,$filter,PdfService) {
+app.controller('reportCtrl', ['$scope','$http','$modal','$filter','PdfService', 'localData',function($scope,$http,$modal,$filter,PdfService, localData) {
 // PRIMERA PROPUESTA
     $scope.previewArray = [];
     $scope.previewSize = 0;
     $scope.Areas = {};
+    var imgGBL;
 
         $scope.init = function(arr,obj){
-            console.log(arr);
             nar = [];
             nar.push(obj);
             for (i=0;i<arr.length;i++){
@@ -18,12 +18,12 @@ app.controller('reportCtrl', ['$scope','$http','$modal','$filter','PdfService' ,
     // Autor
         $scope.getAutorIf = function (){
             if($scope.query[0]==1 && ($scope.query[1].medio.idMedio != undefined || 0) ){
-                $http.post("data/consultas/consultasAdmin.php",{'sentencia':3,"id":$scope.query[1].medio.idMedio}).success(function(rOp){
+                localData.getAutor($scope.query[1].medio.idMedio).then(function(rOp){
                     objt= {'nombreAutor':'Sin Considerar','idAutor':0}
                     $scope.Autores = $scope.init(rOp,objt);
                  });   
             }else{
-                $http.post("data/consultas/consultasAdmin.php",{'sentencia':21}).success(function(rOp){
+                localData.getAllAutores().then(function(rOp){
                     objt= {'nombreAutor':'Sin Considerar','idAutor':0}
                     $scope.Autores = $scope.init(rOp,objt);
                  });   
@@ -33,7 +33,7 @@ app.controller('reportCtrl', ['$scope','$http','$modal','$filter','PdfService' ,
     // Medios
         $scope.getMedios= function (){
 
-                $http.post("data/consultas/consultasAdmin.php",{'sentencia':2}).success(function(rOp){
+                localData.getMedio().then(function(rOp){
                   objt = {"nombreMedio":"Sin Considerar","idMedio":0};
                   $scope.Medios = $scope.init(rOp,objt);
                 });
@@ -43,7 +43,7 @@ app.controller('reportCtrl', ['$scope','$http','$modal','$filter','PdfService' ,
 
     // AREAS   
             $scope.getArea = function(){
-                $http.post("data/consultas/consultasAdmin.php",{'sentencia':7}).success(function(rOp){
+                localData.getArea().then(function(rOp){
                   objt = {"nombreArea":"Sin Considerar","idArea":0};
                   $scope.Areas = $scope.init(rOp,objt);
                 });
@@ -51,14 +51,14 @@ app.controller('reportCtrl', ['$scope','$http','$modal','$filter','PdfService' ,
     // TEMAS
             $scope.getTema = function ()
             {
-                $http.post("data/consultas/consultasAdmin.php",{'sentencia':22}).success(function(rOp){
+                localData.getAllTemas().then(function(rOp){
                   objt = {"nombreTema":"Sin Considerar","idTema":0};
                   $scope.Temas = $scope.init(rOp,objt);
                 });
             };
     // SUBTEMAS
             $scope.getSubtema = function(){
-                $http.post("data/consultas/consultasAdmin.php",{'sentencia':23}).success(function(rOp){
+                localData.getAllSubtemas().then(function(rOp){
                   objt = {"nombreSubtema":"Sin Considerar","idSubtema":0};
                   $scope.Subtemas = $scope.init(rOp,objt);
                 });
@@ -68,7 +68,7 @@ app.controller('reportCtrl', ['$scope','$http','$modal','$filter','PdfService' ,
 
     // PAIS
             $scope.getPais = function(){
-                        $http.post("data/consultas/consultasAdmin.php",{'sentencia':10}).success(function(rOp){
+                        localData.getPais().then(function(rOp){
                            objt = {"nombrePais":"Sin Considerar","idPais":0}; 
                           $scope.Paises = $scope.init(rOp,objt);
                         });   
@@ -76,14 +76,14 @@ app.controller('reportCtrl', ['$scope','$http','$modal','$filter','PdfService' ,
     // Estados
             $scope.getEstado = function (){
 
-                        $http.post("data/consultas/consultasAdmin.php",{'sentencia':24}).success(function(rOp){
+                        localData.getAllEstados().then(function(rOp){
                             objt = {"nombreEstado":"Sin Considerar","idEstado":0};
                           $scope.Estados = $scope.init(rOp,objt);
                         });
                     };
     // Municipios
             $scope.getMunicipio = function (){
-                        $http.post("data/consultas/consultasAdmin.php",{'sentencia':25}).success(function(rOp){
+                        localData.getAllMunicipios().then(function(rOp){
                           objt = {"nombreMunicipio":"Sin Considerar","idMunicipio":0};
                           $scope.Municipios = $scope.init(rOp,objt);
                         });
@@ -93,7 +93,7 @@ app.controller('reportCtrl', ['$scope','$http','$modal','$filter','PdfService' ,
     // PORTAGONISTA
             $scope.getProtagonista = function (){
 
-                    $http.post("data/consultas/consultasAdmin.php",{'sentencia':5}).success(function(rOp){
+                    localData.getProtagonista().then(function(rOp){
                         objt = {"nombreProtagonista":"Sin Considerar","idProtagonista":0};
                       $scope.Protagonistas = $scope.init(rOp,objt);
                     });
@@ -101,20 +101,20 @@ app.controller('reportCtrl', ['$scope','$http','$modal','$filter','PdfService' ,
             };
     // TIPO DE NOTA
             $scope.getTipo = function (){
-                    $http.post("data/consultas/consultasAdmin.php",{'sentencia':1}).success(function(rOp){
+                    localData.getTipoNota().then(function(rOp){
                             objt = {"nombreTipoNota":"Sin Considerar","idTipoNota":0};
                           $scope.tipoNotas = $scope.init(rOp,objt);
-
-                        });                    
+                    });                    
             };
     
     //Seccion
             $scope.getSeccion = function(){
-                    $http.post("data/consultas/consultasAdmin.php",{'sentencia':4}).success(function(rOp){
+                    localData.getSeccion().then(function(rOp){
                         objt = {"nombreSeccion":"Sin Considerar","idSeccion":0};
                       $scope.Seccion = $scope.init(rOp,objt);
                     });
             };
+
 
 
 
@@ -183,6 +183,12 @@ $scope.appendText = function(data){
                     objeto.data =  data.data;
                     $scope.appendVar(objeto);
                     break;
+                // Anexar imagen
+				case 5:         
+					objeto.tipo5;
+					objeto.data = data;       	
+					$scope.appendVar(objeto);
+					break;
             }
             //console.log($scope.previewSize);
             //$scope.previewArray = $scope.appendVar($scope.previewArray,obj,$scope.previewSize);
@@ -193,7 +199,6 @@ $scope.appendText = function(data){
             $scope.pdf = $scope.previewArray;
         };
 
-    // MODAL GRAFICA DE PIE
         $scope.modalPie = function(responce){
               var modalInstance = $modal.open({ 
                 templateUrl: 'partials/admin/modals/reportes/reporteQuery.html',
@@ -265,8 +270,7 @@ $scope.appendText = function(data){
             }
 
         }
-            console.log($scope.rechasados);
-            console.log($scope.aceptados);
+            
       };
     $scope.cancel = function () {
       $modalInstance.close();
@@ -295,6 +299,163 @@ $scope.appendText = function(data){
 $scope.processData(data);
 $scope.pushToTable(1);
                 };
+
+        //Modal Pie
+        $scope.genPie = function(datos){
+            var modalInstance = $modal.open({ 
+                templateUrl: 'partials/admin/modals/reportes/reporteGrafica.html',
+                controller: grafCtrl,
+                size: 'lg',
+                resolve: {
+                data: function() { 
+                		var arr = [];
+                		arr.push(datos,1);
+                		return arr;
+                	}
+                }
+             });
+             
+             modalInstance.result.then(function(data) {
+              	if(data != undefined)
+              	{
+              		var obj = {};
+              		obj.tipo = 5;
+              		obj.data = data;
+              		//console.log("hola");
+              		//(jQuery)("#prueba").append(imgGBL);
+              		$scope.previewArray.push(obj);
+              	}
+              });
+        };
+        
+        $scope.genBar = function(datos){
+            var modalInstance = $modal.open({ 
+                templateUrl: 'partials/admin/modals/reportes/reporteGrafica.html',
+                controller: grafCtrl,
+                size: 'lg',
+                resolve: {
+                data: function() { 
+                		var arr = [];
+                		arr.push(datos,2);
+                		return arr;
+                	}
+                }
+             });
+             
+            modalInstance.result.then(function(data) {
+             	if(data != undefined)
+         		{
+         			var obj = {};
+         			obj.tipo = 5;
+         			obj.data = data;
+         			//console.log("hola");
+         			//(jQuery)("#prueba").append(imgGBL);
+         			$scope.previewArray.push(obj);
+         		}
+             });
+        };
+
+        var grafCtrl = function($scope, $modalInstance, data){
+            var helper = [], i, j, posibles = [], aux, aux1, chart;
+            var op = angular.copy(data[1]);
+            data = data[0];
+            $scope.opCP = [];
+            
+            if(op==1)
+            	$scope.texto = "Grafica de Pie";
+            else 
+            	$scope.texto = "Grafica de Barras";
+            
+            $scope.genObj = function(dato){
+                var auxo = {}, datos = [];                	
+                $scope.graf = 1;  
+                if ($scope.opCP.length > 0)				
+                	$scope.opCP = [];                	                                                                        
+                for(i=0;i<helper.length;i++)
+                {
+                    auxo.total = helper[i]['total'];
+                    auxo[dato] = helper[i][dato];
+                    datos.push(angular.copy(auxo));
+                }                
+
+                if (op == 2)
+                {	
+            		setTimeout(function() {
+            			chart = AmCharts.makeChart("chartdiv", {
+            			   type: "serial",
+            			   dataProvider: datos,
+            			   categoryField: dato,
+            			   graphs: [{
+            				   type: "column",
+            				   title: "Notas",
+            				   valueField: "total",
+            				   lineAlpha: 0,
+            				   fillColors: "#ADD981",
+            				   fillAlphas: 0.8,
+            				   labelText: "[[value]]",
+            				   balloonText: "[[title]] in [[category]]:<b>[[value]]</b>"
+            			   }]
+            			});
+            		}, 1000);	                  		                
+                }else
+                {                   
+            		setTimeout(function() {
+            			chart = AmCharts.makeChart("chartdiv", {
+            			    type: "pie",
+            				theme: "none",
+            			    dataProvider: datos,
+            			    valueField: "total",
+            			    titleField: dato	            			                  	
+            			});
+            		}, 1000);	            	
+                }                        
+            };
+
+            for(i=0; i<data.length; i++)
+                if(data[i].tipo == 1)
+                {            
+                    for(j=0;j<data[i]['data'].length;j++)
+                    {
+                        delete data[i].data[j]['$$hashKey'];
+                        helper.push(data[i]['data'][j]);
+                    }
+                }
+            if(helper.length > 0)
+            {
+                for(i=0; i<helper.length; i++)
+                {
+                    aux = Object.keys(helper[i]);
+                    aux1 = aux.indexOf('total');
+                    aux.splice(aux1,1);
+                    for (j=0;j<aux.length;j++)
+                        if(posibles.indexOf(aux[j]) < 0)
+                            posibles.push(aux[j]);
+                }				
+                if (posibles.length > 1)
+                    $scope.opCP = posibles;
+                else
+                    $scope.genObj(posibles[0]);
+            }else
+                $scope.err = 1;
+            
+            $scope.guardar = function() {
+            	var tmp = new AmCharts.AmExport(chart);
+            	tmp.init();
+            	tmp.output ({
+            	    format: 'png',
+            	    output: 'datastring'
+            	}, function(data) {            	    	
+						(jQuery).post("amcharts/save.php",{imageData : encodeURIComponent(data)}, function(data2) {
+							$modalInstance.close("amcharts/imagenes/"+data2); 
+						});
+            			   	
+            	    });
+            };
+
+            $scope.cancel = function(){
+                $modalInstance.close();
+            };           
+        };
 ////  Modal Texto
          $scope.modalTexto = function(){
               var modalInstance = $modal.open({ 
@@ -350,8 +511,7 @@ $scope.getResume = function (n,data){
     }
     $http.post("data/consultas/consultaReportes.php",
                 {'reporte':reporte,'autor':data.autores, 'medio':data.medios, 'protagonista':data.protagonistas, 'tema':data.temas, 'clasificacion':data.clasificacion,'fecha':data.fecha, 'tipo':data.tipo, 'seccion':data.seccion,'genero':data.genero, 'cargo':data.cargos, 'area':data.areas, 'pais':data.paises, 'subtema':data.subtemas, 'estado':data.estados, 'municipio':data.municipios}).success(function(r) {
-                    $scope.prueba = r;
-                   console.log(r);
+                    $scope.prueba = r;                   
                     $scope.modalPie(r);
                     $scope.resetQuery();
                     //$scope.processData(r);

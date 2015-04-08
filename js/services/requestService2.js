@@ -18,7 +18,7 @@ app.factory("Request",['$http','$q',function($http,$q){
           });	
           return sync.promise;   
 	}
-	servicio.checkMedios = function(){
+	servicio.checkMedios = function(){		
 		return opcionesMedios;
 	}
 

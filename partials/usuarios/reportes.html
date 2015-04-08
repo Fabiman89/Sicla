@@ -333,7 +333,10 @@
                    <br>               
                   </div>
               </div> 
-
+			  <div class="col-md-12" ng-if="elemento.tipo==5"> <!-- Row para Imagen --> 
+			      <div class="col-md-12 "><img ng-src="{{elemento.data}}" >			                  
+			      </div>
+			  </div> 
             </div>  
         </div>  
     </div>
@@ -341,6 +344,8 @@
     <div class="col-md-12" ng-show="previewArray.length>0" > 
       <hr>
       <a class="btn btn-success" href="js/pdfService/pdfClass.php" target='_blank' ng-click="repo(previewArray)">Guardar en pdf</a> 
+      <button class="btn btn-success" ng-click="genPie(previewArray)" ><span class="fa fa-pie-chart"></span>   Grafica de Pie  </button>
+      <button class="btn btn-success" ng-click="genBar(previewArray)" ><span class="fa fa-bar-chart"></span>  Grafica de Barras </button>
     </div>
 
       <!--<pre>{{reporte | json}}</pre>

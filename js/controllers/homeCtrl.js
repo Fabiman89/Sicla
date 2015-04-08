@@ -111,16 +111,16 @@ app.controller('homeCtrl2',['$location','$scope','$http','$modal','$log', functi
           console.log(route);
 
           if(route==1){
-            window.location.assign("admin.html");
-            $modalInstance.close();
+          	$modalInstance.close();
+            window.location.assign("admin.html");            
           }
           if(route==3 || route>4 && route<=9){
-              $location.path("/premium/");
-              $modalInstance.close();
+          	  	$modalInstance.close();
+              $location.path("/premium/");              
           }
           if(route==4){
-              $location.path("/usuario");
-              $modalInstance.close();
+          	  $modalInstance.close();
+              $location.path("/usuario");              
           }
        }else {
        		$scope.alerta.tipo = "alert alert-danger";

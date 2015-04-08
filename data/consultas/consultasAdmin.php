@@ -225,8 +225,10 @@ switch ($instruccion){
 //TODOS LOS CARGOS (ERROR 313) 
 	case 13:
 		$result=mysqli_query($mysqli,
-		"SELECT * 
-		 FROM Cargo order by nombreCargo asc");
+		"SELECT ca.*, pr.idCP, pr.idProtagonista 
+		 FROM cargoProtagonista pr, Cargo ca  
+		 where pr.idCargo = ca.idCargo
+		 order by nombreCargo asc");
 		$arr = array();
 		if($result) {
 			 while($row = $result->fetch_assoc()) {

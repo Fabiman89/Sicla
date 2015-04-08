@@ -1,6 +1,6 @@
 'use strict';
 
-siclaApp.factory('localData', ['$http', '$q', function($http, $q) 
+app.factory('localData', ['$http', '$q', function($http, $q) 
 {
 	var servicio = {};
 	var sec = [],
