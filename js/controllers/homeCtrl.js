@@ -110,7 +110,7 @@ app.controller('homeCtrl2',['$location','$scope','$http','$modal','$log', functi
          route = msg[0].idTipoUsr;
           console.log(route);
 
-          if(route==1){
+          if(route==1 || route ==2){
           	$modalInstance.close();
             window.location.assign("admin.html");            
           }

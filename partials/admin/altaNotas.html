@@ -273,7 +273,7 @@
 
           </div>
           <div class="col-xs-1 col-lg-1">
-            <button type="button" ng-disabled="!nota.tema" title="Nuevo subtema" ng-click="modalSubtema(nota.area.idArea,nota.tema)" class="btn btn-sm btn-success"><span class="fa fa-plus"></span>
+            <button type="button" ng-disabled="!nota.tema" title="Nuevo subtema" ng-click="modalSubtema(nota.tema)" class="btn btn-sm btn-success"><span class="fa fa-plus"></span>
             </button>
           </div>
         </div>
@@ -320,7 +320,7 @@
                           </select>
                         </div>
                         <div class="col-xs-1 col-lg-1">
-                          <button type="button" ng-disabled="" title="Nuevo subtema" ng-click="modalSubtema(nota.otraArea[$index].idArea,nota.otroTema[$index], $index)" class="btn btn-sm btn-success"><span class="fa fa-plus"></span>
+                          <button type="button" ng-disabled="" title="Nuevo subtema" ng-click="modalSubtema(nota.otroTema[$index], $index)" class="btn btn-sm btn-success"><span class="fa fa-plus"></span>
                           </button>                  
                         </div>
                       </div>
@@ -394,7 +394,7 @@
 
           </div>
           <div class="col-xs-1 col-lg-1">
-            <button type="button" title="Nuevo municipio" ng-click="modalMunicipio(nota.pais.idPais,nota.estado)" ng-disabled="!nota.estado" class="btn btn-sm btn-success"><span class="fa fa-plus"></span>
+            <button type="button" title="Nuevo municipio" ng-click="modalMunicipio(nota.estado)" ng-disabled="!nota.estado" class="btn btn-sm btn-success"><span class="fa fa-plus"></span>
             </button>
           </div>
         </div>

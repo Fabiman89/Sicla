@@ -5,7 +5,7 @@
       if (data != "Error 202")
       { 
             nm = data; 
-            $scope.usr = {"nombre":nm,"mensaje":""};    
+            $scope.usr = {"nombre":nm.nombre,"mensaje":"", tipo: nm.tipo};    
       }
       else{ 
         window.location.assign("index.html");
@@ -147,7 +147,7 @@
                 {
                 	$http.post("data/inserciones/insercionesAdmin.php",{'sentencia':1,'nota':nota}).success(function(nota)
                 	{
-		                  if(typeof nota == 'string')
+		                  if(nota.toString().indexOf("error de insercion") == -1)
 		                  {
 		                    if (document.getElementById("exampleInputFile").value != "")
 		                      {
@@ -893,7 +893,7 @@
           		if(data != undefined)
           		{
           			var i, aux = data[1];
-          		  	$scope.opcionesMunicipio = data[1];
+          		  	$scope.opcionesMunicipios = data[1];
           		  	for(i=0; aux.length; i++)
           		  		if(aux[i].nombreMunicipio == data[0]['nombre'])
           		  		{
@@ -916,7 +916,8 @@
        
         $scope.updateMunicipio = function(municipio){
             localData.insertMunicipio(municipio).then(function(data) {
-              $modalInstance.close(data);
+              var aux = [municipio, data];
+              $modalInstance.close(aux);
             });
         };
         

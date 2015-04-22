@@ -31,7 +31,9 @@ switch ($instruccion){
 	case 2:
 		if (isset($_SESSION['unm']))
 		{
-			echo $_SESSION['unm'];
+			$arr['nombre'] = $_SESSION['unm'];
+			$arr['tipo'] = $_SESSION['utp'];
+			echo json_encode($arr);
 		} else{
 			//echo $_SESSION['unm'];
 			echo ("Error 202");
