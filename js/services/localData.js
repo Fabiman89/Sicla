@@ -17,6 +17,100 @@ siclaApp.factory('localData', ['$http', '$q', function($http, $q)
 		cargos = [],		
 		tpNota = [],
 		autores = [];
+	
+	servicio.refreshSubtemas = function() 
+	{
+		var sync = $q.defer();
+		$http.post("data/consultas/consultasAdmin.php",{'sentencia':23}).success(function(dataSubtema)
+		{
+			sbma = dataSubtema;
+			sync.resolve(sbma);	
+		});
+		return sync.promise;
+	};
+	
+	servicio.updateSubtema = function(subtema) 
+	{
+		var sync = $q.defer();
+		$http.post("data/actualizar/actualizacionAdmin.php",{'sentencia':12,'subtema':subtema}).success(function(data){
+			servicio.refreshSubtemas().then(function() 
+			{
+				sync.resolve(data);
+			});
+		});
+		return sync.promise;
+	};
+	
+	servicio.refreshTemas = function() 
+	{
+		var sync = $q.defer();
+		$http.post("data/consultas/consultasAdmin.php",{'sentencia':22}).success(function(dataTema)
+		{
+			tema = dataTema;
+			sync.resolve(tema);
+		});	
+		return sync.promise;
+	};
+			
+	servicio.updateTema = function(tema) 
+	{
+		var sync = $q.defer();
+		$http.post("data/actualizar/actualizacionAdmin.php",{'sentencia':11,"tema":tema}).success(function(data){
+			servicio.refreshTemas().then(function() 
+			{
+				sync.resolve(data);
+			});			
+		});
+		return sync.promise;
+	};
+		
+	servicio.refreshAreas = function() 
+	{
+		var sync = $q.defer();
+		$http.post("data/consultas/consultasAdmin.php",{'sentencia':7}).success(function(dataArea)
+		{				
+			area = dataArea;
+			sync.resolve(area);
+		});
+		return sync.promise;
+	};
+	
+	servicio.updateArea = function(area) 
+	{
+		var sync = $q.defer();
+		$http.post("data/actualizar/actualizacionAdmin.php",{'sentencia':10,"area":area}).success(function(data){
+			if (data == 1)
+				servicio.refreshAreas().then(function(data1) 
+				{
+					var aux = [1,data1];
+					sync.resolve(aux);
+				});
+			else
+			{
+				var aux = [0,data];
+				sync.resolve(aux);
+			}		
+		});
+		return sync.promise;
+	};
+		
+	servicio.updateAutor = function(autor) 
+	{
+		var sync = $q.defer();
+		$http.post("data/actualizar/actualizacionAdmin.php",{'sentencia':4,"autor":autor}).success(function(data){			
+			sync.resolve(data);
+		});
+		return sync.promise;
+	};
+		
+	servicio.updateMedio = function(medio) 
+	{
+		var sync = $q.defer();
+		$http.post("data/actualizar/actualizacionAdmin.php",{'sentencia':1,"medio":medio}).success(function(data){
+			sync.resolve(data);			
+		});
+		return sync.promise;
+	};
 		
 	servicio.insertMunicipio = function(municipio) 
 	{
@@ -135,7 +229,7 @@ siclaApp.factory('localData', ['$http', '$q', function($http, $q)
 	servicio.refreshCargo = function() 
 	{
 		var sync = $q.defer();
-		$http.post("data/consultas/consultasAdmin.php",{'sentencia':6}).success(function(dataCargo)
+		$http.post("data/consultas/consultasAdmin.php",{'sentencia':13}).success(function(dataCargo)
 		{
 			cargo = dataCargo;						
 			sync.resolve(cargo);
@@ -195,6 +289,25 @@ siclaApp.factory('localData', ['$http', '$q', function($http, $q)
 		{
 			medio = data1;
 			sync.resolve(medio);
+		});
+		return sync.promise;
+	};
+	
+	servicio.deleteMedio = function(medio) 
+	{
+		var sync = $q.defer();
+		$http.post("data/borrar/deleteAdmin.php",{'sentencia':1,"medio":medio}).success(function(data){
+			if (data == 1)
+				servicio.refreshMedios().then(function(data1) 
+				{
+					var aux = [1,data1];
+					sync.resolve(aux);
+				});
+			else
+			{
+				var aux = [0,data];
+				sync.resolve(aux);
+			}
 		});
 		return sync.promise;
 	};
@@ -430,6 +543,39 @@ siclaApp.factory('localData', ['$http', '$q', function($http, $q)
 					auxAu.push(autor[i]);
 			sync.resolve(auxAu);
 		}
+		return sync.promise;
+	};
+	
+	servicio.refreshAutores = function() 
+	{
+		var sync = $q.defer();			
+		$http.post("data/consultas/consultasAdmin.php",{'sentencia':21}).success(function(dataAutores)
+		{
+			autor = dataAutores;			
+			sync.resolve(autor);
+		});
+		return sync.promise;
+	};
+	
+	servicio.deleteAutor = function(autor) 
+	{
+		var sync = $q.defer();
+		$http.post("data/borrar/deleteAdmin.php",{'sentencia':3,"autor":autor}).success(function(data){
+			if(data == 1)
+				servicio.refreshAutores().then(function() 
+				{
+					servicio.getAutor(autor.idMedio).then(function(data1) 
+					{
+						var aux = [1,data1];
+						sync.resolve(aux);
+					});					
+				});					
+			else 
+			{
+				var aux = [0,data];
+				sync.resolve(aux);	
+			}
+		});
 		return sync.promise;
 	};
 

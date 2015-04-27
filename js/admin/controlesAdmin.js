@@ -144,42 +144,87 @@
 
               $scope.updateNota = function(nota,k){
                 if( nota!=undefined )
-                {
-                	$http.post("data/inserciones/insercionesAdmin.php",{'sentencia':1,'nota':nota}).success(function(nota)
-                	{
-		                  if(nota.toString().indexOf("error de insercion") == -1)
-		                  {
-		                    if (document.getElementById("exampleInputFile").value != "")
-		                      {
-		                        var file = document.getElementById("exampleInputFile"), formData = new FormData();
-		                        formData.append("imagen", file.files[0]);
-		                        formData.append("nota",nota);
-		                        $.ajax({
-		                          url:'data/inserciones/insercionPortada.php',
-		                          type: 'POST',
-		                          data: formData,
-		                          processData: false,
-		                          contentType: false,
-		                          dataType: 'json',
-		                          success: function(ev) {       
-		                            console.log(ev); 
-		                            document.getElementById("exampleInputFile").value = "";                                              
-		                          }
-		                        });
-		                      }  
-		
-		                    $scope.resetFields(k);
-		                  }else{
-		                  	//Modal de error aqui
-		                  	
-		                  }                         
-                         $scope.permitir = false; 
-                         $scope.auxiliarST = [0];
-                         $scope.auxiliarPT = [0];                    
-              		}); 
+                {                	
+					var modalInstance = $modal.open({ 
+						templateUrl: 'partials/admin/modals/carga.html',
+						controller: cargaModalCtrl,
+						size: 'md',
+						resolve: {
+							notaOpc : function() {
+							  	return nota;  
+							}
+						}
+					});
+					
+					modalInstance.result.then(function(data) {
+						if(data != undefined)
+							if (data == 1)
+							{
+								$scope.resetFields(k);
+								document.getElementById("exampleInputFile").value = "";
+								$scope.permitir = false; 
+								$scope.auxiliarST = [0];
+								$scope.auxiliarPT = [0];
+							}
+					});         										                	
 				}else{
 				  console.log("nota no definida");
 				}
+              };
+              
+              var cargaModalCtrl = function($scope, $modalInstance, $http, notaOpc) 
+              {
+              	$scope.cancel = function() 
+              	{
+              		$modalInstance.close();
+              	};
+              	
+              	$scope.master = {};
+              	var con = true;
+              	$scope.resultado = "";
+              	if (document.getElementById("exampleInputFile").value != "")
+              	{
+              		var nom = document.getElementById("exampleInputFile").value,
+              			ind = nom.lastIndexOf(".") + 1,
+              			name = nom.slice(ind);
+              		if (name.toLowerCase() != "png" && name.toLowerCase() != "jpg" && name.toLowerCase() != "jpeg")
+              		{
+              			$scope.resultado = "La extensión "+name+" no está permitida";
+              			con = false;
+              		}								
+              	}
+              	if (con)
+              		$http.post("data/inserciones/insercionesAdmin.php",{'sentencia':1,'nota':notaOpc}).success(function(nota)
+                  	{
+                            if(nota.toString().indexOf("error de insercion") == -1)
+                            {
+                              if (document.getElementById("exampleInputFile").value != "")
+                              {
+                                  var file = document.getElementById("exampleInputFile"), formData = new FormData();
+                                  formData.append("imagen", file.files[0]);
+                                  formData.append("nota",nota);
+                                  $.ajax({
+                                    url:'data/inserciones/insercionPortada.php',
+                                    type: 'POST',
+                                    data: formData,
+                                    processData: false,
+                                    contentType: false,
+                                    dataType: 'json',
+                                    success: function(ev) {       
+                                      if(ev == 1)
+                                      	$modalInstance.close(ev);
+                                      else
+                                      	$scope.resultado = ev;
+                                    }
+                                  });
+                              }
+                              else
+                              	$modalInstance.close(1);	  
+                            }else{
+                            	//Error aqui
+                            	$scope.resultado = nota;	
+                            }                         			                                     
+                		}); 	
               };
               
     //Opciones para Otros Temas

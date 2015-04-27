@@ -103,22 +103,21 @@
 		
 	}]);
 
-  siclaApp.controller('editMedioCtrl', ['$scope','$http','$modal',function($scope,$http,$modal) {
+  siclaApp.controller('editMedioCtrl', ['$scope','$http','$modal', 'localData',function($scope,$http,$modal, localData) {
     $scope.editAviable = true;
     $scope.medio = {};
 
-    $http.post("data/consultas/consultasAdmin.php",{'sentencia':2}).success(function(medios){
+    localData.getMedio().then(function(medios){
       $scope.medio = medios;
     }); 
 
     $scope.getAutores = function(medio){
       $scope.nmMedio = medio.nombreMedio;
       $scope.medioSeleccionado = medio.idMedio;
-      $http.post("data/consultas/consultasAdmin.php",{'sentencia':3,'id':medio.idMedio}).success(function(autores){
-        $scope.autores = autores;    
+      localData.getAutor(medio.idMedio).then(function(autores){   		  
+              $scope.autores = autores;    
       });
     }
-
    /*--------------------------------------------- Eliminar Medio------------------------------------------------*/                              
               
               $scope.eliminarMedio = function(dato,query){
@@ -136,7 +135,6 @@
 
               });
                 modalInstance.result.then(function(data) {
-                  console.log(data);
                   if(data != undefined ){
                     switch (data[0]){
                       case 1:
@@ -152,51 +150,40 @@
               };
 
               var eliminarMedioCtrl = function($scope,$modalInstance,val) {
-                console.log(val);
                   switch (val[1]) { 
                     case 1:
                       $scope.tipo = 'Medio';
                       $scope.nm = val[0].nombreMedio;
                       $scope.idDato = val[0].idMedio;
                       $scope.eliminaMedio = function (){
-                          $http.post("data/borrar/deleteAdmin.php",{'sentencia':1,"medio":val[0]}).success(function(rMedio){
-                          console.log(rMedio);
-                          if(rMedio==1){
-                            //Control de Success aqui!
-                            $http.post("data/consultas/consultasAdmin.php",{'sentencia':2}).success(function(rMedio2){
-                              respuesta = [];
-                              respuesta.push(1,rMedio2);
+                          localData.deleteMdio(val[0]).then(function(rMedio){                          
+                          if(rMedio[0]==1){
+                            //Control de Success aqui!                            
+                              var respuesta = [1,rMedio[1]];
                               $modalInstance.close(respuesta);
-                            });
                           }else{
                             //control de errores aqui!
                             console.log("Error Al Eliminar Medios");
+                            console.log(rMedio[1]);
                             $modalInstance.close();
                           }
-                          //$modalInstance.close(rMedio);
                         }); 
                       };
                       break;
                     case 2:
                       $scope.tipo = 'Autor';
                       $scope.nm = val[0].nombreAutor;
-                      console.log(val);
                       $scope.idm = val[0].idMedio;
-                      console.log($scope.idm);
                       $scope.eliminaAutor = function (){
-                          $http.post("data/borrar/deleteAdmin.php",{'sentencia':3,"autor":val[0]}).success(function(rAutor){
-                          console.log(rAutor);
+                          localData.deleteAutor(val[0]).then(function(rAutor){
                           if(rAutor==1){
-                            //Control de Success aqui!
-                            $http.post("data/consultas/consultasAdmin.php",{'sentencia':3,'id':$scope.idm}).success(function(rAutor2){
-                              console.log(rAutor2);
-                              respuesta = [];
-                              respuesta.push(2,rAutor2);
+                            //Control de Success aqui!                            
+                              var respuesta = [2,rAutor[1]];
                               $modalInstance.close(respuesta);
-                            });
                           }else{
                             //control de errores aqui!
                             console.log("Error Al Eliminar Autores");
+                            console.log(rAutor[1]);
                             $modalInstance.close();
                           }
                           //$modalInstance.close(rMedio);
@@ -225,15 +212,12 @@
 
               });
                 modalInstance.result.then(function(data) {
-                  console.log(data[0].urlMedio);
                   if(data != undefined ){
                     if(data[0].urlMedio != undefined){
-                      console.log("aqui 1");
                       $scope.medio = data;
                       delete($scope.autores);
                     }else{
                       $scope.autores = data;
-                      console.log($scope.autores);
                     }
                   }
                 });
@@ -242,7 +226,6 @@
               var mediosModalCtrl = function($scope,$modalInstance,val) {
                   $scope.valor = val[1];
                   $scope.nm = {};
-                  //$scope.cambios = val[0];
                   switch (val[1]) {
                     case 1:
                       $scope.cambios = {"nombre":val[0].nombreMedio,"url":val[0].urlMedio,"idMedio":val[0].idMedio}
@@ -251,39 +234,55 @@
                       $scope.textoH4 = "Editando Medio";
                       $scope.actualizaMedio = function(cambiosMedio){
                         $scope.medio = {"idMedio":cambiosMedio.idMedio,"nombreMedio":cambiosMedio.nombre,"urlMedio":cambiosMedio.url };
-                        console.log($scope.medio);
-                        $http.post("data/actualizar/actualizacionAdmin.php",{'sentencia':1,"medio":$scope.medio}).success(function(rMedio){
-                          console.log(rMedio); 
-                          if (document.getElementById("exampleInputFile").value != "")
-                          {                         
-                            var file = document.getElementById("exampleInputFile"), formData = new FormData();
-                            formData.append("imagen", file.files[0]);
-                            formData.append("medio",cambiosMedio.idMedio);                          
-                            $.ajax({
-                              url:'data/actualizar/actualizarLogo.php',
-                              type: 'POST',
-                              data: formData,
-                              processData: false,
-                              contentType: false,
-                              dataType: 'json',
-                              success: function(ev) {       
-                                console.log(ev);  
-                                $modalInstance.close(ev);
-                                }
-                            });
-                          }else
-                            $modalInstance.close(rMedio);
+                        localData.updateMedio($scope.medio).then(function(rMedio){ 
+                          if (rMedio == 1)
+                          {
+	                          if (document.getElementById("exampleInputFile").value != "")
+	                          {                         
+	                            var file = document.getElementById("exampleInputFile"), formData = new FormData();
+	                            formData.append("imagen", file.files[0]);
+	                            formData.append("medio",cambiosMedio.idMedio);                          
+	                            $.ajax({
+	                              url:'data/actualizar/actualizarLogo.php',
+	                              type: 'POST',
+	                              data: formData,
+	                              processData: false,
+	                              contentType: false,
+	                              dataType: 'json',
+	                              success: function() {       
+	                              	localData.refreshMedios().then(function(data) 
+                              		{
+                              			$modalInstance.close(data);
+                              		});  	                                
+	                              }
+	                            });
+	                          }else
+	                          	localData.refreshMedios().then(function(data) 
+	                          	{
+	                          		$modalInstance.close(data);
+	                          	});
+	                   	  }else
+	                   	  {
+	                   	  	console.log(rMedio);
+	                   	  	$modalInstance.close();
+	                   	  }                         
                         }); 
                       };
                       break;
                     case 2: 
                       $scope.actualizaAutor = function(cambiosAutor){
-                        console.log(cambiosAutor);
-                        console.log(val[0].idMedio);
                         $scope.autor = {"idAutor":val[0].idAutor,"nombreAutor":cambiosAutor.nombre,"generoAutor":cambiosAutor.genero};
-                        $http.post("data/actualizar/actualizacionAdmin.php",{'sentencia':4,"autor":$scope.autor,"medio":val[0].idMedio}).success(function(rAutor){
-                          console.log(rAutor);
-                          $modalInstance.close(rAutor);
+                        localData.updateAutor($scope.autor).then(function(rAutor){
+                          if(rAutor == 1)
+                          	localData.refreshAutores().then(function() 
+                          	{
+                          		localData.getAutor(val[0].idMedio).then(function(data) 
+                          		{
+                          			$modalInstance.close(data);                          
+                          		});
+                          	});                          	
+                          else
+                          	$modalInstance.close();
                         });
                       };
                       $scope.cambios = {"nombre":val[0].nombreAutor,"genero":val[0].generoAutor,"idAutor":val[0].idAutor}
@@ -302,15 +301,15 @@
 
 /**************************************************** CONTROLADOR EDICION AREAS  ***************************************/
 
-    siclaApp.controller('editAreaCtrl', ['$scope','$http','$modal',function($scope,$http,$modal) {
+    siclaApp.controller('editAreaCtrl', ['$scope','$http','$modal', 'localData', function($scope,$http,$modal, localData) {
           $scope.editAviable = true;
-          $http.post("data/consultas/consultasAdmin.php",{'sentencia':7}).success(function(area){
+          localData.getArea().then(function(area){
             $scope.areas = area;
           }); 
 
           $scope.getTemas = function(area){
             $scope.nmArea = area.nombreArea;
-            $http.post("data/consultas/consultasAdmin.php",{'sentencia':8,'area':area.idArea}).success(function(respuestaTema){
+            localData.getTema(area.idArea).then(function(respuestaTema){
               $scope.temas = respuestaTema;
             }); 
             if($scope.subtemas){
@@ -320,7 +319,7 @@
 
           $scope.getSubs = function(tema){
             $scope.nmTema = tema.nombreTema;
-            $http.post("data/consultas/consultasAdmin.php",{'sentencia':9,'tema':tema.idTema}).success(function(respuestaSubs){
+            localData.getSubtema(tema.idTema).then(function(respuestaSubs){
               $scope.subtemas = respuestaSubs;
             });
           };
@@ -376,15 +375,13 @@
 
                       $scope.actualizaArea = function(cambiosA){
                         $scope.area = {"idArea":val[0].idArea,"nombre":cambiosA.nombre};
-                        $http.post("data/actualizar/actualizacionAdmin.php",{'sentencia':10,"area":$scope.area}).success(function(rArea){
-                            if(rArea==1){
-                              $http.post("data/consultas/consultasAdmin.php",{'sentencia':7}).success(function(rArea2){
-                                respuesta = [];
-                                respuesta.push(1,rArea2);
+                        localData.updateArea($scope.area).then(function(rArea){
+                            if(rArea[0]==1){                              
+                                var respuesta = [1,rArea[1]];
                                 $modalInstance.close(respuesta);
-                              });
                             }else{
-                              console.log(rArea);
+                              console.log(rArea[1]);
+                              $modalInstance.close();
                             }
 
                         });
@@ -393,13 +390,12 @@
                     case 2: 
                       $scope.actualizaTema = function(cambiosT){
                         tema = {"idTema":val[0].idTema,"nombre":cambiosT.nombre};
-                        $http.post("data/actualizar/actualizacionAdmin.php",{'sentencia':11,"tema":tema}).success(function(rTema){
+                        localData.updateTema(tema).then(function(rTema){
                           if(rTema==1){
-                            $http.post("data/consultas/consultasAdmin.php",{'sentencia':8,'area':val[0].idArea}).success(function(rTema2){
-                              respuesta = [];
-                              respuesta.push(2,rTema2);
+                            localData.getTema(val[0].idArea).then(function(rTema2){
+                              var respuesta = [2,rTema2];
                               $modalInstance.close(respuesta);
-                            });
+                             });
                           }else{
                             // errores aqui
                             console.log(rTema);
@@ -416,11 +412,10 @@
                       $scope.textoH4 = "Editando Subtema";
                       $scope.actualizaSubtema = function(cambiosS){
                         subtema = {"nombre":cambiosS.nombre,"idSubtema":val[0].idSubtema};
-                        $http.post("data/actualizar/actualizacionAdmin.php",{'sentencia':12,'subtema':subtema}).success(function(rSubtema){
+                        localData.updateSubtema(subtema).then(function(rSubtema){
                           if(rSubtema==1){
-                            $http.post("data/consultas/consultasAdmin.php",{'sentencia':9,'tema':val[0].idTema}).success(function(rSubtema2){
-                              respuesta = [];
-                              respuesta.push(3,rSubtema2);
+                            localData.getSubtema(val[0].idTema).then(function(rSubtema2){
+                              var respuesta = [3,rSubtema2];
                               $modalInstance.close(respuesta);
                             });
                           }else{
@@ -531,7 +526,7 @@
 
 /**************************************************** CONTROLADOR EDICION PROTAGONISTA  ***************************************/
 
-    siclaApp.controller('editProtagonistaCtrl', ['$scope','$http','$modal',function($scope,$http,$modal) {
+    siclaApp.controller('editProtagonistaCtrl', ['$scope','$http','$modal', 'localData',function($scope,$http,$modal,localData) {
           $scope.editAviable = true;
           $scope.protagonistas = {};
           $scope.cargos = {};
@@ -540,7 +535,7 @@
             $scope.protagonistas = prot;
           }); 
 
-          $http.post("data/consultas/consultasAdmin.php",{'sentencia':13}).success(function(carg){
+          localData.getAllCargos().then(function(carg){
             $scope.cargos = carg;
           }); 
 

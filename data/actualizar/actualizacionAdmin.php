@@ -13,16 +13,7 @@
 					if ($mysqli->query("update Medio 
 						set nombreMedio = '$nombre', urlMedio = '$url'
 						 where idMedio = $id") === TRUE) {
-					    $result  = $mysqli->query("select * from Medio order by nombreMedio asc");
-						if ($result)
-						{
-							$arr = array();
-							while ($row = mysqli_fetch_assoc($result)) 
-								$arr[] = $row;
-							mysqli_free_result($result);
-							echo json_encode($arr);
-						}else
-							echo "Error 501-2";
+					    	echo 1;						
 					} else {
 					    echo "Error updating record: " . $mysqli->error;
 					}
@@ -58,26 +49,14 @@
 				mysqli_close($mysqli);
 				break;
 //Actualizar Autor Error 504
-		case 4:	if(isset($datos['autor']) && isset($datos['medio']))
+		case 4:	if(isset($datos['autor']))
 				{
 					$id = $datos['autor']['idAutor'];
-					$medio = $datos['medio'];
 					$nombre = $datos['autor']['nombreAutor'];
 					$genero = $datos['autor']['generoAutor'];
-					$mysqli->query("update Autor set nombreAutor = '$nombre', generoAutor = '$genero' where idAutor = $id");
-					$result = $mysqli->query("SELECT a.idAutor, a.nombreAutor,a.generoAutor,c.idMedio, c.idCE 
-			FROM Autor a, colabora_en c 
-			WHERE c.idMedio=$medio 
-			and c.idAutor = a.idAutor 
-			order by nombreAutor asc");
-					if ($result)
-					{
-						$arr = array();
-						while ($row = mysqli_fetch_assoc($result))
-							$arr[] = $row;
-						mysqli_free_result($result);
-						echo json_encode($arr);
-					}else
+					if($mysqli->query("update Autor set nombreAutor = '$nombre', generoAutor = '$genero' where idAutor = $id"))
+						echo 1;
+					else
 						echo "Error 504-2";
 				}else
 					echo "Error 504-1";

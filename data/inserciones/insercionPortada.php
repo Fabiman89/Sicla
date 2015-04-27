@@ -16,17 +16,16 @@
 				move_uploaded_file($tmp_name, "../../imagenes/imagenesNotas/$fecha-$nota-$name");
 				$final="imagenes/imagenesNotas/$fecha-$nota-$name";
 				$mysqli->query("update Nota set imagenNota = '$final' where idNota = $nota");
-			}				
+				mysqli_free_result($result);
+				mysqli_close($mysqli);				
+				echo 1;
+			}
+			else
+				echo "Error: La imagen no subió al servidor.";							
 		}
+		else 
+			echo "Error: La extensión ".$ext." no está permitida.";
 	}
-	$result = $mysqli->query("select * from Nota");
-	$arr = array();
-	if ($result)
-	{
-		while($row = mysqli_fetch_assoc($result))
-			$arr[] = $row;
-		mysqli_free_result($result);
-	}
-	mysqli_close($mysqli);
-	echo json_encode($arr);
+	else
+		echo "Error: La imagen no subió al servidor.";
 ?>
