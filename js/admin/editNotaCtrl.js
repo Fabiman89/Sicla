@@ -168,7 +168,6 @@
 /**** TIPO NOTA    ***/            
 		localData.getTipoNota().then(function(dataTipoNota){
           $scope.opcionesNota = dataTipoNota;  
-          console.log($scope.opcionesNota);
           for(i=0;i<$scope.opcionesNota.length;i++)
             if($scope.opcionesNota[i].idTipoNota == dataEdicion[0].idTipoNota)
              $scope.nota.tipo = $scope.opcionesNota[i];
@@ -328,7 +327,7 @@
           });
 
           modalInstance.result.then(function(){
-            window.location.reload();
+            window.location = "#/altas/recientes"
           });
         };
 
@@ -356,33 +355,80 @@
       });
 
               $scope.updateNota = function(nota){
-                console.log(nota);
-                $http.post("data/actualizar/actualizacionAdmin.php",{'sentencia':9,'nota':nota}).success(function(respuesta){
-
-                  if (document.getElementById("exampleInputFile").value != "")
-                  {
-                    var file = document.getElementById("exampleInputFile"), formData = new FormData();
-                    formData.append("imagen", file.files[0]);
-                    formData.append("nota",nota.idNota);
-                    $.ajax({
-                      url:'data/actualizar/actualizacionPortada.php',
-                      type: 'POST',
-                      data: formData,
-                      processData: false,
-                      contentType: false,
-                      dataType: 'json',
-                      success: function(ev) {       
-                        console.log(ev);  
-                      }
-                    });
-                  }
-                  $scope.modalAlerta(respuesta);
-                  if(respuesta==1){
-                    
-                   // 
-                  }
-                  
-                }); 
+              	var modalInstance = $modal.open({ 
+              		templateUrl: 'partials/admin/modals/carga.html',
+              		controller: cargaModalCtrl,
+              		size: 'md',
+              		resolve: {
+              			notaOpc : function() {
+              			  	return nota;  
+              			}
+              		}
+              	});
+              	
+              	modalInstance.result.then(function(data) {
+              		if(data != undefined)
+              			if (data == 1)
+              			{
+							$scope.modalAlerta(1);	
+              			}
+              	});              	                 
+              };
+              
+              var cargaModalCtrl = function($scope, $modalInstance, $http, notaOpc) 
+              {
+              	$scope.cancel = function() 
+              	{
+              		$modalInstance.close();
+              	};
+              	
+              	$scope.master = {};
+              	var con = true;
+              	$scope.resultado = "";
+              	if (document.getElementById("exampleInputFile").value != "")
+              	{
+              		var nom = document.getElementById("exampleInputFile").value,
+              			ind = nom.lastIndexOf(".") + 1,
+              			name = nom.slice(ind);
+              		if (name.toLowerCase() != "png" && name.toLowerCase() != "jpg" && name.toLowerCase() != "jpeg")
+              		{
+              			$scope.resultado = "La extensión "+name+" no está permitida";
+              			con = false;
+              		}								
+              	}
+              	if (con)
+              		$http.post("data/actualizar/actualizacionAdmin.php",{'sentencia':9,'nota':notaOpc}).success(function(nota)
+                  	{
+                            if(parseInt(nota) == 1)
+                            {
+                            	$scope.state="La nota se guardó correctamente. Se está subiendo la imagen";
+                              if (document.getElementById("exampleInputFile").value != "")
+                              {
+                                  var file = document.getElementById("exampleInputFile"), formData = new FormData();
+                                  formData.append("imagen", file.files[0]);
+                                  formData.append("nota",notaOpc.idNota);
+                                  $.ajax({
+                                    url:'data/actualizar/actualizacionPortada.php',
+                                    type: 'POST',
+                                    data: formData,
+                                    processData: false,
+                                    contentType: false,
+                                    dataType: 'json',
+                                    success: function(ev) {       
+                                      if(ev == 1)
+                                      	$modalInstance.close(ev);
+                                      else
+                                      	$scope.resultado = ev;
+                                    }
+                                  });
+                              }
+                              else
+                              	$modalInstance.close(1);	  
+                            }else{
+                            	//Error aqui
+                            	$scope.resultado = nota;	
+                            }                         			                                     
+                		}); 	
               };
 // Medios /
     /*----------------------------------------------Modal Medios------------------------------------------------*/                              

@@ -198,6 +198,7 @@
                   	{
                             if(nota.toString().indexOf("error de insercion") == -1)
                             {
+                            	$scope.state="La nota se guardó correctamente. Se está subiendo la imagen";
                               if (document.getElementById("exampleInputFile").value != "")
                               {
                                   var file = document.getElementById("exampleInputFile"), formData = new FormData();

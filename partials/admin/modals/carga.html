@@ -3,11 +3,11 @@
 </div>
 <div class="modal-body">
     <div class="form-group" ng-show="resultado == ''">		
-		<button class="btn btn-lg btn-warning"  style="margin: auto;"><span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span> Subiendo...</button>
+		<button class="btn btn-lg btn-primary"  style="margin: auto;"><span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span> Subiendo...</button>
     </div>   
     <div class="form-group" ng-show="resultado != ''">
     	<h3>Error</h3><br />
-    	<label style="display: block;text-align: center;">{{resultado}}</label>
+    	<label style="display: block;text-align: center;">{{state}} <br>{{resultado}}</label>
     </div> 
     <br>          
 </div>
