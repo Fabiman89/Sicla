@@ -46,7 +46,13 @@ app.controller('homeCtrl',['$scope','$http','$modal', function($scope,$http,$mod
 
 
 app.controller('homeCtrl2',['$location','$scope','$http','$modal','$log', function($location,$scope,$http,$modal,$log){
-
+  
+  $scope.contador = 0;
+  $http.post('data/inserciones/insercionContador.php').success(function(data) 
+  {
+  	$scope.contador = data.total;
+  });
+  
   $scope.user = {};
   $scope.open1 = function (size) {
     var modalInstance = $modal.open({
