@@ -1102,3 +1102,19 @@
          });
        };    
     }]);
+    
+/* *********************************************************************************/
+// Visitas
+	siclaApp.controller('visitasCtrl', ['$scope','$http', function($scope,$http) {
+		$scope.total = 0;
+		$scope.visitas = [];
+		
+		$http.post("data/consultas/consultasAdmin.php",{'sentencia':27}).success(function(data) {
+			if(data.total != undefined)
+			{
+				$scope.total = data.total;
+				$scope.visitas = data.datos;	
+			}
+		});
+	}]);
+    

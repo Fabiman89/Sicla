@@ -53,6 +53,9 @@ siclaApp.config(['$routeProvider',
     }).when('/editar/usuarios', {
         templateUrl: 'partials/admin/editar/editarUsuario.html',
         controller: 'edtiUsrCtrl'
+    }).when('/visitas', {
+        templateUrl: 'partials/admin/visitas.html',
+        controller: 'visitasCtrl'
     }).otherwise({
         redirectTo: '/altas/nota'
       });

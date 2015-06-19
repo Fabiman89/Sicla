@@ -542,6 +542,24 @@ case 23:
 				echo("Error 326");
 			mysqli_close($mysqli);
 			break;
+// Visitas
+		case 27:
+			$result = mysqli_query($mysqli, "Select count(IP) as total from Visita");
+			$arr = array();
+			if ($result)
+			{
+				$row = mysqli_fetch_assoc($result);
+				$arr = $row;
+				$result = mysqli_query($mysqli, "Select Usuario, Fecha from Visita order by Fecha desc limit 100");
+				while ($row = mysqli_fetch_assoc($result))
+					$arr["datos"][] = $row;
+				echo json_encode($arr);
+				mysqli_free_result($result);
+			}
+			else
+				echo "Error 327";
+			mysqli_close($mysqli);
+			break;			
 //RESPUESTA DEFAULT
 	default:
 		echo json_encode("Error 300 Admin Querys");
