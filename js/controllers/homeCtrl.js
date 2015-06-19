@@ -1,6 +1,7 @@
 'use strict';
 app.controller('homeCtrl',['$scope','$http','$modal', function($scope,$http,$modal){
  // $http.get("data/consultas/Columnas.php").success(function(Columnas){
+  $http.post('data/inserciones/insercionContador.php',{'Sitio':'Visitas'});
   $http.post("data/consultas/consultas.php",{'sentencia':1}).success(function(Columnas){ 
    $http.post("data/consultas/consultas.php",{'sentencia':2}).success(function(Medios){ 
         $scope.angMedios=Medios;
@@ -45,14 +46,8 @@ app.controller('homeCtrl',['$scope','$http','$modal', function($scope,$http,$mod
 
 
 
-app.controller('homeCtrl2',['$location','$scope','$http','$modal','$log', function($location,$scope,$http,$modal,$log){
-  
-  $scope.contador = 0;
-  $http.post('data/inserciones/insercionContador.php').success(function(data) 
-  {
-  	$scope.contador = data.total;
-  });
-  
+app.controller('homeCtrl2',['$location','$scope','$http','$modal','$log', function($location,$scope,$http,$modal,$log){    
+    
   $scope.user = {};
   $scope.open1 = function (size) {
     var modalInstance = $modal.open({
@@ -179,6 +174,7 @@ app.service('RegisterService',['$http', function($http){
 
 
 app.controller('homeUserCtrl',['$scope','$http','$modal','$log', function($scope,$http,$modal,$log){
+   $http.post('data/inserciones/insercionContador.php',{'Sitio':'Logueado'});
    $http.post("data/consultas/consultas.php",{'sentencia':1}).success(function(Columnas){ 
    $http.post("data/consultas/consultas.php",{'sentencia':2}).success(function(Medios){ 
         $scope.angMedios=Medios;
@@ -239,6 +235,7 @@ app.service('PremiumService',['$http', function($http){
 
 
 app.controller('PremiumCtrl',['$scope','$http','$modal','PremiumService','Request','$q', function($scope,$http,$modal,PremiumService,Request,$q){
+          $http.post('data/inserciones/insercionContador.php',{'Sitio':'Logueado'});
           var sync = $q.defer();
           $scope.Medios = {};
           $scope.Autores = {};
