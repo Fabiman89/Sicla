@@ -193,6 +193,27 @@
 					echo "Error 615-1";
 				mysqli_close($mysqli);
 				break;
-
+		case 16:
+			if (isset($datos['nota']))
+			{
+				$id = $datos['nota'];			
+				$result = $mysqli->query("select imagenNota from Nota where idNota = $id");
+				$row = mysqli_fetch_assoc($result);
+				if (isset($row['imagenNota']))
+				{
+					if (unlink("../../".$row['imagenNota']))
+					{					
+						$mysqli->query("update Nota set imagenNota = null where idNota = $id");
+						echo 1;						
+					}
+					else
+						echo "Error al borrar imagen del servidor ";
+				}
+				else
+					echo 1;						
+			}else
+				echo "Error Portada-1";
+			mysqli_close($mysqli);
+			break;
 	}
 ?>

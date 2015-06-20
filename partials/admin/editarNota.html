@@ -297,9 +297,14 @@
             <input type="text" ng-model="nota.url" class="form-control" placeholder="Link de la nota" required/>
           </div>
         </div>
-        <div  class="col-xs-12 col-sm-12 col-md-12 ">
+        <div  class="col-xs-12 col-sm-12 col-md-12 " ng-show="imgActual">
           <div class="col-xs-5 col-sm-5 col-md-5 col-md-offset-3 text-center">
                 <img ng-src="{{ imgActual }}" class="img-responsive text-center ">
+          </div>
+        </div>
+        <div  class="col-xs-12 col-sm-12 col-md-12 " ng-show="imgActual">
+          <div class="col-xs-5 col-sm-5 col-md-5 col-md-offset-3 text-center">
+                <button class="btn btn-warning" ng-click="eliminarPortada()">Eliminar Portada</button>
           </div>
         </div>
         <div class="form-group">

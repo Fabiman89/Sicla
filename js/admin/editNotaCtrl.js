@@ -288,6 +288,17 @@
             
 /**** FORS    ***/
 
+		$scope.eliminarPortada = function() 
+		{
+			$http.post('data/borrar/deleteAdmin.php', {sentencia:16,nota:$routeParams.idNota}).success(function(data) 
+			{
+				if (data == 1)
+					delete $scope.imgActual;
+				else
+					alert("Error al borrar la imagen: "+data)
+			});
+		};
+
     /*----------------------------------------------Modal Vista Previa-----------------------------------------------*/ 
 
 
