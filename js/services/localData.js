@@ -17,6 +17,92 @@ siclaApp.factory('localData', ['$http', '$q', function($http, $q)
 		cargos = [],		
 		tpNota = [],
 		autores = [];
+	var refresh = false;
+	
+	if (!refresh)
+	{
+		refresh = true;
+		setInterval(function() 
+		{
+			servicio.refreshSubtemas();
+			servicio.refreshTemas();
+			servicio.refreshAreas();
+			servicio.refreshCargo();
+			servicio.refreshMedios();
+			servicio.refreshAutores();
+			servicio.refreshTipoNotas();
+			servicio.refreshProtagonistas();
+			servicio.refreshMunicipios();
+			servicio.refreshEstados();
+			servicio.refreshPaises();
+			servicio.refreshSecciones();
+		}, 1200000);
+	}
+	
+	servicio.refreshSecciones = function() 
+	{
+		var sync = $q.defer();
+		$http.post("data/consultas/consultasAdmin.php",{'sentencia':4}).success(function(dataSecciones)
+		{
+			sec = dataSecciones;
+			sync.resolve(sec);
+		});
+		return sync.promise;
+	};
+	
+	servicio.refreshPaises = function() 
+	{
+		var sync = $q.defer();
+		$http.post("data/consultas/consultasAdmin.php",{'sentencia':10}).success(function(dataPais)
+		{
+			pais = dataPais;
+			sync.resolve(pais);
+		});
+		return sync.promise;
+	};
+	
+	servicio.refreshEstados= function() 
+	{
+		var sync = $q.defer();
+		$http.post("data/consultas/consultasAdmin.php",{'sentencia':24}).success(function(dataEstados)
+		{
+			esta = dataEstados;
+			sync.resolve(esta);
+		});		
+		return sync.promise;
+	};
+	
+	servicio.refreshMunicipios = function() 
+	{
+		var sync = $q.defer();
+		$http.post("data/consultas/consultasAdmin.php",{'sentencia':25}).success(function(dataMunicipio)
+		{
+			muni = dataMunicipio;
+			sync.resolve(muni);
+		});
+		return sync.promise;
+	};
+	
+	servicio.refreshProtagonistas = function() 
+	{
+		var sync = $q.defer();
+		$http.post("data/consultas/consultasAdmin.php",{'sentencia':5}).success(function(dataProtagonista)
+		{
+			prota = dataProtagonista;
+			sync.resolve(prota);
+		});
+		return sync.promise;
+	};
+	servicio.refreshTipoNotas = function() 
+	{
+		var sync = $q.defer();
+		$http.post("data/consultas/consultasAdmin.php",{'sentencia':1}).success(function(data)
+		{
+			tpNota = data;
+			sync.resolve(tpNota);	
+		});
+		return sync.promise;
+	};
 	
 	servicio.refreshSubtemas = function() 
 	{

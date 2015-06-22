@@ -81,7 +81,7 @@
             <li ng-class='{"active":tog==15}' ng-click="tog=15">
                 <a href="#/reportes/todos"><i class="fa fa-area-chart"></i> Reportes</a>
             </li>             	
-            <li ng-class='{"active":tog==16}' ng-click="tog=16">
+            <li ng-show="usr.tipo == 1" ng-class='{"active":tog==16}' ng-click="tog=16">
             	<a href="#/visitas"><i class="fa fa-user"></i> Visitas</a>
             </li> 
           </ul>
