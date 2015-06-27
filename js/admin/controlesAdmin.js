@@ -995,10 +995,21 @@
     siclaApp.controller('TblRecientesCtrl', ['$scope', '$http', '$modal',
     function($scope, $http, $modal) {
     	$scope.notas={};
-    	$http.post('data/consultas/consultasAdmin.php',{'sentencia':17}).success(function(data) {
-    		$scope.notas = data;
+    	$http.post('data/consultas/consultasAdmin.php',{'sentencia':17,'page':1}).success(function(data) {
+    		$scope.notas = data[1];
+        $scope.bigTotalItems = data[0];
+        console.log(data[0]);
     	});
     	
+
+      $scope.changePage = function(numPage){
+      $http.post('data/consultas/consultasAdmin.php',{'sentencia':17,'page':numPage}).success(function(data) {
+              $scope.notas = data[1];
+              $scope.bigTotalItems = data[0];
+            });
+      };
+      $scope.maxSize = 5;
+      $scope.bigCurrentPage = 1;
     	$scope.modalEliminar = function(data) {
     		var modalInstance = $modal.open({
     			templateUrl: 'partials/admin/modals/eliminarNota.html',
@@ -1040,9 +1051,33 @@
 
  siclaApp.controller('EncontrarNotasCtrl',['$scope','$http','$filter','$modal',
   function($scope,$http,$filter,$modal){
-    $scope.notasArray = {};
-    $http.post("data/consultas/consultasAdmin.php",{'sentencia':18}).success(function(respuesta){
-      $scope.notasArray = respuesta;
+    $scope.notasArray = [];
+    $scope.bigCurrentPage = 1;
+    $scope.currentBlock = 1;
+      $http.post('data/consultas/consultasAdmin.php',{'sentencia':18,'block':$scope.currentBlock}).success(function(data) {
+        $scope.notasArray = data[1];
+        console.log($scope.notasArray);
+        $scope.bigTotalItems = data[0];
+      });
+      
+      $scope.opSlise = function(){
+        if($scope.bigCurrentPage == 1)
+          return $scope.bigCurrentPage-1;
+        else
+          return (($scope.bigCurrentPage-1)*25);
+      }
+      $scope.lastPage = function(cP,numPages){
+        if(cP == numPages ){
+          $scope.currentBlock = $scope.currentBlock+1;
+          $http.post('data/consultas/consultasAdmin.php',{'sentencia':18,'block':$scope.currentBlock}).success(function(data) {
+              $scope.notasArray  = $scope.notasArray.concat(data[1]);
+              $scope.bigTotalItems = data[0];
+            });
+        }
+      };
+      $scope.maxSize = 5;
+      
+
       $scope.modalEliminar = function(data) {
         var modalInstance = $modal.open({
           templateUrl: 'partials/admin/modals/eliminarNota.html',
@@ -1075,7 +1110,6 @@
         };
       };
 
-    });
 
 
 

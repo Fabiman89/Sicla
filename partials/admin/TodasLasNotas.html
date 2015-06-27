@@ -18,7 +18,7 @@
 <tr><th>Id</th><th>Fecha</th><th>Título</th><th>Medio</th><th>Tipo de Nota</th><th>Usuario</th></tr>
 </thead>
 <tbody>
-<tr ng-repeat="nota in notasArray |filter:search">
+<tr ng-repeat="nota in notasArray.slice(opSlise()) | filter:search | limitTo:25 track by nota.idNota">
 <td>{{nota.idNota}}</td><td> {{nota.fecha}}</td><td>{{nota.titulo| limitTo:50}}</td><td>{{nota.nombreMedio}}</td><td>{{nota.tipo}}</td><td>{{nota.usuario}}</td>
 <td>
 <div class="btn-group">
@@ -29,4 +29,8 @@
 </tr>
 </tbody>
 </table>
+</div>
+<hr>
+<div class="col-sm-12 text-center">
+<pagination total-items="bigTotalItems" ng-model="bigCurrentPage" max-size="maxSize" class="pagination-sm " ng-change="lastPage(bigCurrentPage,numPages)" items-per-page="25" boundary-links="true" rotate="false" num-pages="numPages"  previous-text="Anterior" next-text="Siguiente" first-text="Primera" last-text="Ultima"></pagination>  
 </div>

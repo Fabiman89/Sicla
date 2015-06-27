@@ -246,6 +246,9 @@ app.controller('PremiumCtrl',['$scope','$http','$modal','PremiumService','Reques
             console.log($scope.angColumnas);
           });
 
+$scope.bigTotalItems = 50;
+$scope.maxSize = 5;
+$scope.bigCurrentPage = 1;
 
 
 //global medios

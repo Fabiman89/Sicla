@@ -350,17 +350,32 @@ switch ($instruccion){
 
 //  NOTAS RECIENTES  (ERROR 317)
 			case 17:
-				$result = $mysqli->query("SELECT n.idNota, n.idNota, n.tituloNota as titulo, n.fecha, m.nombreMedio, t.nombreTipoNota as tipo, u.nombreUsuario as usuario 
+				$content = array();
+				$tmp = $sentencia['page'];
+				$resultMx = $mysqli->query("SELECT MAX(idNota) as m from nota");
+				$maxT =  mysqli_fetch_object($resultMx);
+				$resultTotal = $mysqli->query("SELECT count(idNota) as t from nota");
+				$ttl = mysqli_fetch_object($resultTotal);
+				$content[0] = $ttl->t;
+				if($tmp > 1){
+					$max = $maxT->m - (25 * ($tmp-1)); 
+					$min = $max - (25*($tmp-1));
+				}else{
+					$max = $maxT->m;
+					$min = $max - (25);
+				}				
+				
+				$result = $mysqli->query("SELECT * FROM (SELECT n.idNota, n.tituloNota as titulo, n.fecha, m.nombreMedio, t.nombreTipoNota as tipo, u.nombreUsuario as usuario 
 					from Nota n, Medio m, user u, tipoNota t, colabora_en ce 
-					where n.idCE= ce.idCE and ce.idMedio = m.idMedio and n.idAdmin = u.idUsuario and n.idTipoNota = t.idTipoNota 
-					order by n.idNota 
-					desc limit 30");
+					where n.idCE= ce.idCE and ce.idMedio = m.idMedio and n.idAdmin = u.idUsuario and n.idTipoNota = t.idTipoNota
+					order by n.idNota desc) AS d WHERE (d.idNota BETWEEN $min and $max )");
 				$arr = array();
 				if($result)
 				{
 					while ($row = mysqli_fetch_assoc($result)) 
 						$arr[] = $row;	
-					echo json_encode($arr);
+					$content[1] = $arr;
+					echo json_encode($content);
 					mysqli_free_result($result);
 				}else{
 					echo ("ERROR 317");
@@ -370,6 +385,39 @@ switch ($instruccion){
 
 //  ENCONTRAR NOTAS  (ERROR 318)
 			case 18:
+				$content = array();
+				$tmp = $sentencia['block'];
+				$resultMx = $mysqli->query("SELECT MAX(idNota) as m from nota");
+				$maxT =  mysqli_fetch_object($resultMx);
+				$resultTotal = $mysqli->query("SELECT count(idNota) as t from nota");
+				$ttl = mysqli_fetch_object($resultTotal);
+				$content[0] = $tmp * 2000;
+				if($tmp > 1){
+					$max = $maxT->m - (2000 * ($tmp-1)); 
+					$min = $max - (2000*($tmp-1));
+				}else{
+					$max = $maxT->m;
+					$min = $max - (2000);
+				}				
+				
+				$result = $mysqli->query("SELECT * FROM (SELECT n.idNota, n.tituloNota as titulo, n.fecha, m.nombreMedio, t.nombreTipoNota as tipo, u.nombreUsuario as usuario 
+					from Nota n, Medio m, user u, tipoNota t, colabora_en ce 
+					where n.idCE= ce.idCE and ce.idMedio = m.idMedio and n.idAdmin = u.idUsuario and n.idTipoNota = t.idTipoNota
+					order by n.idNota desc) AS d WHERE (d.idNota BETWEEN $min and $max )");
+				$arr = array();
+				if($result)
+				{
+					while ($row = mysqli_fetch_assoc($result)) 
+						$arr[] = $row;	
+					$content[1] = $arr;
+					echo json_encode($content);
+					mysqli_free_result($result);
+				}else{
+					echo ("ERROR 317");
+				} 
+				mysqli_close($mysqli);
+
+			/*
 				$result = $mysqli->query("SELECT n.idNota, n.tituloNota as titulo, n.fecha, t.nombreTipoNota as tipo, u.nombreUsuario as usuario, m.nombreMedio
 							from Nota n 
 							Left Join user u on n.idAdmin = u.idUsuario
@@ -388,6 +436,7 @@ switch ($instruccion){
 					echo ("ERROR 318");
 				} 
 				mysqli_close($mysqli);
+				*/
 				break;
 
 // tipo usuario (ERROR 319) 

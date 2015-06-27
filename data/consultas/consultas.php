@@ -78,6 +78,7 @@ switch ($instruccion){
 /////
 	case 4:
 		$tipo = $sentencia["tipo"];
+		echo ($tipo);
 		switch ($tipo){
 			case 3:
 				session_start();
