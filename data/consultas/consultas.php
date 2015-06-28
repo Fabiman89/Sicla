@@ -77,8 +77,10 @@ switch ($instruccion){
 
 /////
 	case 4:
+		$contentet = array();
 		$tipo = $sentencia["tipo"];
-		echo ($tipo);
+		$page = $sentencia['page'];
+		$rango = 25;
 		switch ($tipo){
 			case 3:
 				session_start();
@@ -103,9 +105,21 @@ switch ($instruccion){
 							$restriccion = "n.Fecha > '".$hoy->format("Y-m-d")."'";
 							break;	
 				}
-				$result = mysqli_query($mysqli,"SELECT min(n.idNota), n.fecha, n.imagenNota as img8col, n.sintesis, n.texto, p.nombreProtagonista, t.nombreTipoNota as tipo, te.nombreTema, su.nombreSubtema, n.tituloNota, m.urlMedio as idPeriodico, a.nombreAutor as autor, 
-						m.nombreMedio, m.imagenMedio as imagen
-				from Nota n
+				$resultId = $mysqli->query("SELECT MAX(idNota) as m from Nota");
+				$lastId =  mysqli_fetch_object($resultId);
+				$resultTotal = $mysqli->query("SELECT count(idNota) as t from Nota");
+				$totalNotas =  mysqli_fetch_object($resultTotal);
+				$content[0] = $totalNotas->t;
+				if($page > 1){
+					$max = $lastId->m - ($rango * ($page-1)); 
+					$min = $max - ($rango * ($page-1));
+				}else{
+					$max = $lastId->m;
+					$min = $max - ($rango);
+				}				
+				$result = mysqli_query($mysqli,"SELECT * FROM (SELECT min(n.idNota) as idNota, n.fecha, n.imagenNota as img8col, n.sintesis, n.texto, p.nombreProtagonista, t.nombreTipoNota as tipo, te.nombreTema, su.nombreSubtema, n.tituloNota, m.urlMedio as idPeriodico, a.nombreAutor as autor, 
+						m.nombreMedio, m.imagenMedio as imagen	
+						from Nota n
 					 inner Join colabora_en ce on ce.idCE = n.idCE  
 					 inner Join Medio m on ce.idMedio = m.idMedio 
 					 inner Join Autor a on a.idAutor = ce.idAutor 
@@ -116,9 +130,9 @@ switch ($instruccion){
 					 Left Join notaProtagonista np on (np.idNota = n.idNota and np.tipoProtagonista = 1)
 					 Left Join cargoProtagonista cp on np.idCP = cp.idCP
 					 Left Join Protagonista p on cp.idProtagonista = p.idProtagonista
-				where $restriccion	
+				where $restriccion
 				Group by n.idNota						 					
-				ORDER BY n.idNota DESC limit 5000 ");
+				ORDER BY n.idNota DESC) AS d WHERE (d.idNota BETWEEN $min and $max)");
 			break;
 			case 4:
 				$result=mysqli_query($mysqli,
@@ -144,7 +158,10 @@ switch ($instruccion){
 		 while($row = $result->fetch_assoc()) {
 		 	$arr[] = $row;
 		 }
-		 echo json_encode($arr);
+		 if($content[0]==undefined)
+		 	$content[0]=0;
+		 $content[1] = $arr;
+		 echo json_encode($content);
 		 mysqli_free_result($result);
 		}else{
 		echo ("E104");

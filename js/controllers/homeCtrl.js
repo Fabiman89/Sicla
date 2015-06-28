@@ -148,7 +148,7 @@ app.service('RegisterService',['$http', function($http){
     var medios = [];
     this.getNotes = function (){
           $http.post("data/consultas/consultas.php",{'sentencia':4 ,'tipo':4}).success(function(info){ 
-            periodicos = info;
+            periodicos = info[1];
           });
      };
 
@@ -240,17 +240,15 @@ app.controller('PremiumCtrl',['$scope','$http','$modal','PremiumService','Reques
           $scope.Medios = {};
           $scope.Autores = {};
           $scope.Tipos={};
-
-          $http.post("data/consultas/consultas.php",{'sentencia':4 ,'tipo':3}).success(function(info){ 
-            $scope.angColumnas = info;
-            console.log($scope.angColumnas);
-          });
-
-$scope.bigTotalItems = 50;
-$scope.maxSize = 5;
-$scope.bigCurrentPage = 1;
-
-
+          $scope.changePage = function(numPage){
+              $http.post("data/consultas/consultas.php",{'sentencia':4 ,'tipo':3,'page':numPage}).success(function(info){ 
+                         $scope.angColumnas  = info[1];
+                        $scope.bigTotalItems = info[0];
+                      });
+                };
+                 $scope.changePage(1);
+                 $scope.maxSize = 5;
+                 $scope.bigCurrentPage = 1;
 //global medios
         $scope.requestControl  = function (){
           var tmpMedios = Request.checkMedios();
@@ -295,7 +293,6 @@ $scope.bigCurrentPage = 1;
         }
 
         $scope.requestControl();
-
          $scope.notaVista="";
          $scope.datosModal= function(index){
           $scope.notaVista=angular.copy(index);

@@ -352,9 +352,9 @@ switch ($instruccion){
 			case 17:
 				$content = array();
 				$tmp = $sentencia['page'];
-				$resultMx = $mysqli->query("SELECT MAX(idNota) as m from nota");
+				$resultMx = $mysqli->query("SELECT MAX(idNota) as m from Nota");
 				$maxT =  mysqli_fetch_object($resultMx);
-				$resultTotal = $mysqli->query("SELECT count(idNota) as t from nota");
+				$resultTotal = $mysqli->query("SELECT count(idNota) as t from Nota");
 				$ttl = mysqli_fetch_object($resultTotal);
 				$content[0] = $ttl->t;
 				if($tmp > 1){
@@ -387,9 +387,9 @@ switch ($instruccion){
 			case 18:
 				$content = array();
 				$tmp = $sentencia['block'];
-				$resultMx = $mysqli->query("SELECT MAX(idNota) as m from nota");
+				$resultMx = $mysqli->query("SELECT MAX(idNota) as m from Nota");
 				$maxT =  mysqli_fetch_object($resultMx);
-				$resultTotal = $mysqli->query("SELECT count(idNota) as t from nota");
+				$resultTotal = $mysqli->query("SELECT count(idNota) as t from Nota");
 				$ttl = mysqli_fetch_object($resultTotal);
 				$content[0] = $tmp * 2000;
 				if($tmp > 1){
