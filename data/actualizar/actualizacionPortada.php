@@ -4,7 +4,7 @@
 		{
 			$id = $_POST['nota'];
 			$imagen = $_FILES['imagen'];
-			$allow = array("png","jpg","jpeg");
+			$allow = array("png","jpg","jpeg","gif","tiff");
 			if(file_exists($imagen['tmp_name']) || is_uploaded_file($imagen['tmp_name'])) 
 			{
 				$name = $imagen["name"];	

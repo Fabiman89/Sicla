@@ -187,7 +187,7 @@
               		var nom = document.getElementById("exampleInputFile").value,
               			ind = nom.lastIndexOf(".") + 1,
               			name = nom.slice(ind);
-              		if (name.toLowerCase() != "png" && name.toLowerCase() != "jpg" && name.toLowerCase() != "jpeg")
+              		if (name.toLowerCase() != "png" && name.toLowerCase() != "jpg" && name.toLowerCase() != "jpeg" && name.toLowerCase() != "gif" && name.toLowerCase() != "tiff")
               		{
               			$scope.resultado = "La extensión "+name+" no está permitida";
               			con = false;

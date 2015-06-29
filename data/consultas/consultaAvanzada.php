@@ -815,7 +815,7 @@
 				if($result = $mysqli->query($sql))
 				{
 					$row = mysqli_fetch_assoc($result);
-					if(isset($row['Título']))
+					if(isset($row['tituloNota']))
 					{
 						//$row["sql"] = $sql;
 						$row["dato"] = true;
