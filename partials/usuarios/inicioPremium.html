@@ -39,15 +39,7 @@
         <div class="row">
         <div class="col-lg-12">
             <div class=" titles container-fluid col-lg-10 col-lg-offset-1">
-              <div class=""> Busqueda Avanzada</div>
-              <div class="">
-
-              <!--
-                <input class="form-control" style="border-radius:9px;" ng-model="search.autor" placeholder="Buscar por Periodico, Titulo, Fecha, Autor, Protagonista, Tema o palabras clave">
-              </div>
-              <input class="form-control" ng-model="search.nombreMedio">
-              -->
-            </div>    
+              <div class=""> Busqueda Avanzada</div>                 
         </div>
       </div>
 
@@ -70,30 +62,33 @@
                       
                       <div class="form-group">
                         <p class="help-block">Protagonista</p >
-                        <input class="form-control input-sm" type="text" ng-model="search.nombreProtagonista" placeholder="Comienza a escribir aquí" typeahead=" p.nombreProtagonista for p in Protagonista |limitTo: 8 |filter:$viewValue"  >  
+                        <input class="form-control input-sm" type="text" ng-model="search.nombreProtagonista" placeholder="Comienza a escribir aquí"  typeahead=" p as p.nombreProtagonista for p in Protagonista |limitTo: 8 |filter:$viewValue"  >  
                       </div>
 
                       <div class="form-group">
                       <p class="help-block">Filtrar Medios</p >
-                         <input class="form-control input-sm" type="text" ng-model="search.nombreMedio" placeholder="Comienza a escribir aquí" typeahead=" m.nombreMedio for m in Medios |limitTo: 8 |filter:$viewValue"  >  
+                         <input class="form-control input-sm" type="text" ng-model="search.nombreMedio" placeholder="Comienza a escribir aquí" typeahead=" m as m.nombreMedio for m in Medios |limitTo: 8 |filter:$viewValue">  
                          
                       </div>                      
                     </div>  
                         <div class="col-md-6 col-sm-6">
                             <div class="form-group">
                                <p class="help-block">Filtrar por Tema</p >
-                               <input class="form-control input-sm" type="text" ng-model="search.nombreTema" placeholder="Comienza a escribir aquí" typeahead=" nota.nombreTema for nota in Temas |limitTo: 8 |filter:$viewValue"  >  
+                               <input class="form-control input-sm" type="text" ng-model="search.nombreTema" placeholder="Comienza a escribir aquí" typeahead=" nota as nota.nombreTema for nota in Temas |limitTo: 8 |filter:$viewValue">  
                             </div>  
                             <div class="form-group">
                                <p class="help-block">Filtrar por Subtema</p >
-                               <input class="form-control input-sm" type="text" ng-model="search.nombreSubtema" placeholder="Comienza a escribir aquí" typeahead=" nota.nombreSubtema for nota in Subtemas |limitTo: 8 |filter:$viewValue"  >  
+                               <input class="form-control input-sm" type="text" ng-model="search.nombreSubtema" placeholder="Comienza a escribir aquí" typeahead=" nota as nota.nombreSubtema for nota in Subtemas |limitTo: 8 |filter:$viewValue">  
                             </div>                        
+                        </div>
+                        <div class="col-md-12 text-center">
+                        	<button ng-click="busquedaAvanzada()" class="btn" ng-disabled="!search.nombreSubtema && !search.nombreTema && !search.nombreMedio && !search.nombreProtagonista && !search.fecha">Buscar</button>
                         </div>
                     </div>
                   </form>
               </div>
     
-<div class="col-md-3 col-sm-6 col-xs-8 "  ng-repeat="columnas in angColumnas | filter:search |filter:search2" >
+<div class="col-md-3 col-sm-6 col-xs-8 "  ng-repeat="columnas in angColumnas |filter:search2" >
 <div class="post-container"  >
         <div class="post-image">
             <img ng-hide="!columnas.img8col" ng-src="{{columnas.img8col}}" style="height:338px;" ng-click="datosModal(columnas)" class="img-responsive center-block clickable">

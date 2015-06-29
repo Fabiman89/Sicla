@@ -234,9 +234,20 @@ app.service('PremiumService',['$http', function($http){
 }]);
 
 
-app.controller('PremiumCtrl',['$scope','$http','$modal','PremiumService','Request','$q', function($scope,$http,$modal,PremiumService,Request,$q){
+app.controller('PremiumCtrl',['$scope','$http','$modal','PremiumService','Request','$q', 'localData',function($scope,$http,$modal,PremiumService,Request,$q, localData){
           $http.post('data/inserciones/insercionContador.php',{'Sitio':'Logueado'});
-          var sync = $q.defer();
+          localData.getProtagonista().then(function(data) {
+          		$scope.Protagonista = data;
+          });
+          localData.getMedio().then(function(data) {
+          		$scope.Medios = data;
+          });
+          localData.getAllSubtemas().then(function(data) {
+				$scope.Subtemas = data;          
+          });
+          localData.getAllTemas().then(function(data) {
+				$scope.Temas = data;
+          });
           $scope.Medios = {};
           $scope.Autores = {};
           $scope.Tipos={};
@@ -250,49 +261,40 @@ app.controller('PremiumCtrl',['$scope','$http','$modal','PremiumService','Reques
                  $scope.maxSize = 5;
                  $scope.bigCurrentPage = 1;
 //global medios
-        $scope.requestControl  = function (){
-          var tmpMedios = Request.checkMedios();
-          if(tmpMedios==1){
-            Request.getMedios().then(function(){
-              $scope.Medios = Request.checkMedios();
-              sync.resolve();
-            });            
-          }else{
-            console.log("allreadyCharged");
-          }
-          var tempProtagonista = Request.checkProtagonista();
-          if(tempProtagonista == 1 ){
-            Request.getProtagonista().then(function(){
-              $scope.Protagonista = Request.checkProtagonista();
-              sync.resolve();
-              console.log($scope.Protagonista);
-            });
-          }else{
-            console.log("Probemas");
-          }
-          var tempTemas = Request.checkTemas();
-          if(tempTemas == 1 ){
-            Request.getTemas().then(function(){
-              $scope.Temas = Request.checkTemas();
-              sync.resolve();
-              console.log($scope.Temas);
-            });
-          }else{
-            console.log("Error en temas");
-          }
-          var tempSubtemas = Request.checkSubtemas();
-          if(tempSubtemas == 1 ){
-            Request.getSubtemas().then(function(){
-              $scope.Subtemas = Request.checkSubtemas();
-              sync.resolve();
-              console.log($scope.Subtemas);
-            });
-          }else{
-            console.log("Error en temas");
-          }
-        }
-
-        $scope.requestControl();
+         $scope.busquedaAvanzada = function() 
+         {
+         	var auxTema = [], auxST = [], auxMedio = [], auxPro = [], auxFecha = [];
+         	if ($scope.search.nombreProtagonista != undefined)
+         		auxPro.push(1,$scope.search.nombreProtagonista);
+         	else
+         		auxPro.push(0);
+         	if ($scope.search.fecha != undefined)
+     			auxFecha.push(1,$scope.search.fecha);     		
+     		else
+     			auxFecha.push(0);	
+         	if ($scope.search.nombreMedio != undefined)
+     			auxMedio.push(1,$scope.search.nombreMedio);
+     		else
+     			auxMedio.push(0);
+         	if ($scope.search.nombreTema != undefined)
+	 			auxTema.push(1,$scope.search.nombreTema);
+	 		else
+	 			auxTema.push(0);
+	 		if ($scope.search.nombreSubtema != undefined)
+ 				auxST.push(1,$scope.search.nombreSubtema);
+ 			else
+ 				auxST.push(0);
+ 			$http.post('data/consultas/consultaAvanzada.php', {medio:auxMedio, protagonista:auxPro, tema:auxTema, subtema:auxST, fecha:auxFecha, autor:[0], clasificacion:[0], tipo:[0], seccion:[0], genero:[0], pais:[0], estado:[0], area:[0], cargo:[0], municipio:[0]}).success(function(data) 
+ 			{
+ 				$http.post('data/consultas/consultaAvanzada.php', {medio:auxMedio, protagonista:auxPro, tema:auxTema, subtema:auxST, fecha:auxFecha, reporte:2, autor:[0], clasificacion:[0], tipo:[0], seccion:[0], genero:[0], pais:[0], estado:[0], area:[0], cargo:[0], municipio:[0]}).success(function(data2) 
+				{
+					//data2 son las notas
+					$scope.angColumnas = data2;
+					$scope.bigTotalItems = data.total;
+					$scope.bigCurrentPage = 1;
+				});	
+ 			});
+         };
          $scope.notaVista="";
          $scope.datosModal= function(index){
           $scope.notaVista=angular.copy(index);
