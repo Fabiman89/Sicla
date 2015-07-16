@@ -251,19 +251,30 @@ app.controller('PremiumCtrl',['$scope','$http','$modal','PremiumService','Reques
           $scope.Medios = {};
           $scope.Autores = {};
           $scope.Tipos={};
+          var ad = false, bqAvd;
           $scope.changePage = function(numPage){
-              $http.post("data/consultas/consultas.php",{'sentencia':4 ,'tipo':3,'page':numPage}).success(function(info){ 
-                         $scope.angColumnas  = info[1];
-                        $scope.bigTotalItems = info[0];
-                      });
-                };
+          		if (!ad)
+	          		$http.post("data/consultas/consultas.php",{'sentencia':4 ,'tipo':3,'page':numPage}).success(function(info){ 
+	                     $scope.angColumnas  = info[1];
+	                    $scope.bigTotalItems = info[0];
+	                });
+	            else
+	            {
+	            	var auxcol = [], i=0;
+	            	for (i=(numPage-1)*25; i<((numPage-1)*25)+25; i++)
+	            		if (i<bqAvd.length)
+	            			auxcol.push(bqAvd[i]);
+	            	$scope.angColumnas = auxcol;
+	            }
+	            	
+          };
                  $scope.changePage(1);
                  $scope.maxSize = 5;
                  $scope.bigCurrentPage = 1;
 //global medios
          $scope.busquedaAvanzada = function() 
          {
-         	var auxTema = [], auxST = [], auxMedio = [], auxPro = [], auxFecha = [];
+         	var auxTema = [], auxST = [], auxMedio = [], auxPro = [], auxFecha = [], auxTotal;
          	if ($scope.search.nombreProtagonista != undefined)
          		auxPro.push(1,$scope.search.nombreProtagonista);
          	else
@@ -284,17 +295,20 @@ app.controller('PremiumCtrl',['$scope','$http','$modal','PremiumService','Reques
  				auxST.push(1,$scope.search.nombreSubtema);
  			else
  				auxST.push(0);
- 			$http.post('data/consultas/consultaAvanzada.php', {medio:auxMedio, protagonista:auxPro, tema:auxTema, subtema:auxST, fecha:auxFecha, autor:[0], clasificacion:[0], tipo:[0], seccion:[0], genero:[0], pais:[0], estado:[0], area:[0], cargo:[0], municipio:[0]}).success(function(data) 
- 			{
- 				$http.post('data/consultas/consultaAvanzada.php', {medio:auxMedio, protagonista:auxPro, tema:auxTema, subtema:auxST, fecha:auxFecha, reporte:2, autor:[0], clasificacion:[0], tipo:[0], seccion:[0], genero:[0], pais:[0], estado:[0], area:[0], cargo:[0], municipio:[0]}).success(function(data2) 
-				{
-					//data2 son las notas
-					$scope.angColumnas = data2;
-					$scope.bigTotalItems = data.total;
-					$scope.bigCurrentPage = 1;
-				});	
- 			});
+			$http.post('data/consultas/consultaAvanzada.php', {medio:auxMedio, protagonista:auxPro, tema:auxTema, subtema:auxST, fecha:auxFecha, reporte:2, autor:[0], clasificacion:[0], tipo:[0], seccion:[0], genero:[0], pais:[0], estado:[0], area:[0], cargo:[0], municipio:[0]}).success(function(data2) 
+			{
+				ad = true;
+				bqAvd = data2;
+				var auxcol = [], i=0;
+				for (i=0; i<25; i++)
+					if (i<data2.length)
+						auxcol.push(data2[i]);									
+				$scope.angColumnas = auxcol;
+				$scope.bigTotalItems = data2.length;
+				$scope.bigCurrentPage = 1;
+			});	
          };
+         
          $scope.notaVista="";
          $scope.datosModal= function(index){
           $scope.notaVista=angular.copy(index);

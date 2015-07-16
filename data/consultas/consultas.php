@@ -158,7 +158,7 @@ switch ($instruccion){
 		 while($row = $result->fetch_assoc()) {
 		 	$arr[] = $row;
 		 }
-		 if($content[0]==undefined)
+		 if(empty($content[0]))
 		 	$content[0]=0;
 		 $content[1] = $arr;
 		 echo json_encode($content);

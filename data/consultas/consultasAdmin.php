@@ -599,7 +599,7 @@ case 23:
 			{
 				$row = mysqli_fetch_assoc($result);
 				$arr = $row;
-				$result = mysqli_query($mysqli, "Select Usuario, Fecha from Visita order by Fecha desc limit 100");
+				$result = mysqli_query($mysqli, "Select Usuario, Fecha from Visita where Usuario <> '' order by Fecha desc limit 100");
 				while ($row = mysqli_fetch_assoc($result))
 					$arr["datos"][] = $row;
 				echo json_encode($arr);

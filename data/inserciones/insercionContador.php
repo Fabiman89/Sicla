@@ -15,7 +15,10 @@
 		$id = $_SESSION['uid'];
 		$result = mysqli_query($mysqli, "Select concat_ws(' ',nombreUsuario, apellidoUsuario) as nombre from user where idUsuario = $id");
 		$row = mysqli_fetch_assoc($result);
-		$usuario = $row['nombre'];
+		if (isset($row['nombre']))
+			$usuario = $row['nombre'];
+		else
+			return;
 	}
 	else
 		$usuario = "Visitante";
