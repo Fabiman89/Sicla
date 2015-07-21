@@ -1,4 +1,76 @@
 <br />
+<div class="container">
+        <div class="row">
+              <div class="col-md-10 col-lg-10 well well-sm">
+                  <form class="">
+                    <div class="row"> 
+                    <div class="col-md-6 col-sm-6">
+                      <div class="form-group">
+                         <p class="help-block">Palabra Clave</p >
+                         <input class="form-control input-sm" type="text" ng-model="search2" placeholder="Comienza a escribir aquí" >  
+                      </div>
+                    </div>
+                    <div class="col-md-6 col-sm-6">
+                      <div class="form-group">
+                        <p class="help-block">Fecha</p >
+                        <input class="form-control input-sm" type="date" ng-model="search.fecha" >  
+                      </div>
+                    </div>
+                    <div class="col-md-6 col-sm-6" >
+                      
+                      <div class="form-group">
+                        <p class="help-block">Protagonista</p >
+                        <input class="form-control input-sm" type="text" ng-model="search.nombreProtagonista" placeholder="Comienza a escribir aquí"  typeahead=" p as p.nombreProtagonista for p in Protagonista |filter:$viewValue |limitTo: 8 "  >  
+                      </div>
+
+                      <div class="form-group">
+                      <p class="help-block">Filtrar Medios</p >
+                         <input class="form-control input-sm" type="text" ng-model="search.nombreMedio" placeholder="Comienza a escribir aquí" typeahead=" m as m.nombreMedio for m in Medios |filter:$viewValue |limitTo: 8 ">  
+                         
+                      </div>                      
+                    </div>  
+                        <div class="col-md-6 col-sm-6">
+                            <div class="form-group">
+                               <p class="help-block">Filtrar por Tema</p >
+                               <input class="form-control input-sm" type="text" ng-model="search.nombreTema" placeholder="Comienza a escribir aquí" typeahead=" nota as nota.nombreTema for nota in Temas |filter:$viewValue |limitTo: 8 ">  
+                            </div>  
+                            <div class="form-group">
+                               <p class="help-block">Filtrar por Subtema</p >
+                               <input class="form-control input-sm" type="text" ng-model="search.nombreSubtema" placeholder="Comienza a escribir aquí" typeahead=" nota as nota.nombreSubtema for nota in Subtemas |filter:$viewValue |limitTo: 8 ">  
+                            </div>                        
+                        </div>
+                        <div class="col-md-12 text-center">
+                        	<button ng-click="busquedaAvanzada()" class="btn" ng-disabled="!search.nombreSubtema && !search.nombreTema && !search.nombreMedio && !search.nombreProtagonista && !search.fecha">Buscar</button>
+                        </div>
+                    </div>
+                  </form>
+              </div>
+    
+	<table class="table table-hover">
+	<thead>
+	<tr><th>Id</th><th>	Fecha</th> <th>Título</th><th>Medio</th><th>Tipo de Nota</th><th>Usuario</th></tr>
+	</thead>
+	<tbody>
+	<tr ng-repeat="nota in notas | filter:search2">
+	<td>{{nota.idNota}}</td> <td>{{nota.fecha}}</td><td>{{nota.tituloNota | limitTo:20}}</td><td>{{nota.Medio}}</td><td>{{nota.nombreTipoNota}}</td><td>{{nota.usuario}}</td>
+	<td>
+	<td>
+	<div class="btn-group">
+		<a href="#/Editar/Nota/{{nota.idNota}}" class="btn btn-primary" role="button" >Editar</a>
+	  <button type="button" class="btn btn-danger" ng-click="modalEliminar(nota)">Eliminar</button>
+	</div>
+	</td>
+	</tr>
+	</tbody>
+	</table>
+</div>
+</div>
+<hr>
+<div class="col-sm-12 text-center">
+<pagination total-items="bigTotalItems" ng-model="bigCurrentPage" max-size="maxSize" class="pagination-sm " ng-change="changePage(bigCurrentPage)" items-per-page="25" boundary-links="false" rotate="false" num-pages="numPages" previous-text="Anterior" next-text="Siguiente" first-text="Primera" last-text="Ultima"></pagination>  
+</div>
+
+<!--
 <table class="table table-hover">
 <thead>
 <tr><th>Id</th><th>	Fecha</th> <th>Título</th><th>Medio</th><th>Tipo de Nota</th><th>Usuario</th></tr>
@@ -20,3 +92,4 @@
 <div class="col-sm-12 text-center">
 <pagination total-items="bigTotalItems" ng-model="bigCurrentPage" max-size="maxSize" class="pagination-sm " ng-change="changePage(bigCurrentPage)" items-per-page="25" boundary-links="false" rotate="false" num-pages="numPages" previous-text="Anterior" next-text="Siguiente" first-text="Primera" last-text="Ultima"></pagination>	
 </div>
+-->

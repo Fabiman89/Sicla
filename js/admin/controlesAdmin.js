@@ -992,24 +992,81 @@
 /* *********************************************************************************/
 //      CONTROLADOR NOTAS RECIENTES
 
-    siclaApp.controller('TblRecientesCtrl', ['$scope', '$http', '$modal',
-    function($scope, $http, $modal) {
-    	$scope.notas={};
-    	$http.post('data/consultas/consultasAdmin.php',{'sentencia':17,'page':1}).success(function(data) {
-    		$scope.notas = data[1];
-        $scope.bigTotalItems = data[0];
-        console.log(data[0]);
-    	});
-    	
-
-      $scope.changePage = function(numPage){
-      $http.post('data/consultas/consultasAdmin.php',{'sentencia':17,'page':numPage}).success(function(data) {
-              $scope.notas = data[1];
-              $scope.bigTotalItems = data[0];
-            });
-      };
-      $scope.maxSize = 5;
-      $scope.bigCurrentPage = 1;
+    siclaApp.controller('TblRecientesCtrl', ['$scope', '$http', '$modal', 'localData',
+    function($scope, $http, $modal, localData) {
+    	  localData.getProtagonista().then(function(data) {
+	      		$scope.Protagonista = data;
+	      });
+	      localData.getMedio().then(function(data) {
+	      		$scope.Medios = data;
+	      });
+	      localData.getAllSubtemas().then(function(data) {
+				$scope.Subtemas = data;          
+	      });
+	      localData.getAllTemas().then(function(data) {
+				$scope.Temas = data;
+	      });
+	      $scope.Medios = {};
+	      $scope.Autores = {};
+	      $scope.Tipos={};
+	      var ad = false, bqAvd;
+	      $scope.changePage = function(numPage){
+	      		if (!ad)
+	          		$http.post('data/consultas/consultasAdmin.php',{'sentencia':17,'page':numPage}).success(function(info) {
+	                     $scope.notas  = info[1];
+	                    $scope.bigTotalItems = info[0];
+	                });
+	            else
+	            {
+	            	var auxcol = [], i=0;
+	            	for (i=(numPage-1)*25; i<((numPage-1)*25)+25; i++)
+	            		if (i<bqAvd.length)
+	            			auxcol.push(bqAvd[i]);
+	            	$scope.notas = auxcol;
+	            }
+	            	
+	      };
+	             $scope.changePage(1);
+	             $scope.maxSize = 5;
+	             $scope.bigCurrentPage = 1;
+	//global medios
+	     $scope.busquedaAvanzada = function() 
+	     {
+	     	var auxTema = [], auxST = [], auxMedio = [], auxPro = [], auxFecha = [], auxTotal;
+	     	if ($scope.search.nombreProtagonista != undefined)
+	     		auxPro.push(1,$scope.search.nombreProtagonista);
+	     	else
+	     		auxPro.push(0);
+	     	if ($scope.search.fecha != undefined)
+	 			auxFecha.push(1,$scope.search.fecha);     		
+	 		else
+	 			auxFecha.push(0);	
+	     	if ($scope.search.nombreMedio != undefined)
+	 			auxMedio.push(1,$scope.search.nombreMedio);
+	 		else
+	 			auxMedio.push(0);
+	     	if ($scope.search.nombreTema != undefined)
+	 			auxTema.push(1,$scope.search.nombreTema);
+	 		else
+	 			auxTema.push(0);
+	 		if ($scope.search.nombreSubtema != undefined)
+					auxST.push(1,$scope.search.nombreSubtema);
+				else
+					auxST.push(0);
+			$http.post('data/consultas/consultaAvanzada.php', {medio:auxMedio, protagonista:auxPro, tema:auxTema, subtema:auxST, fecha:auxFecha, reporte:2, autor:[0], clasificacion:[0], tipo:[0], seccion:[0], genero:[0], pais:[0], estado:[0], area:[0], cargo:[0], municipio:[0]}).success(function(data2) 
+			{
+				ad = true;
+				bqAvd = data2;
+				var auxcol = [], i=0;
+				for (i=0; i<25; i++)
+					if (i<data2.length)
+						auxcol.push(data2[i]);									
+				$scope.notas = auxcol;
+				$scope.bigTotalItems = data2.length;
+				$scope.bigCurrentPage = 1;
+			});	
+	     };
+    	    	
     	$scope.modalEliminar = function(data) {
     		var modalInstance = $modal.open({
     			templateUrl: 'partials/admin/modals/eliminarNota.html',
@@ -1056,7 +1113,6 @@
     $scope.currentBlock = 1;
       $http.post('data/consultas/consultasAdmin.php',{'sentencia':18,'block':$scope.currentBlock}).success(function(data) {
         $scope.notasArray = data[1];
-        console.log($scope.notasArray);
         $scope.bigTotalItems = data[0];
       });
       

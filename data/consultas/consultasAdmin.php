@@ -365,7 +365,7 @@ switch ($instruccion){
 					$min = $max - (25);
 				}				
 				
-				$result = $mysqli->query("SELECT * FROM (SELECT n.idNota, n.tituloNota as titulo, n.fecha, m.nombreMedio, t.nombreTipoNota as tipo, u.nombreUsuario as usuario 
+				$result = $mysqli->query("SELECT * FROM (SELECT n.idNota, n.tituloNota, n.fecha, m.nombreMedio as Medio, t.nombreTipoNota, u.nombreUsuario as usuario 
 					from Nota n, Medio m, user u, tipoNota t, colabora_en ce 
 					where n.idCE= ce.idCE and ce.idMedio = m.idMedio and n.idAdmin = u.idUsuario and n.idTipoNota = t.idTipoNota
 					order by n.idNota desc) AS d WHERE (d.idNota BETWEEN $min and $max )");
@@ -599,7 +599,7 @@ case 23:
 			{
 				$row = mysqli_fetch_assoc($result);
 				$arr = $row;
-				$result = mysqli_query($mysqli, "Select Usuario, Fecha from Visita where Usuario <> '' order by Fecha desc limit 100");
+				$result = mysqli_query($mysqli, "Select Usuario, Fecha from Visita order by Fecha desc limit 100");
 				while ($row = mysqli_fetch_assoc($result))
 					$arr["datos"][] = $row;
 				echo json_encode($arr);

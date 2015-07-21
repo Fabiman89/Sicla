@@ -23,7 +23,7 @@ siclaApp.config(['$routeProvider',
       }).when('/Editar/Nota/:idNota', {
         templateUrl: 'partials/admin/editarNota.html',
         controller: 'EdicionNotasCtrl'
-      }).when('/Buscar/Nota', {
+      }).when('/altas/recientes', {
         templateUrl: 'partials/admin/TodasLasNotas.html',
         controller: 'EncontrarNotasCtrl'
       }).when('/Editar/Notas', {
@@ -32,7 +32,7 @@ siclaApp.config(['$routeProvider',
       }).when('/altas/nota', {
         templateUrl: 'partials/admin/altaNotas.html',
         controller: 'FormNotasCtrl'
-    }).when('/altas/recientes', {
+    }).when('/Buscar/Nota', {
     	templateUrl: 'partials/admin/notasRecientes.html',
     	controller: 'TblRecientesCtrl'
     }).when('/editar/medios', {

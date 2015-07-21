@@ -808,9 +808,9 @@
 			for($i = 0; $i < count($notas); $i++)
 			{				
 				$nota = $notas[$i]["idNota"];
-				$sql = "SELECT n.tituloNota, n.fecha, n.sintesis, n.urlNota, tp.nombreTipoNota, p.nombreProtagonista as Protagonista, m.nombreMedio as Medio, a.nombreArea as 'Área', au.nombreAutor as autor, t.nombreTema as Tema, sb.nombreSubtema as Subtema, n.Clasificacion as Clasificación, n.texto, n.imagenNota as img8col, m.imagenMedio as imagen
-										from Nota n, tipoNota tp, trata_de td, subtema sb, tema t, Area a, colabora_en ce, Medio m, notaProtagonista np, cargoProtagonista cp, Protagonista p, Autor au
-										where n.idTipoNota = tp.idTipoNota and n.idCE = ce.idCE and ce.idMedio = m.idMedio and np.idNota = n.idNota and np.tipoProtagonista = 1 and np.idCP = cp.idCP and cp.idProtagonista = p.idProtagonista and ce.idAutor = au.idAutor
+				$sql = "SELECT n.tituloNota, n.fecha, n.sintesis, n.urlNota, tp.nombreTipoNota, p.nombreProtagonista as Protagonista, m.nombreMedio as Medio, a.nombreArea as 'Área', au.nombreAutor as autor, t.nombreTema as Tema, sb.nombreSubtema as Subtema, n.Clasificacion as Clasificación, n.texto, n.imagenNota as img8col, m.imagenMedio as imagen, n.idNota, u.nombreUsuario as usuario
+										from Nota n, tipoNota tp, trata_de td, subtema sb, tema t, Area a, colabora_en ce, Medio m, notaProtagonista np, cargoProtagonista cp, Protagonista p, Autor au, user u
+										where n.idTipoNota = tp.idTipoNota and n.idCE = ce.idCE and ce.idMedio = m.idMedio and np.idNota = n.idNota and np.tipoProtagonista = 1 and np.idCP = cp.idCP and cp.idProtagonista = p.idProtagonista and ce.idAutor = au.idAutor and n.idAdmin = u.idUsuario
 										and td.idNota_ = n.idNota and td.idSubtema = sb.idSubtema and sb.idTema = t.idTema and t.idArea = a.idArea and n.idNota = $nota";
 				if($result = $mysqli->query($sql))
 				{
