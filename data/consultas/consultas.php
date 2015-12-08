@@ -168,7 +168,28 @@ switch ($instruccion){
 		}
 		mysqli_close($mysqli);
 	break;
-
+	//Nota Específica
+	case 5:
+		$result=mysqli_query($mysqli,
+		"SELECT n.idNota, n.fecha, n.imagenNota as img8col,n.urlNota, n.sintesis, n.texto, t.idTipoNota as tipo,  n.tituloNota, m.urlMedio as idPeriodico, a.nombreAutor as autor, m.nombreMedio, m.imagenMedio as imagen
+		from Nota n,colabora_en ce, Medio m, Autor a ,tipoNota t
+		where n.idNota = ".$sentencia['idNota']." 
+		and ce.idCE = n.idCE 
+		and ce.idMedio = m.idMedio 
+		and m.idMedio = ce.idMedio 
+		and a.idAutor = ce.idAutor 
+		and t.idtiponota = n.idTipoNota");
+		$arr = array();
+		if($result==true) {
+		 while($row = $result->fetch_assoc()) 
+		 	$arr[] = $row;
+		 echo json_encode($arr);
+		 mysqli_free_result($result);
+		}else{
+		echo ("Error 105");
+		}
+		mysqli_close($mysqli);
+		break; 
 	default:
 	echo json_encode("Error Default");
 	break;

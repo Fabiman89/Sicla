@@ -18,8 +18,7 @@ app.config(['$routeProvider',function ($routeProvider){
 	//$routeProvider.when('home/admin/alta/autores',{templateUrl:'partials/admin/altaAutores.html',controller:'FormAutorCtrl'});
 	//$routeProvider.when('home/admin/alta/temas',{templateUrl:'partials/admin/altaTemas.html',controller:'FormTemasCtrl'});
 	//$routeProvider.when('home/admin/alta/notas',{templateUrl:'partials/admin/altaNotas.html',controller:'FormNotasCtrl'});
-
-
+	
 //	$routeProvider.when('/nota/:idNoticia',{templateUrl:'partials/nota.html',controller:'notaCtrl'});
 //	$routeProvider.when('/nota/8/:idNoticia',{templateUrl:'partials/nota8.html',controller:'notaCtrl'});
 	$routeProvider.otherwise({redirectTo:'/inicio'});	

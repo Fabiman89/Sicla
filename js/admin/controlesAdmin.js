@@ -1033,23 +1033,23 @@
 	     $scope.busquedaAvanzada = function() 
 	     {
 	     	var auxTema = [], auxST = [], auxMedio = [], auxPro = [], auxFecha = [], auxTotal;
-	     	if ($scope.search.nombreProtagonista != undefined)
+	     	if ($scope.search.nombreProtagonista != undefined && $scope.search.nombreProtagonista != "")
 	     		auxPro.push(1,$scope.search.nombreProtagonista);
 	     	else
 	     		auxPro.push(0);
-	     	if ($scope.search.fecha != undefined)
+	     	if ($scope.search.fecha != undefined && $scope.search.fecha != "")
 	 			auxFecha.push(1,$scope.search.fecha);     		
 	 		else
 	 			auxFecha.push(0);	
-	     	if ($scope.search.nombreMedio != undefined)
+	     	if ($scope.search.nombreMedio != undefined && $scope.search.nombreMedio != "")
 	 			auxMedio.push(1,$scope.search.nombreMedio);
 	 		else
 	 			auxMedio.push(0);
-	     	if ($scope.search.nombreTema != undefined)
+	     	if ($scope.search.nombreTema != undefined && $scope.search.nombreTema != "")
 	 			auxTema.push(1,$scope.search.nombreTema);
 	 		else
 	 			auxTema.push(0);
-	 		if ($scope.search.nombreSubtema != undefined)
+	 		if ($scope.search.nombreSubtema != undefined && $scope.search.nombreSubtema != "")
 					auxST.push(1,$scope.search.nombreSubtema);
 				else
 					auxST.push(0);

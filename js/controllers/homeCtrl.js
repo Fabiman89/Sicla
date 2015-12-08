@@ -165,9 +165,28 @@ app.service('RegisterService',['$http', function($http){
 }]);
 
 
-
-
-
+app.controller('notaEsCtrl',['$scope','$http','$routeParams', function($scope,$http,$routeParams){
+	$scope.no = false;
+	if($routeParams.idNota != undefined)
+	{
+		$http.post('data/consultas/consultas.php', {'sentencia':5, 'idNota':$routeParams.idNota}).then(function(nota) {
+			if (nota.data != "Error 105")				
+				if(nota.data.length > 0)
+					$scope.dt = nota.data[0];
+				else
+				{
+					$scope.txt = "No existe la nota solicitada.";
+					$scope.no = true;
+				}
+			else
+			{
+				$scope.txt = "Hubo un error en el servidor.";
+				$scope.no = true;
+			}								
+		});
+	}else
+		$location.path("/inicio");              	
+}]);
 
 
 
@@ -179,7 +198,6 @@ app.controller('homeUserCtrl',['$scope','$http','$modal','$log', function($scope
    $http.post("data/consultas/consultas.php",{'sentencia':2}).success(function(Medios){ 
         $scope.angMedios=Medios;
         $scope.angColumnas=Columnas;
-        console.log(Columnas);
 
        });
       });
@@ -275,26 +293,26 @@ app.controller('PremiumCtrl',['$scope','$http','$modal','PremiumService','Reques
          $scope.busquedaAvanzada = function() 
          {
          	var auxTema = [], auxST = [], auxMedio = [], auxPro = [], auxFecha = [], auxTotal;
-         	if ($scope.search.nombreProtagonista != undefined)
-         		auxPro.push(1,$scope.search.nombreProtagonista);
-         	else
-         		auxPro.push(0);
-         	if ($scope.search.fecha != undefined)
+         	if ($scope.search.nombreProtagonista != undefined && $scope.search.nombreProtagonista != "")
+     			auxPro.push(1,$scope.search.nombreProtagonista);
+     		else
+     			auxPro.push(0);
+     		if ($scope.search.fecha != undefined && $scope.search.fecha != "")
      			auxFecha.push(1,$scope.search.fecha);     		
      		else
      			auxFecha.push(0);	
-         	if ($scope.search.nombreMedio != undefined)
+     		if ($scope.search.nombreMedio != undefined && $scope.search.nombreMedio != "")
      			auxMedio.push(1,$scope.search.nombreMedio);
      		else
      			auxMedio.push(0);
-         	if ($scope.search.nombreTema != undefined)
-	 			auxTema.push(1,$scope.search.nombreTema);
-	 		else
-	 			auxTema.push(0);
-	 		if ($scope.search.nombreSubtema != undefined)
- 				auxST.push(1,$scope.search.nombreSubtema);
- 			else
- 				auxST.push(0);
+     		if ($scope.search.nombreTema != undefined && $scope.search.nombreTema != "")
+     			auxTema.push(1,$scope.search.nombreTema);
+     		else
+     			auxTema.push(0);
+     		if ($scope.search.nombreSubtema != undefined && $scope.search.nombreSubtema != "")
+     			auxST.push(1,$scope.search.nombreSubtema);
+     		else
+     			auxST.push(0);
 			$http.post('data/consultas/consultaAvanzada.php', {medio:auxMedio, protagonista:auxPro, tema:auxTema, subtema:auxST, fecha:auxFecha, reporte:2, autor:[0], clasificacion:[0], tipo:[0], seccion:[0], genero:[0], pais:[0], estado:[0], area:[0], cargo:[0], municipio:[0]}).success(function(data2) 
 			{
 				ad = true;

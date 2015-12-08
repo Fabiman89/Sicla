@@ -11,7 +11,7 @@ $routeProvider.when('/home',{templateUrl:'partials/home.html',controller:'homeCt
 $routeProvider.when('/usuario',{templateUrl:'partials/usuarios/inicio.html',controller:'homeUserCtrl'});
 $routeProvider.when('/premium/',{templateUrl:'partials/usuarios/inicioPremium.html',controller:'PremiumCtrl'});
 $routeProvider.when('/premium/reportes',{templateUrl:'partials/usuarios/reportes.html',controller:'reportCtrl'});
-
+$routeProvider.when('/nota/:idNota',{templateUrl:'partials/notaEspecifica.html',controller:'notaEsCtrl'});
 //$routeProvider.when('/nota/:idNoticia',{templateUrl:'partials/nota.html',controller:'notaCtrl'});
 //$routeProvider.when('/nota/8/:idNoticia',{templateUrl:'partials/nota8.html',controller:'notaCtrl'});
 $routeProvider.otherwise({redirectTo:'/home'});	
