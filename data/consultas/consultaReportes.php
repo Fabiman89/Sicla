@@ -182,7 +182,8 @@
 		}
 		if($datos['subtema'][0]==2)
 		{
-			$atema = $datos['tema'][1]['idTema'];
+
+			$atema = (isset($datos['tema'][1]['idTema'])) ? $datos['tema'][1]['idTema'] : 'idTema';
 			$result = $mysqli->query("select idSubtema, nombreSubtema from subtema where idTema = $atema");
 			while($row = mysqli_fetch_assoc($result))
 				$subtema[] = $row;
@@ -212,14 +213,14 @@
 		}
 		if ($datos['estado'][0]==2)
 		{
-			$apais = $datos['pais'][1]['idPais'];
+			$apais = (isset($datos['pais'][1]['idPais'])) ? $datos['pais'][1]['idPais'] : 'idPais';
 			$result = $mysqli->query("select idEstado, nombreEstado from estado where idPais = $apais");
 			while($row = mysqli_fetch_assoc($result))
 				$estado[] = $row;
 		}
 		if ($datos['municipio'][0]==2)
 		{
-			$aestado = $datos['estado'][1]['idEstado'];
+			$aestado = (isset($datos['estado'][1]['idEstado'])) ? $datos['estado'][1]['idEstado'] : 'idEstado';
 			$result = $mysqli->query("select idMunicipio, nombreMunicipio from municipio where idEstado = $aestado");
 			while($row = mysqli_fetch_assoc($result))
 				$municipio[] = $row;
@@ -232,7 +233,7 @@
 		}
 		if($datos['tema'][0]==2)
 		{
-			$aarea = $datos['tema'][1]['idArea'];
+			$aarea = (isset($datos['tema'][1]['idArea'])) ? $datos['tema'][1]['idArea'] : 'idArea';
 			$result = $mysqli->query("select idTema, nombreTema from tema where idArea = $atema");
 			while($row = mysqli_fetch_assoc($result))
 				$tema[] = $row;

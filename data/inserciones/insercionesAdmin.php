@@ -136,12 +136,12 @@ switch ($instruccion){
 // PROTAGONISTA (ERROR 406)
 	case 6:
 	$dato = $sentencia['protagonista'];
-    $nombre = $dato['nombre'];
-	$cargo = $dato['cargo']['idCargo'];
+    $nombre = $dato['nombre'];	
 	$gen = $dato['genero'];
 	$mysqli->query("insert into Protagonista values(null,'$nombre','$gen')");
 	$id = mysqli_insert_id($mysqli);
-	$mysqli->query("insert into cargoProtagonista values(null,$cargo,$id)");
+	if (isset($dato['cargo']['idCargo']))
+		$mysqli->query("insert into cargoProtagonista values(null,".$dato['cargo']['idCargo'].",$id)");
 	$result = $mysqli->query("select * from Protagonista order by nombreProtagonista asc");
 	$arr = array();
 	if($result)
