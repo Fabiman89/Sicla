@@ -169,10 +169,10 @@ app.controller('notaEsCtrl',['$scope','$http','$routeParams', function($scope,$h
 	$scope.no = false;
 	if($routeParams.idNota != undefined)
 	{
-		$http.post('data/consultas/consultas.php', {'sentencia':5, 'idNota':$routeParams.idNota}).then(function(nota) {
-			if (nota.data != "Error 105")				
-				if(nota.data.length > 0)
-					$scope.dt = nota.data[0];
+		$http.post('data/consultas/consultas.php', {'sentencia':5, 'idNota':$routeParams.idNota}).success(function(nota) {
+			if (nota != "Error 105")				
+				if(nota.length > 0)
+					$scope.dt = nota[0];
 				else
 				{
 					$scope.txt = "No existe la nota solicitada.";

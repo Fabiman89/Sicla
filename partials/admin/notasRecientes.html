@@ -12,8 +12,9 @@
                     </div>
                     <div class="col-md-6 col-sm-6">
                       <div class="form-group">
-                        <p class="help-block">Fecha</p >
+                        <p class="help-block">Fecha Rango<input type="checkbox" ng-model="periodo" /></p >
                         <input class="form-control input-sm" type="date" ng-model="search.fecha" >  
+                        <input class="form-control input-sm" type="date" ng-model="search.fecha2" ng-show="periodo">  
                       </div>
                     </div>
                     <div class="col-md-6 col-sm-6" >
@@ -40,7 +41,7 @@
                             </div>                        
                         </div>
                         <div class="col-md-12 text-center">
-                        	<button ng-click="busquedaAvanzada()" class="btn" ng-disabled="!search.nombreSubtema && !search.nombreTema && !search.nombreMedio && !search.nombreProtagonista && !search.fecha">Buscar</button>
+                        	<button ng-click="busquedaAvanzada()" class="btn" ng-hide="!search.nombreSubtema && !search.nombreTema && !search.nombreMedio && !search.nombreProtagonista && !search.fecha">Buscar</button>
                         </div>
                     </div>
                   </form>

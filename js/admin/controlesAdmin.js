@@ -1053,6 +1053,8 @@
 					auxST.push(1,$scope.search.nombreSubtema);
 				else
 					auxST.push(0);
+			if ($scope.search.fecha2 != undefined && $scope.search.fecha != "")
+				auxFecha.push($scope.search.fecha2); 
 			$http.post('data/consultas/consultaAvanzada.php', {medio:auxMedio, protagonista:auxPro, tema:auxTema, subtema:auxST, fecha:auxFecha, reporte:2, autor:[0], clasificacion:[0], tipo:[0], seccion:[0], genero:[0], pais:[0], estado:[0], area:[0], cargo:[0], municipio:[0]}).success(function(data2) 
 			{
 				ad = true;
